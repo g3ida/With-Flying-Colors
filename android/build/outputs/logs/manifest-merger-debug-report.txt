@@ -1,0 +1,179 @@
+-- Merging decision tree log ---
+manifest
+ADDED from /Users/a/Documents/Projects/WFC/android/AndroidManifest.xml:2:1-24:12
+INJECTED from /Users/a/Documents/Projects/WFC/android/AndroidManifest.xml:2:1-24:12
+INJECTED from /Users/a/Documents/Projects/WFC/android/AndroidManifest.xml:2:1-24:12
+INJECTED from /Users/a/Documents/Projects/WFC/android/AndroidManifest.xml:2:1-24:12
+MERGED from [com.badlogicgames.gdx-controllers:gdx-controllers-android:2.1.0] /Users/a/.gradle/caches/transforms-3/d5301e2e84d72f160f45055a5768eb0a/transformed/gdx-controllers-android-2.1.0/AndroidManifest.xml:2:1-11:12
+MERGED from [de.golfgl.gdxgamesvcs:gdx-gamesvcs-android-gpgs:1.0.2] /Users/a/.gradle/caches/transforms-3/3457203f991c7be71e65caa93ea209e8/transformed/gdx-gamesvcs-android-gpgs-1.0.2/AndroidManifest.xml:2:1-11:12
+MERGED from [com.google.android.gms:play-services-games:16.0.0] /Users/a/.gradle/caches/transforms-3/a9600b855281769806ea74f23fc7a3a2/transformed/play-services-games-16.0.0/AndroidManifest.xml:17:1-24:12
+MERGED from [com.google.android.gms:play-services-drive:16.0.0] /Users/a/.gradle/caches/transforms-3/de0bf447d003f3a6eb9a36f32b50bc1d/transformed/play-services-drive-16.0.0/AndroidManifest.xml:17:1-24:12
+MERGED from [com.google.android.gms:play-services-base:16.0.1] /Users/a/.gradle/caches/transforms-3/9a3bf58e31e241f94a931eea8ce12687/transformed/play-services-base-16.0.1/AndroidManifest.xml:17:1-29:12
+MERGED from [com.google.android.gms:play-services-tasks:16.0.1] /Users/a/.gradle/caches/transforms-3/2db56bbee394ad4cea38de1477f0ca1f/transformed/play-services-tasks-16.0.1/AndroidManifest.xml:2:1-9:12
+MERGED from [com.google.android.gms:play-services-basement:16.0.1] /Users/a/.gradle/caches/transforms-3/90f0e13b2aff0aebe302263c4e966d9a/transformed/play-services-basement-16.0.1/AndroidManifest.xml:17:1-28:12
+MERGED from [com.android.support:support-v4:26.1.0] /Users/a/.gradle/caches/transforms-3/1eff8f97e527cc30355e0a13559242fd/transformed/support-v4-26.1.0/AndroidManifest.xml:17:1-31:12
+MERGED from [com.android.support:support-media-compat:26.1.0] /Users/a/.gradle/caches/transforms-3/a7769ca5953cae4415e205936b18011e/transformed/support-media-compat-26.1.0/AndroidManifest.xml:17:1-31:12
+MERGED from [com.android.support:support-fragment:26.1.0] /Users/a/.gradle/caches/transforms-3/5d5ad2281dfdba53a7402a8c1dfe0e38/transformed/support-fragment-26.1.0/AndroidManifest.xml:17:1-31:12
+MERGED from [com.android.support:support-core-utils:26.1.0] /Users/a/.gradle/caches/transforms-3/4ee33ab699f21f571ad36d2b3cfcd95d/transformed/support-core-utils-26.1.0/AndroidManifest.xml:17:1-31:12
+MERGED from [com.android.support:support-core-ui:26.1.0] /Users/a/.gradle/caches/transforms-3/f323d5e9596fdbd2702391b8835ec1a0/transformed/support-core-ui-26.1.0/AndroidManifest.xml:17:1-31:12
+MERGED from [com.android.support:support-compat:26.1.0] /Users/a/.gradle/caches/transforms-3/b54390d23805ec090635e5aa9f7795e3/transformed/support-compat-26.1.0/AndroidManifest.xml:17:1-31:12
+MERGED from [android.arch.lifecycle:runtime:1.0.0] /Users/a/.gradle/caches/transforms-3/d38dd375ce4bcf23cce0921866f52c80/transformed/runtime-1.0.0/AndroidManifest.xml:17:1-30:12
+INJECTED from /Users/a/Documents/Projects/WFC/android/AndroidManifest.xml:2:1-24:12
+INJECTED from /Users/a/Documents/Projects/WFC/android/AndroidManifest.xml:2:1-24:12
+INJECTED from /Users/a/Documents/Projects/WFC/android/AndroidManifest.xml:2:1-24:12
+	package
+		ADDED from /Users/a/Documents/Projects/WFC/android/AndroidManifest.xml:3:5-42
+		INJECTED from /Users/a/Documents/Projects/WFC/android/AndroidManifest.xml
+		INJECTED from /Users/a/Documents/Projects/WFC/android/AndroidManifest.xml
+	android:versionName
+		INJECTED from /Users/a/Documents/Projects/WFC/android/AndroidManifest.xml
+		ADDED from /Users/a/Documents/Projects/WFC/android/AndroidManifest.xml:2:1-24:12
+		INJECTED from /Users/a/Documents/Projects/WFC/android/AndroidManifest.xml
+	android:versionCode
+		INJECTED from /Users/a/Documents/Projects/WFC/android/AndroidManifest.xml
+		ADDED from /Users/a/Documents/Projects/WFC/android/AndroidManifest.xml:2:1-24:12
+		INJECTED from /Users/a/Documents/Projects/WFC/android/AndroidManifest.xml
+	xmlns:android
+		ADDED from /Users/a/Documents/Projects/WFC/android/AndroidManifest.xml:2:11-69
+application
+ADDED from /Users/a/Documents/Projects/WFC/android/AndroidManifest.xml:5:5-22:19
+MERGED from [com.badlogicgames.gdx-controllers:gdx-controllers-android:2.1.0] /Users/a/.gradle/caches/transforms-3/d5301e2e84d72f160f45055a5768eb0a/transformed/gdx-controllers-android-2.1.0/AndroidManifest.xml:9:5-20
+MERGED from [com.badlogicgames.gdx-controllers:gdx-controllers-android:2.1.0] /Users/a/.gradle/caches/transforms-3/d5301e2e84d72f160f45055a5768eb0a/transformed/gdx-controllers-android-2.1.0/AndroidManifest.xml:9:5-20
+MERGED from [de.golfgl.gdxgamesvcs:gdx-gamesvcs-android-gpgs:1.0.2] /Users/a/.gradle/caches/transforms-3/3457203f991c7be71e65caa93ea209e8/transformed/gdx-gamesvcs-android-gpgs-1.0.2/AndroidManifest.xml:9:5-20
+MERGED from [de.golfgl.gdxgamesvcs:gdx-gamesvcs-android-gpgs:1.0.2] /Users/a/.gradle/caches/transforms-3/3457203f991c7be71e65caa93ea209e8/transformed/gdx-gamesvcs-android-gpgs-1.0.2/AndroidManifest.xml:9:5-20
+MERGED from [com.google.android.gms:play-services-games:16.0.0] /Users/a/.gradle/caches/transforms-3/a9600b855281769806ea74f23fc7a3a2/transformed/play-services-games-16.0.0/AndroidManifest.xml:22:5-20
+MERGED from [com.google.android.gms:play-services-games:16.0.0] /Users/a/.gradle/caches/transforms-3/a9600b855281769806ea74f23fc7a3a2/transformed/play-services-games-16.0.0/AndroidManifest.xml:22:5-20
+MERGED from [com.google.android.gms:play-services-drive:16.0.0] /Users/a/.gradle/caches/transforms-3/de0bf447d003f3a6eb9a36f32b50bc1d/transformed/play-services-drive-16.0.0/AndroidManifest.xml:22:5-20
+MERGED from [com.google.android.gms:play-services-drive:16.0.0] /Users/a/.gradle/caches/transforms-3/de0bf447d003f3a6eb9a36f32b50bc1d/transformed/play-services-drive-16.0.0/AndroidManifest.xml:22:5-20
+MERGED from [com.google.android.gms:play-services-base:16.0.1] /Users/a/.gradle/caches/transforms-3/9a3bf58e31e241f94a931eea8ce12687/transformed/play-services-base-16.0.1/AndroidManifest.xml:22:5-27:19
+MERGED from [com.google.android.gms:play-services-base:16.0.1] /Users/a/.gradle/caches/transforms-3/9a3bf58e31e241f94a931eea8ce12687/transformed/play-services-base-16.0.1/AndroidManifest.xml:22:5-27:19
+MERGED from [com.google.android.gms:play-services-tasks:16.0.1] /Users/a/.gradle/caches/transforms-3/2db56bbee394ad4cea38de1477f0ca1f/transformed/play-services-tasks-16.0.1/AndroidManifest.xml:7:5-20
+MERGED from [com.google.android.gms:play-services-tasks:16.0.1] /Users/a/.gradle/caches/transforms-3/2db56bbee394ad4cea38de1477f0ca1f/transformed/play-services-tasks-16.0.1/AndroidManifest.xml:7:5-20
+MERGED from [com.google.android.gms:play-services-basement:16.0.1] /Users/a/.gradle/caches/transforms-3/90f0e13b2aff0aebe302263c4e966d9a/transformed/play-services-basement-16.0.1/AndroidManifest.xml:22:5-26:19
+MERGED from [com.google.android.gms:play-services-basement:16.0.1] /Users/a/.gradle/caches/transforms-3/90f0e13b2aff0aebe302263c4e966d9a/transformed/play-services-basement-16.0.1/AndroidManifest.xml:22:5-26:19
+MERGED from [com.android.support:support-v4:26.1.0] /Users/a/.gradle/caches/transforms-3/1eff8f97e527cc30355e0a13559242fd/transformed/support-v4-26.1.0/AndroidManifest.xml:25:5-29:19
+MERGED from [com.android.support:support-v4:26.1.0] /Users/a/.gradle/caches/transforms-3/1eff8f97e527cc30355e0a13559242fd/transformed/support-v4-26.1.0/AndroidManifest.xml:25:5-29:19
+MERGED from [com.android.support:support-media-compat:26.1.0] /Users/a/.gradle/caches/transforms-3/a7769ca5953cae4415e205936b18011e/transformed/support-media-compat-26.1.0/AndroidManifest.xml:25:5-29:19
+MERGED from [com.android.support:support-media-compat:26.1.0] /Users/a/.gradle/caches/transforms-3/a7769ca5953cae4415e205936b18011e/transformed/support-media-compat-26.1.0/AndroidManifest.xml:25:5-29:19
+MERGED from [com.android.support:support-fragment:26.1.0] /Users/a/.gradle/caches/transforms-3/5d5ad2281dfdba53a7402a8c1dfe0e38/transformed/support-fragment-26.1.0/AndroidManifest.xml:25:5-29:19
+MERGED from [com.android.support:support-fragment:26.1.0] /Users/a/.gradle/caches/transforms-3/5d5ad2281dfdba53a7402a8c1dfe0e38/transformed/support-fragment-26.1.0/AndroidManifest.xml:25:5-29:19
+MERGED from [com.android.support:support-core-utils:26.1.0] /Users/a/.gradle/caches/transforms-3/4ee33ab699f21f571ad36d2b3cfcd95d/transformed/support-core-utils-26.1.0/AndroidManifest.xml:25:5-29:19
+MERGED from [com.android.support:support-core-utils:26.1.0] /Users/a/.gradle/caches/transforms-3/4ee33ab699f21f571ad36d2b3cfcd95d/transformed/support-core-utils-26.1.0/AndroidManifest.xml:25:5-29:19
+MERGED from [com.android.support:support-core-ui:26.1.0] /Users/a/.gradle/caches/transforms-3/f323d5e9596fdbd2702391b8835ec1a0/transformed/support-core-ui-26.1.0/AndroidManifest.xml:25:5-29:19
+MERGED from [com.android.support:support-core-ui:26.1.0] /Users/a/.gradle/caches/transforms-3/f323d5e9596fdbd2702391b8835ec1a0/transformed/support-core-ui-26.1.0/AndroidManifest.xml:25:5-29:19
+MERGED from [com.android.support:support-compat:26.1.0] /Users/a/.gradle/caches/transforms-3/b54390d23805ec090635e5aa9f7795e3/transformed/support-compat-26.1.0/AndroidManifest.xml:25:5-29:19
+MERGED from [com.android.support:support-compat:26.1.0] /Users/a/.gradle/caches/transforms-3/b54390d23805ec090635e5aa9f7795e3/transformed/support-compat-26.1.0/AndroidManifest.xml:25:5-29:19
+MERGED from [android.arch.lifecycle:runtime:1.0.0] /Users/a/.gradle/caches/transforms-3/d38dd375ce4bcf23cce0921866f52c80/transformed/runtime-1.0.0/AndroidManifest.xml:24:5-28:19
+MERGED from [android.arch.lifecycle:runtime:1.0.0] /Users/a/.gradle/caches/transforms-3/d38dd375ce4bcf23cce0921866f52c80/transformed/runtime-1.0.0/AndroidManifest.xml:24:5-28:19
+	android:label
+		ADDED from /Users/a/Documents/Projects/WFC/android/AndroidManifest.xml:10:9-41
+	android:appCategory
+		ADDED from /Users/a/Documents/Projects/WFC/android/AndroidManifest.xml:9:9-35
+	android:icon
+		ADDED from /Users/a/Documents/Projects/WFC/android/AndroidManifest.xml:7:9-45
+	android:allowBackup
+		ADDED from /Users/a/Documents/Projects/WFC/android/AndroidManifest.xml:6:9-35
+	android:theme
+		ADDED from /Users/a/Documents/Projects/WFC/android/AndroidManifest.xml:11:9-40
+	android:isGame
+		ADDED from /Users/a/Documents/Projects/WFC/android/AndroidManifest.xml:8:9-30
+activity#com.g3ida.withflyingcolours.AndroidLauncher
+ADDED from /Users/a/Documents/Projects/WFC/android/AndroidManifest.xml:12:9-21:20
+	android:screenOrientation
+		ADDED from /Users/a/Documents/Projects/WFC/android/AndroidManifest.xml:15:13-50
+	android:label
+		ADDED from /Users/a/Documents/Projects/WFC/android/AndroidManifest.xml:14:13-45
+	android:configChanges
+		ADDED from /Users/a/Documents/Projects/WFC/android/AndroidManifest.xml:16:13-107
+	android:name
+		ADDED from /Users/a/Documents/Projects/WFC/android/AndroidManifest.xml:13:13-71
+intent-filter#action:name:android.intent.action.MAIN+category:name:android.intent.category.LAUNCHER
+ADDED from /Users/a/Documents/Projects/WFC/android/AndroidManifest.xml:17:13-20:29
+action#android.intent.action.MAIN
+ADDED from /Users/a/Documents/Projects/WFC/android/AndroidManifest.xml:18:17-69
+	android:name
+		ADDED from /Users/a/Documents/Projects/WFC/android/AndroidManifest.xml:18:25-66
+category#android.intent.category.LAUNCHER
+ADDED from /Users/a/Documents/Projects/WFC/android/AndroidManifest.xml:19:17-77
+	android:name
+		ADDED from /Users/a/Documents/Projects/WFC/android/AndroidManifest.xml:19:27-74
+uses-sdk
+INJECTED from /Users/a/Documents/Projects/WFC/android/AndroidManifest.xml reason: use-sdk injection requested
+INJECTED from /Users/a/Documents/Projects/WFC/android/AndroidManifest.xml
+INJECTED from /Users/a/Documents/Projects/WFC/android/AndroidManifest.xml
+MERGED from [com.badlogicgames.gdx-controllers:gdx-controllers-android:2.1.0] /Users/a/.gradle/caches/transforms-3/d5301e2e84d72f160f45055a5768eb0a/transformed/gdx-controllers-android-2.1.0/AndroidManifest.xml:5:5-7:41
+MERGED from [com.badlogicgames.gdx-controllers:gdx-controllers-android:2.1.0] /Users/a/.gradle/caches/transforms-3/d5301e2e84d72f160f45055a5768eb0a/transformed/gdx-controllers-android-2.1.0/AndroidManifest.xml:5:5-7:41
+MERGED from [de.golfgl.gdxgamesvcs:gdx-gamesvcs-android-gpgs:1.0.2] /Users/a/.gradle/caches/transforms-3/3457203f991c7be71e65caa93ea209e8/transformed/gdx-gamesvcs-android-gpgs-1.0.2/AndroidManifest.xml:5:5-7:41
+MERGED from [de.golfgl.gdxgamesvcs:gdx-gamesvcs-android-gpgs:1.0.2] /Users/a/.gradle/caches/transforms-3/3457203f991c7be71e65caa93ea209e8/transformed/gdx-gamesvcs-android-gpgs-1.0.2/AndroidManifest.xml:5:5-7:41
+MERGED from [com.google.android.gms:play-services-games:16.0.0] /Users/a/.gradle/caches/transforms-3/a9600b855281769806ea74f23fc7a3a2/transformed/play-services-games-16.0.0/AndroidManifest.xml:20:5-44
+MERGED from [com.google.android.gms:play-services-games:16.0.0] /Users/a/.gradle/caches/transforms-3/a9600b855281769806ea74f23fc7a3a2/transformed/play-services-games-16.0.0/AndroidManifest.xml:20:5-44
+MERGED from [com.google.android.gms:play-services-drive:16.0.0] /Users/a/.gradle/caches/transforms-3/de0bf447d003f3a6eb9a36f32b50bc1d/transformed/play-services-drive-16.0.0/AndroidManifest.xml:20:5-44
+MERGED from [com.google.android.gms:play-services-drive:16.0.0] /Users/a/.gradle/caches/transforms-3/de0bf447d003f3a6eb9a36f32b50bc1d/transformed/play-services-drive-16.0.0/AndroidManifest.xml:20:5-44
+MERGED from [com.google.android.gms:play-services-base:16.0.1] /Users/a/.gradle/caches/transforms-3/9a3bf58e31e241f94a931eea8ce12687/transformed/play-services-base-16.0.1/AndroidManifest.xml:20:5-44
+MERGED from [com.google.android.gms:play-services-base:16.0.1] /Users/a/.gradle/caches/transforms-3/9a3bf58e31e241f94a931eea8ce12687/transformed/play-services-base-16.0.1/AndroidManifest.xml:20:5-44
+MERGED from [com.google.android.gms:play-services-tasks:16.0.1] /Users/a/.gradle/caches/transforms-3/2db56bbee394ad4cea38de1477f0ca1f/transformed/play-services-tasks-16.0.1/AndroidManifest.xml:5:5-44
+MERGED from [com.google.android.gms:play-services-tasks:16.0.1] /Users/a/.gradle/caches/transforms-3/2db56bbee394ad4cea38de1477f0ca1f/transformed/play-services-tasks-16.0.1/AndroidManifest.xml:5:5-44
+MERGED from [com.google.android.gms:play-services-basement:16.0.1] /Users/a/.gradle/caches/transforms-3/90f0e13b2aff0aebe302263c4e966d9a/transformed/play-services-basement-16.0.1/AndroidManifest.xml:20:5-44
+MERGED from [com.google.android.gms:play-services-basement:16.0.1] /Users/a/.gradle/caches/transforms-3/90f0e13b2aff0aebe302263c4e966d9a/transformed/play-services-basement-16.0.1/AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:support-v4:26.1.0] /Users/a/.gradle/caches/transforms-3/1eff8f97e527cc30355e0a13559242fd/transformed/support-v4-26.1.0/AndroidManifest.xml:21:5-23:54
+MERGED from [com.android.support:support-v4:26.1.0] /Users/a/.gradle/caches/transforms-3/1eff8f97e527cc30355e0a13559242fd/transformed/support-v4-26.1.0/AndroidManifest.xml:21:5-23:54
+MERGED from [com.android.support:support-media-compat:26.1.0] /Users/a/.gradle/caches/transforms-3/a7769ca5953cae4415e205936b18011e/transformed/support-media-compat-26.1.0/AndroidManifest.xml:21:5-23:63
+MERGED from [com.android.support:support-media-compat:26.1.0] /Users/a/.gradle/caches/transforms-3/a7769ca5953cae4415e205936b18011e/transformed/support-media-compat-26.1.0/AndroidManifest.xml:21:5-23:63
+MERGED from [com.android.support:support-fragment:26.1.0] /Users/a/.gradle/caches/transforms-3/5d5ad2281dfdba53a7402a8c1dfe0e38/transformed/support-fragment-26.1.0/AndroidManifest.xml:21:5-23:60
+MERGED from [com.android.support:support-fragment:26.1.0] /Users/a/.gradle/caches/transforms-3/5d5ad2281dfdba53a7402a8c1dfe0e38/transformed/support-fragment-26.1.0/AndroidManifest.xml:21:5-23:60
+MERGED from [com.android.support:support-core-utils:26.1.0] /Users/a/.gradle/caches/transforms-3/4ee33ab699f21f571ad36d2b3cfcd95d/transformed/support-core-utils-26.1.0/AndroidManifest.xml:21:5-23:61
+MERGED from [com.android.support:support-core-utils:26.1.0] /Users/a/.gradle/caches/transforms-3/4ee33ab699f21f571ad36d2b3cfcd95d/transformed/support-core-utils-26.1.0/AndroidManifest.xml:21:5-23:61
+MERGED from [com.android.support:support-core-ui:26.1.0] /Users/a/.gradle/caches/transforms-3/f323d5e9596fdbd2702391b8835ec1a0/transformed/support-core-ui-26.1.0/AndroidManifest.xml:21:5-23:58
+MERGED from [com.android.support:support-core-ui:26.1.0] /Users/a/.gradle/caches/transforms-3/f323d5e9596fdbd2702391b8835ec1a0/transformed/support-core-ui-26.1.0/AndroidManifest.xml:21:5-23:58
+MERGED from [com.android.support:support-compat:26.1.0] /Users/a/.gradle/caches/transforms-3/b54390d23805ec090635e5aa9f7795e3/transformed/support-compat-26.1.0/AndroidManifest.xml:21:5-23:58
+MERGED from [com.android.support:support-compat:26.1.0] /Users/a/.gradle/caches/transforms-3/b54390d23805ec090635e5aa9f7795e3/transformed/support-compat-26.1.0/AndroidManifest.xml:21:5-23:58
+MERGED from [android.arch.lifecycle:runtime:1.0.0] /Users/a/.gradle/caches/transforms-3/d38dd375ce4bcf23cce0921866f52c80/transformed/runtime-1.0.0/AndroidManifest.xml:20:5-22:41
+MERGED from [android.arch.lifecycle:runtime:1.0.0] /Users/a/.gradle/caches/transforms-3/d38dd375ce4bcf23cce0921866f52c80/transformed/runtime-1.0.0/AndroidManifest.xml:20:5-22:41
+INJECTED from /Users/a/Documents/Projects/WFC/android/AndroidManifest.xml
+INJECTED from /Users/a/Documents/Projects/WFC/android/AndroidManifest.xml
+	tools:overrideLibrary
+		ADDED from [com.android.support:support-v4:26.1.0] /Users/a/.gradle/caches/transforms-3/1eff8f97e527cc30355e0a13559242fd/transformed/support-v4-26.1.0/AndroidManifest.xml:23:9-51
+	android:targetSdkVersion
+		INJECTED from /Users/a/Documents/Projects/WFC/android/AndroidManifest.xml
+		ADDED from /Users/a/Documents/Projects/WFC/android/AndroidManifest.xml
+		INJECTED from /Users/a/Documents/Projects/WFC/android/AndroidManifest.xml
+	android:minSdkVersion
+		INJECTED from /Users/a/Documents/Projects/WFC/android/AndroidManifest.xml
+		ADDED from /Users/a/Documents/Projects/WFC/android/AndroidManifest.xml
+		INJECTED from /Users/a/Documents/Projects/WFC/android/AndroidManifest.xml
+activity#com.google.android.gms.common.api.GoogleApiActivity
+ADDED from [com.google.android.gms:play-services-base:16.0.1] /Users/a/.gradle/caches/transforms-3/9a3bf58e31e241f94a931eea8ce12687/transformed/play-services-base-16.0.1/AndroidManifest.xml:23:9-26:75
+	android:exported
+		ADDED from [com.google.android.gms:play-services-base:16.0.1] /Users/a/.gradle/caches/transforms-3/9a3bf58e31e241f94a931eea8ce12687/transformed/play-services-base-16.0.1/AndroidManifest.xml:25:13-37
+	android:theme
+		ADDED from [com.google.android.gms:play-services-base:16.0.1] /Users/a/.gradle/caches/transforms-3/9a3bf58e31e241f94a931eea8ce12687/transformed/play-services-base-16.0.1/AndroidManifest.xml:26:13-72
+	android:name
+		ADDED from [com.google.android.gms:play-services-base:16.0.1] /Users/a/.gradle/caches/transforms-3/9a3bf58e31e241f94a931eea8ce12687/transformed/play-services-base-16.0.1/AndroidManifest.xml:24:13-79
+meta-data#com.google.android.gms.version
+ADDED from [com.google.android.gms:play-services-basement:16.0.1] /Users/a/.gradle/caches/transforms-3/90f0e13b2aff0aebe302263c4e966d9a/transformed/play-services-basement-16.0.1/AndroidManifest.xml:23:9-25:69
+	android:value
+		ADDED from [com.google.android.gms:play-services-basement:16.0.1] /Users/a/.gradle/caches/transforms-3/90f0e13b2aff0aebe302263c4e966d9a/transformed/play-services-basement-16.0.1/AndroidManifest.xml:25:13-66
+	android:name
+		ADDED from [com.google.android.gms:play-services-basement:16.0.1] /Users/a/.gradle/caches/transforms-3/90f0e13b2aff0aebe302263c4e966d9a/transformed/play-services-basement-16.0.1/AndroidManifest.xml:24:13-58
+meta-data#android.support.VERSION
+ADDED from [com.android.support:support-v4:26.1.0] /Users/a/.gradle/caches/transforms-3/1eff8f97e527cc30355e0a13559242fd/transformed/support-v4-26.1.0/AndroidManifest.xml:26:9-28:38
+MERGED from [com.android.support:support-media-compat:26.1.0] /Users/a/.gradle/caches/transforms-3/a7769ca5953cae4415e205936b18011e/transformed/support-media-compat-26.1.0/AndroidManifest.xml:26:9-28:38
+MERGED from [com.android.support:support-media-compat:26.1.0] /Users/a/.gradle/caches/transforms-3/a7769ca5953cae4415e205936b18011e/transformed/support-media-compat-26.1.0/AndroidManifest.xml:26:9-28:38
+MERGED from [com.android.support:support-fragment:26.1.0] /Users/a/.gradle/caches/transforms-3/5d5ad2281dfdba53a7402a8c1dfe0e38/transformed/support-fragment-26.1.0/AndroidManifest.xml:26:9-28:38
+MERGED from [com.android.support:support-fragment:26.1.0] /Users/a/.gradle/caches/transforms-3/5d5ad2281dfdba53a7402a8c1dfe0e38/transformed/support-fragment-26.1.0/AndroidManifest.xml:26:9-28:38
+MERGED from [com.android.support:support-core-utils:26.1.0] /Users/a/.gradle/caches/transforms-3/4ee33ab699f21f571ad36d2b3cfcd95d/transformed/support-core-utils-26.1.0/AndroidManifest.xml:26:9-28:38
+MERGED from [com.android.support:support-core-utils:26.1.0] /Users/a/.gradle/caches/transforms-3/4ee33ab699f21f571ad36d2b3cfcd95d/transformed/support-core-utils-26.1.0/AndroidManifest.xml:26:9-28:38
+MERGED from [com.android.support:support-core-ui:26.1.0] /Users/a/.gradle/caches/transforms-3/f323d5e9596fdbd2702391b8835ec1a0/transformed/support-core-ui-26.1.0/AndroidManifest.xml:26:9-28:38
+MERGED from [com.android.support:support-core-ui:26.1.0] /Users/a/.gradle/caches/transforms-3/f323d5e9596fdbd2702391b8835ec1a0/transformed/support-core-ui-26.1.0/AndroidManifest.xml:26:9-28:38
+MERGED from [com.android.support:support-compat:26.1.0] /Users/a/.gradle/caches/transforms-3/b54390d23805ec090635e5aa9f7795e3/transformed/support-compat-26.1.0/AndroidManifest.xml:26:9-28:38
+MERGED from [com.android.support:support-compat:26.1.0] /Users/a/.gradle/caches/transforms-3/b54390d23805ec090635e5aa9f7795e3/transformed/support-compat-26.1.0/AndroidManifest.xml:26:9-28:38
+	android:value
+		ADDED from [com.android.support:support-v4:26.1.0] /Users/a/.gradle/caches/transforms-3/1eff8f97e527cc30355e0a13559242fd/transformed/support-v4-26.1.0/AndroidManifest.xml:28:13-35
+	android:name
+		ADDED from [com.android.support:support-v4:26.1.0] /Users/a/.gradle/caches/transforms-3/1eff8f97e527cc30355e0a13559242fd/transformed/support-v4-26.1.0/AndroidManifest.xml:27:13-51
+meta-data#android.arch.lifecycle.VERSION
+ADDED from [android.arch.lifecycle:runtime:1.0.0] /Users/a/.gradle/caches/transforms-3/d38dd375ce4bcf23cce0921866f52c80/transformed/runtime-1.0.0/AndroidManifest.xml:25:9-27:47
+	android:value
+		ADDED from [android.arch.lifecycle:runtime:1.0.0] /Users/a/.gradle/caches/transforms-3/d38dd375ce4bcf23cce0921866f52c80/transformed/runtime-1.0.0/AndroidManifest.xml:27:13-44
+	android:name
+		ADDED from [android.arch.lifecycle:runtime:1.0.0] /Users/a/.gradle/caches/transforms-3/d38dd375ce4bcf23cce0921866f52c80/transformed/runtime-1.0.0/AndroidManifest.xml:26:13-58

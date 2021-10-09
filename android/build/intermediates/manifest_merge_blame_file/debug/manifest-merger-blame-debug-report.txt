@@ -1,0 +1,79 @@
+1<?xml version="1.0" encoding="utf-8"?>
+2<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+3    package="com.g3ida.withflyingcolours"
+4    android:versionCode="1"
+5    android:versionName="1.0" >
+6
+7    <uses-sdk
+8        android:minSdkVersion="16"
+8-->/Users/a/Documents/Projects/WFC/android/AndroidManifest.xml
+9        android:targetSdkVersion="30" />
+9-->/Users/a/Documents/Projects/WFC/android/AndroidManifest.xml
+10
+11    <application
+11-->/Users/a/Documents/Projects/WFC/android/AndroidManifest.xml:5:5-22:19
+12        android:allowBackup="true"
+12-->/Users/a/Documents/Projects/WFC/android/AndroidManifest.xml:6:9-35
+13        android:appCategory="game"
+13-->/Users/a/Documents/Projects/WFC/android/AndroidManifest.xml:9:9-35
+14        android:debuggable="true"
+15        android:icon="@drawable/ic_launcher"
+15-->/Users/a/Documents/Projects/WFC/android/AndroidManifest.xml:7:9-45
+16        android:isGame="true"
+16-->/Users/a/Documents/Projects/WFC/android/AndroidManifest.xml:8:9-30
+17        android:label="@string/app_name"
+17-->/Users/a/Documents/Projects/WFC/android/AndroidManifest.xml:10:9-41
+18        android:testOnly="true"
+19        android:theme="@style/GdxTheme" >
+19-->/Users/a/Documents/Projects/WFC/android/AndroidManifest.xml:11:9-40
+20        <activity
+20-->/Users/a/Documents/Projects/WFC/android/AndroidManifest.xml:12:9-21:20
+21            android:name="com.g3ida.withflyingcolours.AndroidLauncher"
+21-->/Users/a/Documents/Projects/WFC/android/AndroidManifest.xml:13:13-71
+22            android:configChanges="keyboard|keyboardHidden|navigation|orientation|screenSize|screenLayout"
+22-->/Users/a/Documents/Projects/WFC/android/AndroidManifest.xml:16:13-107
+23            android:label="@string/app_name"
+23-->/Users/a/Documents/Projects/WFC/android/AndroidManifest.xml:14:13-45
+24            android:screenOrientation="landscape" >
+24-->/Users/a/Documents/Projects/WFC/android/AndroidManifest.xml:15:13-50
+25            <intent-filter>
+25-->/Users/a/Documents/Projects/WFC/android/AndroidManifest.xml:17:13-20:29
+26                <action android:name="android.intent.action.MAIN" />
+26-->/Users/a/Documents/Projects/WFC/android/AndroidManifest.xml:18:17-69
+26-->/Users/a/Documents/Projects/WFC/android/AndroidManifest.xml:18:25-66
+27
+28                <category android:name="android.intent.category.LAUNCHER" />
+28-->/Users/a/Documents/Projects/WFC/android/AndroidManifest.xml:19:17-77
+28-->/Users/a/Documents/Projects/WFC/android/AndroidManifest.xml:19:27-74
+29            </intent-filter>
+30        </activity>
+31        <activity
+31-->[com.google.android.gms:play-services-base:16.0.1] /Users/a/.gradle/caches/transforms-3/9a3bf58e31e241f94a931eea8ce12687/transformed/play-services-base-16.0.1/AndroidManifest.xml:23:9-26:75
+32            android:name="com.google.android.gms.common.api.GoogleApiActivity"
+32-->[com.google.android.gms:play-services-base:16.0.1] /Users/a/.gradle/caches/transforms-3/9a3bf58e31e241f94a931eea8ce12687/transformed/play-services-base-16.0.1/AndroidManifest.xml:24:13-79
+33            android:exported="false"
+33-->[com.google.android.gms:play-services-base:16.0.1] /Users/a/.gradle/caches/transforms-3/9a3bf58e31e241f94a931eea8ce12687/transformed/play-services-base-16.0.1/AndroidManifest.xml:25:13-37
+34            android:theme="@android:style/Theme.Translucent.NoTitleBar" />
+34-->[com.google.android.gms:play-services-base:16.0.1] /Users/a/.gradle/caches/transforms-3/9a3bf58e31e241f94a931eea8ce12687/transformed/play-services-base-16.0.1/AndroidManifest.xml:26:13-72
+35
+36        <meta-data
+36-->[com.google.android.gms:play-services-basement:16.0.1] /Users/a/.gradle/caches/transforms-3/90f0e13b2aff0aebe302263c4e966d9a/transformed/play-services-basement-16.0.1/AndroidManifest.xml:23:9-25:69
+37            android:name="com.google.android.gms.version"
+37-->[com.google.android.gms:play-services-basement:16.0.1] /Users/a/.gradle/caches/transforms-3/90f0e13b2aff0aebe302263c4e966d9a/transformed/play-services-basement-16.0.1/AndroidManifest.xml:24:13-58
+38            android:value="@integer/google_play_services_version" />
+38-->[com.google.android.gms:play-services-basement:16.0.1] /Users/a/.gradle/caches/transforms-3/90f0e13b2aff0aebe302263c4e966d9a/transformed/play-services-basement-16.0.1/AndroidManifest.xml:25:13-66
+39        <meta-data
+39-->[com.android.support:support-v4:26.1.0] /Users/a/.gradle/caches/transforms-3/1eff8f97e527cc30355e0a13559242fd/transformed/support-v4-26.1.0/AndroidManifest.xml:26:9-28:38
+40            android:name="android.support.VERSION"
+40-->[com.android.support:support-v4:26.1.0] /Users/a/.gradle/caches/transforms-3/1eff8f97e527cc30355e0a13559242fd/transformed/support-v4-26.1.0/AndroidManifest.xml:27:13-51
+41            android:value="26.1.0" />
+41-->[com.android.support:support-v4:26.1.0] /Users/a/.gradle/caches/transforms-3/1eff8f97e527cc30355e0a13559242fd/transformed/support-v4-26.1.0/AndroidManifest.xml:28:13-35
+42        <meta-data
+42-->[android.arch.lifecycle:runtime:1.0.0] /Users/a/.gradle/caches/transforms-3/d38dd375ce4bcf23cce0921866f52c80/transformed/runtime-1.0.0/AndroidManifest.xml:25:9-27:47
+43            android:name="android.arch.lifecycle.VERSION"
+43-->[android.arch.lifecycle:runtime:1.0.0] /Users/a/.gradle/caches/transforms-3/d38dd375ce4bcf23cce0921866f52c80/transformed/runtime-1.0.0/AndroidManifest.xml:26:13-58
+44            android:value="27.0.0-SNAPSHOT" />
+44-->[android.arch.lifecycle:runtime:1.0.0] /Users/a/.gradle/caches/transforms-3/d38dd375ce4bcf23cce0921866f52c80/transformed/runtime-1.0.0/AndroidManifest.xml:27:13-44
+45    </application>
+46
+47</manifest>

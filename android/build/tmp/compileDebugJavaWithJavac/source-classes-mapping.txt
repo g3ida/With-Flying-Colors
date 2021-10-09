@@ -1,0 +1,4 @@
+com/g3ida/withflyingcolours/BuildConfig.java
+ com.g3ida.withflyingcolours.BuildConfig
+com/g3ida/withflyingcolours/AndroidLauncher.java
+ com.g3ida.withflyingcolours.AndroidLauncher
