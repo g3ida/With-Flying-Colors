@@ -1,4 +1,0 @@
-#Sat Oct 09 16:51:54 WAT 2021
-base.0=C\:\\Users\\Mohamed Alaa Gaida\\Documents\\project\\WFC\\android\\build\\intermediates\\dex\\debug\\mergeDexDebug\\out\\classes.dex
-path.0=classes.dex
-renamed.0=classes.dex
