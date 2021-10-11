@@ -9,7 +9,7 @@ buildscript {
         google()
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:7.0.0'
+        classpath 'com.android.tools.build:gradle:7.0.2'
         classpath 'com.mobidevelop.robovm:robovm-gradle-plugin:2.3.12'
         
 
@@ -28,6 +28,7 @@ allprojects {
         ashleyVersion = '1.7.3'
         aiVersion = '1.8.2'
         gdxControllersVersion = '2.1.0'
+        junitVersion = '4.12'
     }
 
     repositories {
@@ -119,6 +120,7 @@ project(":core") {
         api "com.badlogicgames.ashley:ashley:$ashleyVersion"
         api "com.underwaterapps.overlap2druntime:overlap2d-runtime-libgdx:0.1.0"
         api "de.golfgl.gdxgamesvcs:gdx-gamesvcs-core:1.0.2"
+        testImplementation "junit:junit:$junitVersion"
         
     }
 }
