@@ -8,7 +8,7 @@ public class MainMenuScreen extends ScreenAdapter {
 
     WithFlyingColours game;
 
-    public MainMenuScreen(WithFlyingColours game); {
+    public MainMenuScreen(WithFlyingColours game) {
         super();
         this.game = game;
     }
