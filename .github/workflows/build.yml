@@ -1,4 +1,4 @@
-name: Android CI
+name: Build and Tests
 
 on:
   push:
@@ -24,3 +24,6 @@ jobs:
       run: chmod +x gradlew
     - name: Build desktop with Gradle
       run: ./gradlew desktop:build
+    - name: Run unit tests
+      run: ./gradlew core:test
+
