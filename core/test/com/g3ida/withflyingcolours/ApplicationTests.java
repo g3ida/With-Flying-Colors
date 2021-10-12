@@ -9,6 +9,6 @@ public class ApplicationTests extends TestCase {
 
     @Test
     public void testAdd() throws Exception {
-        Assert.assertEquals(10, Utils.add(3, 7));
+        Assert.assertEquals(10, Utils.add(4, 7));
     }
 }
