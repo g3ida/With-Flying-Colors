@@ -9,10 +9,8 @@ buildscript {
         google()
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:7.0.2'
+        classpath 'com.android.tools.build:gradle:7.0.3'
         classpath 'com.mobidevelop.robovm:robovm-gradle-plugin:2.3.12'
-        
-
     }
 }
 
@@ -25,10 +23,13 @@ allprojects {
         gdxVersion = '1.10.0'
         roboVMVersion = '2.3.12'
         box2DLightsVersion = '1.5'
-        ashleyVersion = '1.7.3'
+        ashleyVersion = '1.7.4'
         aiVersion = '1.8.2'
         gdxControllersVersion = '2.1.0'
         junitVersion = '4.12'
+        h2dVersion = '0.0.7'
+        typingLabelVersion = '1.2.0'
+        mokitoVersion = '3.12.4'
     }
 
     repositories {
@@ -84,7 +85,6 @@ project(":android") {
         api "com.badlogicgames.gdx-controllers:gdx-controllers-android:$gdxControllersVersion"
         api "com.badlogicgames.ashley:ashley:$ashleyVersion"
         api "de.golfgl.gdxgamesvcs:gdx-gamesvcs-android-gpgs:1.0.2"
-        
     }
 }
 
@@ -112,6 +112,7 @@ project(":core") {
 
 
     dependencies {
+        api "games.rednblack.hyperlap2d:runtime-libgdx:$h2dVersion"
         api "com.badlogicgames.gdx:gdx:$gdxVersion"
         api "com.badlogicgames.gdx:gdx-box2d:$gdxVersion"
         api "com.badlogicgames.box2dlights:box2dlights:$box2DLightsVersion"
@@ -120,7 +121,27 @@ project(":core") {
         api "com.badlogicgames.ashley:ashley:$ashleyVersion"
         api "com.underwaterapps.overlap2druntime:overlap2d-runtime-libgdx:0.1.0"
         api "de.golfgl.gdxgamesvcs:gdx-gamesvcs-core:1.0.2"
+        api "com.rafaskoberg.gdx:typing-label:$typingLabelVersion"
+    }
+}
+
+project(":tests") {
+    apply plugin: "java"
+
+    sourceSets.test.java.srcDirs = ["src/"]
+
+    dependencies {
+
+        implementation project(":core")
+
+        testImplementation "com.badlogicgames.gdx:gdx-backend-headless:$gdxVersion"
+
         testImplementation "junit:junit:$junitVersion"
-        
+        testImplementation "org.mockito:mockito-core:$mokitoVersion"
+
+        testImplementation "com.badlogicgames.gdx:gdx-backend-headless:$gdxVersion"
+        testImplementation "com.badlogicgames.gdx:gdx:$gdxVersion"
+        testImplementation "com.badlogicgames.gdx:gdx-platform:$gdxVersion:natives-desktop"
+        testImplementation "com.badlogicgames.gdx:gdx-box2d-platform:$gdxVersion:natives-desktop"
     }
 }

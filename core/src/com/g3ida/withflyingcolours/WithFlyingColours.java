@@ -4,6 +4,9 @@ import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.g3ida.withflyingcolours.core.AssetsLoader;
+import com.g3ida.withflyingcolours.screens.GameScreen;
+import com.g3ida.withflyingcolours.screens.MainMenuScreen;
 
 public class WithFlyingColours extends Game {
 	SpriteBatch batch;
@@ -11,20 +14,23 @@ public class WithFlyingColours extends Game {
 	@Override
 	public void create () {
 		batch = new SpriteBatch();
-		setScreen(new MainMenuScreen(this));
+		setScreen(new GameScreen());
 	}
 
 	@Override
 	public void render () {
-		GL20 gl = Gdx.gl;
-		gl.glClearColor(1.0f, 1.0f, 1.0f, 0.0f);
-		gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-
+		clearScreen();
 		super.render();
 	}
 	
 	@Override
 	public void dispose () {
 		batch.dispose();
+	}
+
+	public void clearScreen() {
+		GL20 gl = Gdx.gl;
+		gl.glClearColor(1.0f, 1.0f, 1.0f, 1.0f);
+		gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 	}
 }
