@@ -20,14 +20,17 @@ public class PlayerJumpSystem extends IteratingSystem {
         PhysicsBodyComponent physicsBody = ComponentRetriever.get(entity, PhysicsBodyComponent.class);
         PlayerJumpComponent playerJump = ComponentRetriever.get(entity, PlayerJumpComponent.class);
 
-        playerJump.timeSinceGrounded += deltaTime;
+        if(isGrounded(physicsBody)) {
+            playerJump.timeSinceGrounded = 0;
+        }
+
         boolean doJump = false; //should we jump in this frame ?
 
         if (isJumpPressed(playerJump)) {
             if (can_jump(playerJump, physicsBody)) {
                 doJump = true;
             } else { // if the player can't jump right now let's check if he can before the responsiveness time passes.
-                playerJump.responsivenessTimer = PlayerJumpComponent.jumpSettigs.responsiveness;
+                playerJump.responsivenessTimer = PlayerJumpComponent.jumpSettings.responsiveness;
             }
         }
 
@@ -44,12 +47,10 @@ public class PlayerJumpSystem extends IteratingSystem {
         }
 
         //perform the jump
-        if (doJump){
-            //if (playerJump.shouldJump && !wasJumping)
+        if (doJump) {
             {
                 playerJump.jumpTimer = playerJump.timeUntilFullJumpIsConsidered;
-                //rb.velocity = Vector2.up * jump_force + rb.velocity;
-                physicsBody.body.applyForce(new Vector2(0f, playerJump.jumpForce), physicsBody.body.getWorldCenter(), true);
+                physicsBody.body.applyLinearImpulse(0f, playerJump.jumpForce, physicsBody.body.getWorldCenter().x, physicsBody.body.getWorldCenter().y, true);
             }
         }
 
@@ -64,6 +65,10 @@ public class PlayerJumpSystem extends IteratingSystem {
 
         if (playerJump.shouldJump) {
             playerJump.jumpTimer -= deltaTime;
+        }
+
+        if(!isGrounded(physicsBody)) {
+            playerJump.timeSinceGrounded += deltaTime;
         }
 
         playerJump.oldShouldJump = playerJump.shouldJump;
@@ -88,11 +93,10 @@ public class PlayerJumpSystem extends IteratingSystem {
 
     boolean can_jump(PlayerJumpComponent playerJump, PhysicsBodyComponent physicsBody) {
         if(isGrounded(physicsBody)) {
-            playerJump.timeSinceGrounded = 0;
             return true;
         }
         //handle permissiveness
-        boolean isJumping = physicsBody.body.getLinearVelocity().y > 0;
-        return playerJump.timeSinceGrounded <= PlayerJumpComponent.jumpSettigs.permissiveness && !isJumping;
+        boolean isJumping = physicsBody.body.getLinearVelocity().y > 0f;
+        return (playerJump.timeSinceGrounded <= PlayerJumpComponent.jumpSettings.permissiveness) && !isJumping && playerJump.jumpTimer <= 0f;
     }
 }

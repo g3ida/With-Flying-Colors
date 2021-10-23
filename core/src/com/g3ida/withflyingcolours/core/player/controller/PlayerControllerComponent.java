@@ -4,7 +4,7 @@ import games.rednblack.editor.renderer.components.BaseComponent;
 
 public class PlayerControllerComponent implements BaseComponent {
 
-    public float moveInput = 0f;
+    public int moveInput = 0;
     public boolean shouldRotateLeft = false;
     public boolean shouldRotateRight = false;
     public boolean shouldJump = false;

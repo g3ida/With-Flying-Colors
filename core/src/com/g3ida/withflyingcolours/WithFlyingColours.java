@@ -30,7 +30,7 @@ public class WithFlyingColours extends Game {
 
 	public void clearScreen() {
 		GL20 gl = Gdx.gl;
-		gl.glClearColor(1.0f, 1.0f, 1.0f, 1.0f);
+		gl.glClearColor(0.1490f,0.1764f, 0.1960f, 1.0f);
 		gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 	}
 }

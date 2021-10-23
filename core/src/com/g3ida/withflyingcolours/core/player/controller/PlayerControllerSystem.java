@@ -20,15 +20,15 @@ public class PlayerControllerSystem extends IteratingSystem {
         //player movement left/right
         PlayerControllerComponent playerMovement = ComponentRetriever.get(entity, PlayerControllerComponent.class);
         if (Gdx.input.isKeyPressed(Input.Keys.LEFT)) {
-            playerMovement.moveInput = -1f;
+            playerMovement.moveInput = -1;
         } else if (Gdx.input.isKeyPressed(Input.Keys.RIGHT)) {
-            playerMovement.moveInput = 1f;
+            playerMovement.moveInput = 1;
         } else {
-            playerMovement.moveInput = 0f;
+            playerMovement.moveInput = 0;
         }
 
         //jumping
-        playerMovement.shouldJump = Gdx.input.isKeyPressed(Input.Keys.SPACE);
+        playerMovement.shouldJump = Gdx.input.isKeyPressed(Input.Keys.UP);
 
         //rotating
         playerMovement.shouldRotateLeft = Gdx.input.isKeyJustPressed(Input.Keys.Z);

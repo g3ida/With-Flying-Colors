@@ -11,6 +11,8 @@ import com.g3ida.withflyingcolours.core.player.movement.PlayerJumpComponent;
 import com.g3ida.withflyingcolours.core.player.movement.PlayerJumpSystem;
 import com.g3ida.withflyingcolours.core.player.movement.PlayerRotationComponent;
 import com.g3ida.withflyingcolours.core.player.movement.PlayerRotationSystem;
+import com.g3ida.withflyingcolours.core.player.movement.PlayerWalkComponent;
+import com.g3ida.withflyingcolours.core.player.movement.PlayerWalkSystem;
 import com.g3ida.withflyingcolours.utils.RotationDirection;
 
 
@@ -27,7 +29,7 @@ public class Player extends GameScript {
     private PlayerControllerComponent _playerController;
     private PlayerRotationComponent _playerRotation;
     private PlayerJumpComponent _playerJump;
-    private PhysicsBodyComponent _physicsBody;
+    private PlayerWalkComponent _playerWalk;
     TransformComponent _transform;
 
     private final Vector2 impulse = new Vector2(0, 0);
@@ -40,27 +42,32 @@ public class Player extends GameScript {
         getEngine().addSystem(new PlayerControllerSystem());
         getEngine().addSystem(new PlayerRotationSystem());
         getEngine().addSystem(new PlayerJumpSystem());
+        getEngine().addSystem(new PlayerWalkSystem());
     }
 
     public void initComponents() {
 
         _transform = ComponentRetriever.get(_entity, TransformComponent.class);
-        _physicsBody = ComponentRetriever.get(_entity, PhysicsBodyComponent.class);
 
         // add PlayerMovementComponent to the player entity.
         ComponentRetriever.addMapper(PlayerControllerComponent.class); //FIXME : find a better place for this
         _entity.add(getEngine().createComponent(PlayerControllerComponent.class));
         _playerController = ComponentRetriever.get(_entity, PlayerControllerComponent.class);
 
-        // add PlayerRotation to the player entity.
+        // add PlayerRotationComponent to the player entity.
         ComponentRetriever.addMapper(PlayerRotationComponent.class);
         _entity.add(getEngine().createComponent(PlayerRotationComponent.class));
         _playerRotation = ComponentRetriever.get(_entity, PlayerRotationComponent.class);
 
-        // add PlayerRotation to the player entity.
+        // add PlayerJumpComponent to the player entity.
         ComponentRetriever.addMapper(PlayerJumpComponent.class);
         _entity.add(getEngine().createComponent(PlayerJumpComponent.class));
         _playerJump = ComponentRetriever.get(_entity, PlayerJumpComponent.class);
+
+        // add PlayerWalkComponent to the player entity.
+        ComponentRetriever.addMapper(PlayerWalkComponent.class);
+        _entity.add(getEngine().createComponent(PlayerWalkComponent.class));
+        _playerWalk = ComponentRetriever.get(_entity, PlayerWalkComponent.class);
     }
 
     @Override
@@ -78,6 +85,7 @@ public class Player extends GameScript {
     public void act(float delta) {
 
         //TODO: handle left and write controls
+        _playerWalk.direction =  _playerController.moveInput;
 
         _playerJump.shouldJump = _playerController.shouldJump;
 

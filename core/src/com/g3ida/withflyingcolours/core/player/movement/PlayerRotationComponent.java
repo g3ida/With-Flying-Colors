@@ -6,7 +6,7 @@ import games.rednblack.editor.renderer.components.BaseComponent;
 
 public class PlayerRotationComponent implements BaseComponent {
 
-    public float rotationDuration = 0.16f; // duration of the rotation animation.
+    public float rotationDuration = 0.12f; // duration of the rotation animation.
     float thetaZero; // initial angle, before the rotation is performed.
     float thetaTarget; // target angle, after the rotation is completed.
     float thetaPoint; // the calculated angular velocity.
