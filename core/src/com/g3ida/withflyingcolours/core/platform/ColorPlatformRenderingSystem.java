@@ -51,11 +51,6 @@ public class ColorPlatformRenderingSystem extends IteratingSystem {
             u_campos.set(GameSettings.mainViewPort.getCamera().position.x - GameSettings.mainViewPort.getScreenWidth() * 0.5f, GameSettings.mainViewPort.getCamera().position.y - GameSettings.mainViewPort.getScreenHeight() * 0.5f);
             shaderComponent.customUniforms.put("u_campos", u_campos);
 
-            //TransformComponent tc = ComponentRetriever.get(entity, TransformComponent.class);
-            //ShaderUniformVO u_playerpos = new ShaderUniformVO();
-            //u_playerpos.set(tc.x * ratioX*2, tc.y * ratioY*2);
-            //shaderComponent.customUniforms.put("u_playerpos", u_playerpos);
-
             renderingComponent.splashTimer -= deltaTime;
         }
     }

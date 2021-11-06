@@ -4,6 +4,8 @@ import com.badlogic.ashley.core.Entity;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.glutils.ShaderProgram;
 import com.badlogic.gdx.math.Vector2;
+import com.g3ida.withflyingcolours.Constants;
+import com.g3ida.withflyingcolours.Utils;
 
 import games.rednblack.editor.renderer.components.BaseComponent;
 import games.rednblack.editor.renderer.components.ShaderComponent;
@@ -17,20 +19,20 @@ public class ColorPlatformRenderingComponent implements BaseComponent {
     public float splashTimer = 0f;
     public Vector2 contactPosition = new Vector2();
 
+    private static final String _SHADER_NAME = "color_splash";
     private ShaderProgram _shader;
 
     public ColorPlatformRenderingComponent(Entity entity) {
-        _shader = new ShaderProgram(
-                Gdx.files.internal("shaders/invert.vert"),
-                Gdx.files.internal("shaders/invert.frag"));
+
+        _shader = Utils.loadShader(_SHADER_NAME);
 
         if(!_shader.isCompiled()){
-            Gdx.app.log("ShaderTest", _shader.getLog());
+            Gdx.app.log(Constants.LOG_SHADER_PREFIX, _shader.getLog());
         }
 
         ShaderComponent shaderComponent = new ShaderComponent();
         shaderComponent.renderingLayer = MainItemVO.RenderingLayer.SCREEN;
-        shaderComponent.setShader("colorShader", _shader);
+        shaderComponent.setShader(_SHADER_NAME, _shader);
 
         entity.add(shaderComponent);
     }

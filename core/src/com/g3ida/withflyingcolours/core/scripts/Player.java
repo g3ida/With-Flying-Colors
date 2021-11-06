@@ -47,23 +47,6 @@ public class Player extends GameScript {
     }
 
     public void initComponents() {
-        /*_shader = new ShaderProgram(
-                Gdx.files.internal("shaders/invert.vert"),
-                Gdx.files.internal("shaders/invert.frag"));
-
-        if(!_shader.isCompiled()){
-            Gdx.app.log("ShaderTest", _shader.getLog());
-        }
-
-        ShaderComponent shaderComponent = new ShaderComponent();
-        shaderComponent.renderingLayer = MainItemVO.RenderingLayer.SCREEN;
-        shaderComponent.setShader("colorShader", _shader);*/
-
-        //ShaderUniformVO uniform = new ShaderUniformVO();
-        //uniform.set(HyperLap2dRenderer.timeRunning);
-        //shaderComponent.customUniforms.put("start_time", uniform);
-        //entity.add(shaderComponent);
-        //shaderComponent = ComponentRetriever.get(_entity, ShaderComponent.class);
 
         // add PlayerMovementComponent to the player entity.
         ComponentRetriever.addMapper(PlayerControllerComponent.class); //FIXME : find a better place for this

@@ -7,8 +7,8 @@ import games.rednblack.editor.renderer.scripts.BasicScript;
 
 public abstract class GameScript extends BasicScript {
 
-    private PooledEngine _engine;
-    private World _world;
+    private final PooledEngine _engine;
+    private final World _world;
 
     public GameScript(PooledEngine engine, World world) {
         _engine = engine;

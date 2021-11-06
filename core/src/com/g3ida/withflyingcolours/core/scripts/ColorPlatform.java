@@ -26,7 +26,7 @@ public class ColorPlatform extends GameScript implements PhysicsContact {
     }
 
     public void initComponents() {
-        // add ColorPlatformRenderingComponent to the player entity.
+        // add ColorPlatformRenderingComponent.
         ComponentRetriever.addMapper(ColorPlatformRenderingComponent.class);
         _entity.add(new ColorPlatformRenderingComponent(_entity));
         _platformRenderingComponent = ComponentRetriever.get(_entity, ColorPlatformRenderingComponent.class);
@@ -41,7 +41,7 @@ public class ColorPlatform extends GameScript implements PhysicsContact {
 
     @Override
     public void act(float delta) {
-        //_platformRenderingComponent.doColorSplash = true;
+
     }
 
     @Override
