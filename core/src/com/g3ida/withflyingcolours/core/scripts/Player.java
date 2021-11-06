@@ -4,7 +4,11 @@ import com.badlogic.ashley.core.Entity;
 import com.badlogic.ashley.core.PooledEngine;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.physics.box2d.Body;
+import com.badlogic.gdx.physics.box2d.Fixture;
+import com.badlogic.gdx.physics.box2d.RayCastCallback;
+import com.badlogic.gdx.physics.box2d.World;
+import com.g3ida.withflyingcolours.core.GameSettings;
+import com.g3ida.withflyingcolours.core.platform.ColorPlatformRenderingComponent;
 import com.g3ida.withflyingcolours.core.player.controller.PlayerControllerComponent;
 import com.g3ida.withflyingcolours.core.player.controller.PlayerControllerSystem;
 import com.g3ida.withflyingcolours.core.player.movement.PlayerJumpComponent;
@@ -15,13 +19,11 @@ import com.g3ida.withflyingcolours.core.player.movement.PlayerWalkComponent;
 import com.g3ida.withflyingcolours.core.player.movement.PlayerWalkSystem;
 import com.g3ida.withflyingcolours.utils.RotationDirection;
 
-
-import games.rednblack.editor.renderer.SceneLoader;
+import games.rednblack.editor.renderer.components.DimensionsComponent;
 import games.rednblack.editor.renderer.components.TransformComponent;
 import games.rednblack.editor.renderer.components.physics.PhysicsBodyComponent;
-import games.rednblack.editor.renderer.scripts.BasicScript;
+import games.rednblack.editor.renderer.physics.PhysicsBodyLoader;
 import games.rednblack.editor.renderer.utils.ComponentRetriever;
-import games.rednblack.editor.renderer.utils.ItemWrapper;
 
 public class Player extends GameScript {
 
@@ -30,14 +32,13 @@ public class Player extends GameScript {
     private PlayerRotationComponent _playerRotation;
     private PlayerJumpComponent _playerJump;
     private PlayerWalkComponent _playerWalk;
-    TransformComponent _transform;
+    //private ShaderProgram _shader;
 
     private final Vector2 impulse = new Vector2(0, 0);
     private final Vector2 speed = new Vector2(0, 0);
 
-    public Player(PooledEngine engine) {
-        super(engine);
-
+    public Player(PooledEngine engine, World world) {
+        super(engine, world);
         //FIXME: find a better place for initializing systems
         getEngine().addSystem(new PlayerControllerSystem());
         getEngine().addSystem(new PlayerRotationSystem());
@@ -46,8 +47,23 @@ public class Player extends GameScript {
     }
 
     public void initComponents() {
+        /*_shader = new ShaderProgram(
+                Gdx.files.internal("shaders/invert.vert"),
+                Gdx.files.internal("shaders/invert.frag"));
 
-        _transform = ComponentRetriever.get(_entity, TransformComponent.class);
+        if(!_shader.isCompiled()){
+            Gdx.app.log("ShaderTest", _shader.getLog());
+        }
+
+        ShaderComponent shaderComponent = new ShaderComponent();
+        shaderComponent.renderingLayer = MainItemVO.RenderingLayer.SCREEN;
+        shaderComponent.setShader("colorShader", _shader);*/
+
+        //ShaderUniformVO uniform = new ShaderUniformVO();
+        //uniform.set(HyperLap2dRenderer.timeRunning);
+        //shaderComponent.customUniforms.put("start_time", uniform);
+        //entity.add(shaderComponent);
+        //shaderComponent = ComponentRetriever.get(_entity, ShaderComponent.class);
 
         // add PlayerMovementComponent to the player entity.
         ComponentRetriever.addMapper(PlayerControllerComponent.class); //FIXME : find a better place for this
@@ -79,6 +95,7 @@ public class Player extends GameScript {
 
     @Override
     public void dispose() {
+
     }
 
     @Override
