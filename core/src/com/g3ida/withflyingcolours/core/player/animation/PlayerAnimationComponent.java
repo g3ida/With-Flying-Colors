@@ -10,8 +10,8 @@ public class PlayerAnimationComponent implements BaseComponent {
     public boolean doSqueeze;
     public float squeezeTimer;
     public float scaleTimer;
-    public static final float SQUEEZE_ANIM_DURATION = 0.13f;
-    public static final float SCALE_ANIM_DURATION = 0.13f;
+    public static final float SQUEEZE_ANIM_DURATION = 0.17f;
+    public static final float SCALE_ANIM_DURATION = 0.17f;
     public Interpolation interpolation;
     public PlayerAnimationComponent() {
         reset();
@@ -19,6 +19,7 @@ public class PlayerAnimationComponent implements BaseComponent {
 
     @Override
     public void reset() {
+        this.doScale = false;
         this.doSqueeze = false;
         this.squeezeTimer = 0;
     }

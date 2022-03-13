@@ -111,9 +111,9 @@ public class Player extends GameScript {
         PhysicsBodyComponent physicsBodyComponent = ComponentRetriever.get(_entity, PhysicsBodyComponent.class);
         TransformComponent transformComponent = ComponentRetriever.get(_entity, TransformComponent.class);
 
-        float rayGap = dimensionsComponent.height / 2;
+        float rayGap = transformComponent.scaleY * dimensionsComponent.height / 2;
 
-        float raySize = - physicsBodyComponent.body.getLinearVelocity().y * delta;
+        float raySize = -physicsBodyComponent.body.getLinearVelocity().y * delta;
 
         //float ratioX = GameSettings.mainViewPort.getScreenWidth() / GameSettings.mainViewPort.getWorldWidth();
         //float ratioY = GameSettings.mainViewPort.getScreenHeight() / GameSettings.mainViewPort.getWorldHeight();
@@ -131,7 +131,9 @@ public class Player extends GameScript {
                 //if (entity != null) {
                     PlayerAnimationComponent playerAnimationComponent = ComponentRetriever.get(_entity, PlayerAnimationComponent.class);
                     if (playerAnimationComponent != null) {
-                        playerAnimationComponent.doSqueeze = true;
+                        if (playerAnimationComponent.squeezeTimer <= 0 && playerAnimationComponent.scaleTimer <= 0) {
+                            playerAnimationComponent.doSqueeze = true;
+                        }
                     }
                 //}
                 return 0;
