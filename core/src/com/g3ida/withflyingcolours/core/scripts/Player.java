@@ -131,7 +131,7 @@ public class Player extends GameScript {
                 //if (entity != null) {
                     PlayerAnimationComponent playerAnimationComponent = ComponentRetriever.get(_entity, PlayerAnimationComponent.class);
                     if (playerAnimationComponent != null) {
-                        if (playerAnimationComponent.squeezeTimer <= 0 && playerAnimationComponent.scaleTimer <= 0) {
+                        if (!playerAnimationComponent.squeezeAnimation.isRunning() && !playerAnimationComponent.scaleAnimation.isRunning()) {
                             playerAnimationComponent.doSqueeze = true;
                         }
                     }

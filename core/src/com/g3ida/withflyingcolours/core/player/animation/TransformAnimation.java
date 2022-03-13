@@ -23,10 +23,13 @@ public class TransformAnimation {
     }
 
     public void start() {
-        if (this._timer > 0f)
+        if (isRunning())
             return;
         this._timer = _animationDuration;
+    }
 
+    public boolean isRunning() {
+        return this._timer > 0f;
     }
 
     public void step(TransformComponent transform, float deltaTime) {
