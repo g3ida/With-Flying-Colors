@@ -2,13 +2,12 @@ package com.g3ida.withflyingcolours.core.scripts;
 
 import com.badlogic.ashley.core.Entity;
 import com.badlogic.ashley.core.PooledEngine;
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Fixture;
 import com.badlogic.gdx.physics.box2d.RayCastCallback;
 import com.badlogic.gdx.physics.box2d.World;
-import com.g3ida.withflyingcolours.core.GameSettings;
-import com.g3ida.withflyingcolours.core.platform.ColorPlatformRenderingComponent;
+import com.g3ida.withflyingcolours.core.player.animation.PlayerAnimationComponent;
+import com.g3ida.withflyingcolours.core.player.animation.PlayerAnimationSystem;
 import com.g3ida.withflyingcolours.core.player.controller.PlayerControllerComponent;
 import com.g3ida.withflyingcolours.core.player.controller.PlayerControllerSystem;
 import com.g3ida.withflyingcolours.core.player.movement.PlayerJumpComponent;
@@ -22,7 +21,6 @@ import com.g3ida.withflyingcolours.utils.RotationDirection;
 import games.rednblack.editor.renderer.components.DimensionsComponent;
 import games.rednblack.editor.renderer.components.TransformComponent;
 import games.rednblack.editor.renderer.components.physics.PhysicsBodyComponent;
-import games.rednblack.editor.renderer.physics.PhysicsBodyLoader;
 import games.rednblack.editor.renderer.utils.ComponentRetriever;
 
 public class Player extends GameScript {
@@ -32,6 +30,8 @@ public class Player extends GameScript {
     private PlayerRotationComponent _playerRotation;
     private PlayerJumpComponent _playerJump;
     private PlayerWalkComponent _playerWalk;
+    private PlayerAnimationComponent _playerAnim;
+
     //private ShaderProgram _shader;
 
     private final Vector2 impulse = new Vector2(0, 0);
@@ -44,6 +44,7 @@ public class Player extends GameScript {
         getEngine().addSystem(new PlayerRotationSystem());
         getEngine().addSystem(new PlayerJumpSystem());
         getEngine().addSystem(new PlayerWalkSystem());
+        getEngine().addSystem(new PlayerAnimationSystem());
     }
 
     public void initComponents() {
@@ -67,6 +68,11 @@ public class Player extends GameScript {
         ComponentRetriever.addMapper(PlayerWalkComponent.class);
         _entity.add(getEngine().createComponent(PlayerWalkComponent.class));
         _playerWalk = ComponentRetriever.get(_entity, PlayerWalkComponent.class);
+
+        // add PlayerWalkComponent to the player entity.
+        ComponentRetriever.addMapper(PlayerAnimationComponent.class);
+        _entity.add(getEngine().createComponent(PlayerAnimationComponent.class));
+        _playerAnim = ComponentRetriever.get(_entity, PlayerAnimationComponent.class);
     }
 
     @Override
@@ -96,5 +102,40 @@ public class Player extends GameScript {
         if(_playerController.shouldRotateLeft) {
             _playerRotation.setRotationDirection(RotationDirection.antiClockwise);
         }
+
+        rayCast(delta);
+    }
+
+    public void rayCast(float delta) {
+        DimensionsComponent dimensionsComponent = ComponentRetriever.get(_entity, DimensionsComponent.class);
+        PhysicsBodyComponent physicsBodyComponent = ComponentRetriever.get(_entity, PhysicsBodyComponent.class);
+        TransformComponent transformComponent = ComponentRetriever.get(_entity, TransformComponent.class);
+
+        float rayGap = dimensionsComponent.height / 2;
+
+        float raySize = - physicsBodyComponent.body.getLinearVelocity().y * delta;
+
+        //float ratioX = GameSettings.mainViewPort.getScreenWidth() / GameSettings.mainViewPort.getWorldWidth();
+        //float ratioY = GameSettings.mainViewPort.getScreenHeight() / GameSettings.mainViewPort.getWorldHeight();
+
+        Vector2 rayFrom = new Vector2((transformComponent.x+dimensionsComponent.width/2), (transformComponent.y+rayGap));
+        Vector2 rayTo = new Vector2((transformComponent.x+dimensionsComponent.width/2), (transformComponent.y-raySize));
+
+        //cast the ray
+        World world = getWorld();
+
+        world.rayCast(new RayCastCallback() {
+            @Override
+            public float reportRayFixture(Fixture fixture, Vector2 point, Vector2 normal, float fraction) {
+                //Entity entity = (Entity) fixture.getBody().getUserData();
+                //if (entity != null) {
+                    PlayerAnimationComponent playerAnimationComponent = ComponentRetriever.get(_entity, PlayerAnimationComponent.class);
+                    if (playerAnimationComponent != null) {
+                        playerAnimationComponent.doSqueeze = true;
+                    }
+                //}
+                return 0;
+            }
+        }, rayFrom, rayTo);
     }
 }
