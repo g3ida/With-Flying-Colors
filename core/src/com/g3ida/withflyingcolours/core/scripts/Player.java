@@ -6,6 +6,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Fixture;
 import com.badlogic.gdx.physics.box2d.RayCastCallback;
 import com.badlogic.gdx.physics.box2d.World;
+import com.g3ida.withflyingcolours.core.camera.CameraSystem;
 import com.g3ida.withflyingcolours.core.player.animation.PlayerAnimationComponent;
 import com.g3ida.withflyingcolours.core.player.animation.PlayerAnimationSystem;
 import com.g3ida.withflyingcolours.core.player.controller.PlayerControllerComponent;
@@ -73,6 +74,10 @@ public class Player extends GameScript {
         ComponentRetriever.addMapper(PlayerAnimationComponent.class);
         _entity.add(getEngine().createComponent(PlayerAnimationComponent.class));
         _playerAnim = ComponentRetriever.get(_entity, PlayerAnimationComponent.class);
+
+        // attach player to camera
+        CameraSystem cameraSystem = getEngine().getSystem(CameraSystem.class);
+        cameraSystem.setFocus(_entity);
     }
 
     @Override

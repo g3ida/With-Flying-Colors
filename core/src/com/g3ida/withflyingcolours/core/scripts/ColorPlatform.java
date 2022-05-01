@@ -2,15 +2,12 @@ package com.g3ida.withflyingcolours.core.scripts;
 
 import com.badlogic.ashley.core.Entity;
 import com.badlogic.ashley.core.PooledEngine;
-import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Contact;
 import com.badlogic.gdx.physics.box2d.Fixture;
 import com.badlogic.gdx.physics.box2d.World;
 import com.g3ida.withflyingcolours.core.platform.ColorPlatformRenderingComponent;
 import com.g3ida.withflyingcolours.core.platform.ColorPlatformRenderingSystem;
 
-import games.rednblack.editor.renderer.components.TransformComponent;
-import games.rednblack.editor.renderer.components.physics.PhysicsBodyComponent;
 import games.rednblack.editor.renderer.physics.PhysicsContact;
 import games.rednblack.editor.renderer.utils.ComponentRetriever;
 

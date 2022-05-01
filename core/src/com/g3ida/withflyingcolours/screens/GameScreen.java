@@ -8,6 +8,7 @@ import com.badlogic.gdx.utils.viewport.Viewport;
 import com.g3ida.withflyingcolours.core.AssetsLoader;
 import com.g3ida.withflyingcolours.core.GameSettings;
 import com.g3ida.withflyingcolours.core.SceneMapper;
+import com.g3ida.withflyingcolours.core.camera.CameraSystem;
 import com.g3ida.withflyingcolours.core.scripts.Player;
 
 import games.rednblack.editor.renderer.SceneLoader;
@@ -38,6 +39,9 @@ public class GameScreen extends ScreenAdapter {
         _camera = new OrthographicCamera();
         _viewport = new ExtendViewport(13, 7, _camera);
         GameSettings.mainViewPort = _viewport;
+
+        CameraSystem cameraSystem = new CameraSystem(0, 20, 0, 7);
+        _engine.addSystem(cameraSystem);
 
         _sceneLoader.loadScene("MainScene", _viewport);
 

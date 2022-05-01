@@ -3,6 +3,8 @@ package com.g3ida.withflyingcolours.core.platform;
 import com.badlogic.ashley.core.Entity;
 import com.badlogic.ashley.core.Family;
 import com.badlogic.ashley.systems.IteratingSystem;
+import com.badlogic.gdx.graphics.Camera;
+import com.badlogic.gdx.math.Vector2;
 import com.g3ida.withflyingcolours.core.GameSettings;
 
 import games.rednblack.editor.renderer.components.ShaderComponent;
@@ -33,10 +35,15 @@ public class ColorPlatformRenderingSystem extends IteratingSystem {
             uniform.set(HyperLap2dRenderer.timeRunning);
             shaderComponent.customUniforms.put("start_time", uniform);
 
+            Camera camera = GameSettings.mainViewPort.getCamera();
+            Vector2 positionOnViewport = new Vector2();
+            positionOnViewport.x = GameSettings.mainViewPort.getWorldWidth()  / 2f + renderingComponent.contactPosition.x - camera.position.x;
+            positionOnViewport.y = GameSettings.mainViewPort.getWorldHeight() / 2f + renderingComponent.contactPosition.y - camera.position.y;
+
             float ratioX = GameSettings.mainViewPort.getScreenWidth() / GameSettings.mainViewPort.getWorldWidth();
             float ratioY = GameSettings.mainViewPort.getScreenHeight() / GameSettings.mainViewPort.getWorldHeight();
             ShaderUniformVO u_contactpos = new ShaderUniformVO();
-            u_contactpos.set(renderingComponent.contactPosition.x * ratioX*2, renderingComponent.contactPosition.y * ratioY*2);
+            u_contactpos.set(positionOnViewport.x * ratioX*2, positionOnViewport.y * ratioY*2);
             shaderComponent.customUniforms.put("u_contactpos", u_contactpos);
         }
 
