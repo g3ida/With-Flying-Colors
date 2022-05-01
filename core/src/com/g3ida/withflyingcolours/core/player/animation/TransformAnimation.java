@@ -41,9 +41,15 @@ public class TransformAnimation {
             float sinRotation = (float)Math.sin(transform.rotation * Utils.PI / 180.);
 
             float normalized = _timer / _animationDuration;
-            float i = _interpolation.apply(0f, 1f, normalized);
-            transform.scaleX = i * Math.abs(cosRotation) +  Math.abs(sinRotation) / (i + 0.01f);
-            transform.scaleY = i * Math.abs(sinRotation) +  Math.abs(cosRotation) / (i + 0.01f);
+            float mean = 1f;
+            float i = _interpolation.apply(0f, 1f, normalized) - mean;
+            transform.scaleX = mean + (i * Math.abs(cosRotation) - Math.abs(sinRotation) * (i + 0.00f));
+            transform.scaleY = mean + (i * Math.abs(sinRotation) - Math.abs(cosRotation) * (i + 0.00f));
+
+            System.out.println(transform.scaleX);
+            System.out.println(transform.scaleY);
+            System.out.println((i-1)*sinRotation );
+            System.out.println("========");
 
             if (!this._centerOriginY) {
                 transform.originY = 0.5f + (1f - transform.scaleY) * 0.5f * cosRotation;
