@@ -20,7 +20,7 @@ public class ColorPlatformRenderingComponent implements BaseComponent {
     public Vector2 contactPosition = new Vector2();
 
     private static final String _SHADER_NAME = "color_splash";
-    private ShaderProgram _shader;
+    private final ShaderProgram _shader;
 
     public ColorPlatformRenderingComponent(Entity entity) {
 
