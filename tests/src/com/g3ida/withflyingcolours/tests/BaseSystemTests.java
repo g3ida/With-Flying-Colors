@@ -1,8 +1,8 @@
 package com.g3ida.withflyingcolours.tests;
 
-import com.badlogic.ashley.core.Engine;
-import com.badlogic.ashley.core.Entity;
-import com.badlogic.ashley.core.PooledEngine;
+import com.artemis.BaseSystem;
+import com.artemis.WorldConfiguration;
+import com.artemis.WorldConfigurationBuilder;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.World;
 
@@ -14,43 +14,55 @@ import games.rednblack.editor.renderer.systems.PhysicsSystem;
 
 public class BaseSystemTests {
 
+    public class EngineWithEntity {
+
+        public EngineWithEntity(com.artemis.World world, int entityId) {
+            this.world = world;
+            this.entityId = entityId;
+        }
+
+        public com.artemis.World world;
+        public int entityId;
+    }
+
     public BaseSystemTests() {
 
     }
 
-    public void cycleEngineFor(Engine engine, float seconds) {
+    public void cycleEngineFor(com.artemis.World engine, float seconds) {
         float frameTime = 0.016f; // 60 FPS
         int numFrames = (int)(seconds / frameTime);
         float remaining = seconds - numFrames * frameTime;
 
         for(int i=0; i < numFrames; i++) {
-            engine.update(0.016f);
+            engine.setDelta(0.016f);
+            engine.process();
         }
-        engine.update(remaining);
+        engine.setDelta(remaining);
+        engine.process();
     }
 
-    public Engine createPhysicsWorldWithDynamicEntity() {
-
-        PooledEngine engine = new PooledEngine();
-        Entity entity = new Entity();
-
-        entity.add(new MainItemComponent());
-        entity.add(new TransformComponent());
-
-        //add shape to entity
-        PolygonComponent polygonComponent = new PolygonComponent();
-        polygonComponent.makeRectangle(1, 1);
-        entity.add(polygonComponent);
-
-        // add physics body to entity
-        PhysicsBodyComponent physicsBodyComponent = new PhysicsBodyComponent();
+    public EngineWithEntity createPhysicsWorldWithDynamicEntity(BaseSystem[] additionalSystems) {
         World world = new World(new Vector2(0, -10), true);
-        physicsBodyComponent.bodyType = 2; //dynamic
-        entity.add(physicsBodyComponent);
+        PhysicsSystem physicsSystem = new PhysicsSystem();
+        physicsSystem.setBox2DWorld(world);
 
-        engine.addSystem(new PhysicsSystem(world));
-        engine.addEntity(entity);
+        WorldConfigurationBuilder worldConfigurationBuilder = new WorldConfigurationBuilder()
+                .with(physicsSystem);
+        for (BaseSystem system: additionalSystems) {
+            worldConfigurationBuilder = worldConfigurationBuilder.with(additionalSystems);
+        }
+        WorldConfiguration setup =  worldConfigurationBuilder.build();
+        com.artemis.World engine = new com.artemis.World(setup);
 
-        return engine;
+        int entityId = engine.create();
+        engine.edit(entityId).create(MainItemComponent.class);
+        engine.edit(entityId).create(TransformComponent.class);
+        //add shape to entity
+        engine.edit(entityId).create(PolygonComponent.class).makeRectangle(1, 1);
+        // add physics body to entity
+        engine.edit(entityId).create(PhysicsBodyComponent.class).bodyType = 2; //dynamic
+
+        return new EngineWithEntity(engine, entityId);
     }
 }

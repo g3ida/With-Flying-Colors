@@ -1,8 +1,9 @@
 package com.g3ida.withflyingcolours.core.player.controller;
 
-import games.rednblack.editor.renderer.components.BaseComponent;
+import com.artemis.Component;
+import com.artemis.PooledComponent;
 
-public class PlayerControllerComponent implements BaseComponent {
+public class PlayerControllerComponent extends PooledComponent {
 
     public int moveInput = 0;
     public boolean shouldRotateLeft = false;

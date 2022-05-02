@@ -1,22 +1,24 @@
 package com.g3ida.withflyingcolours.core.player.animation;
 
-import com.badlogic.ashley.core.Entity;
-import com.badlogic.ashley.core.Family;
-import com.badlogic.ashley.systems.IteratingSystem;
-import com.badlogic.gdx.math.Interpolation;
+import com.artemis.ComponentMapper;
+import com.artemis.annotations.All;
+import com.artemis.systems.IteratingSystem;
 
 import games.rednblack.editor.renderer.components.TransformComponent;
-import games.rednblack.editor.renderer.utils.ComponentRetriever;
 
+@All({PlayerAnimationComponent.class, TransformComponent.class})
 public class PlayerAnimationSystem extends IteratingSystem {
+    private ComponentMapper<PlayerAnimationComponent> mPlayerAnimationComponent;
+    private ComponentMapper<TransformComponent> mTransformComponent;
 
     public PlayerAnimationSystem() {
-        super(Family.all(PlayerAnimationComponent.class, TransformComponent.class).get());
+        super();
     }
 
     @Override
-    protected void processEntity(Entity entity, float deltaTime) {
-        PlayerAnimationComponent playerAnimation = ComponentRetriever.get(entity, PlayerAnimationComponent.class);
+    protected void process(int entityId) {
+        PlayerAnimationComponent playerAnimation = mPlayerAnimationComponent.get(entityId);
+        TransformComponent transform = mTransformComponent.get(entityId);
 
         if (playerAnimation.doSqueeze) {
             playerAnimation.doSqueeze = false;
@@ -27,9 +29,7 @@ public class PlayerAnimationSystem extends IteratingSystem {
             playerAnimation.scaleAnimation.start();
         }
 
-        TransformComponent transform = ComponentRetriever.get(entity, TransformComponent.class);
-
-        playerAnimation.scaleAnimation.step(transform, deltaTime);
-        playerAnimation.squeezeAnimation.step(transform, deltaTime);
+        playerAnimation.scaleAnimation.step(transform, world.delta);
+        playerAnimation.squeezeAnimation.step(transform, world.delta);
     }
 }

@@ -1,8 +1,8 @@
 package com.g3ida.withflyingcolours.core.platform;
 
-import com.badlogic.ashley.core.Entity;
-import com.badlogic.ashley.core.Family;
-import com.badlogic.ashley.systems.IteratingSystem;
+import com.artemis.ComponentMapper;
+import com.artemis.annotations.All;
+import com.artemis.systems.IteratingSystem;
 import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.math.Vector2;
 import com.g3ida.withflyingcolours.core.GameSettings;
@@ -13,26 +13,28 @@ import games.rednblack.editor.renderer.data.ShaderUniformVO;
 import games.rednblack.editor.renderer.systems.render.HyperLap2dRenderer;
 import games.rednblack.editor.renderer.utils.ComponentRetriever;
 
+@All({ColorPlatformRenderingComponent.class, ShaderComponent.class, TransformComponent.class})
 public class ColorPlatformRenderingSystem extends IteratingSystem {
+    protected ComponentMapper<ColorPlatformRenderingComponent> mColorPlatformRenderingComponent;
+    protected ComponentMapper<ShaderComponent> mShaderComponent;
+    protected ComponentMapper<TransformComponent> mTransformComponent;
 
     public ColorPlatformRenderingSystem() {
-        super(Family.all(
-                ColorPlatformRenderingComponent.class,
-                ShaderComponent.class,
-                TransformComponent.class).get());
+        super();
     }
 
     @Override
-    protected void processEntity(Entity entity, float deltaTime) {
-        ColorPlatformRenderingComponent renderingComponent = ComponentRetriever.get(entity, ColorPlatformRenderingComponent.class);
+    protected void process(int entityId) {
+        ColorPlatformRenderingComponent renderingComponent = mColorPlatformRenderingComponent.get(entityId);
 
         if (renderingComponent.doColorSplash) {
             renderingComponent.doColorSplash = false;
             renderingComponent.splashTimer = ColorPlatformRenderingComponent.SPLASH_DURATION;
 
-            ShaderComponent shaderComponent = ComponentRetriever.get(entity, ShaderComponent.class);
+            ShaderComponent shaderComponent = mShaderComponent.get(entityId);
             ShaderUniformVO uniform = new ShaderUniformVO();
-            uniform.set(HyperLap2dRenderer.timeRunning);
+
+            uniform.set(world.getSystem(HyperLap2dRenderer.class).getTimeRunning());
             shaderComponent.customUniforms.put("start_time", uniform);
 
             Camera camera = GameSettings.mainViewPort.getCamera();
@@ -48,7 +50,7 @@ public class ColorPlatformRenderingSystem extends IteratingSystem {
         }
 
         if (renderingComponent.splashTimer > 0f) {
-            ShaderComponent shaderComponent = ComponentRetriever.get(entity, ShaderComponent.class);
+            ShaderComponent shaderComponent = ComponentRetriever.get(entityId, ShaderComponent.class, world);
 
             ShaderUniformVO u_resolution = new ShaderUniformVO();
             u_resolution.set(GameSettings.mainViewPort.getScreenWidth()*2, GameSettings.mainViewPort.getScreenHeight()*2);
@@ -58,7 +60,7 @@ public class ColorPlatformRenderingSystem extends IteratingSystem {
             u_campos.set(GameSettings.mainViewPort.getCamera().position.x - GameSettings.mainViewPort.getScreenWidth() * 0.5f, GameSettings.mainViewPort.getCamera().position.y - GameSettings.mainViewPort.getScreenHeight() * 0.5f);
             shaderComponent.customUniforms.put("u_campos", u_campos);
 
-            renderingComponent.splashTimer -= deltaTime;
+            renderingComponent.splashTimer -= world.delta;
         }
     }
 }

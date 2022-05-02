@@ -1,21 +1,23 @@
 package com.g3ida.withflyingcolours.core.camera;
 
-import com.badlogic.ashley.core.Entity;
-import com.badlogic.ashley.core.Family;
-import com.badlogic.ashley.systems.IteratingSystem;
+import com.artemis.ComponentMapper;
+import com.artemis.annotations.All;
+import com.artemis.systems.IteratingSystem;
 import com.badlogic.gdx.graphics.Camera;
 
 import games.rednblack.editor.renderer.components.TransformComponent;
 import games.rednblack.editor.renderer.components.ViewPortComponent;
-import games.rednblack.editor.renderer.utils.ComponentRetriever;
 
+@All(ViewPortComponent.class)
 public class CameraSystem extends IteratingSystem {
 
-    private Entity _focus;
+    private int _focusEntityId = -1;
+    private ComponentMapper<ViewPortComponent> _mViewport;
+    private ComponentMapper<TransformComponent> _mTransform;
+
     private final float _xMin, _xMax, _yMin, _yMax;
 
     public CameraSystem(float xMin, float xMax, float yMin, float yMax) {
-        super(Family.all(ViewPortComponent.class).get());
 
         this._xMin = xMin;
         this._xMax = xMax;
@@ -23,23 +25,24 @@ public class CameraSystem extends IteratingSystem {
         this._yMax = yMax;
     }
 
+    public void setFocus(int entityId) {
+        this._focusEntityId = entityId;
+    }
+
     @Override
-    protected void processEntity(Entity entity, float deltaTime) {
-        ViewPortComponent viewPortComponent = ComponentRetriever.get(entity, ViewPortComponent.class);
+    protected void process(int entityId) {
+        ViewPortComponent viewPortComponent = _mViewport.get(entityId);
+
         Camera camera = viewPortComponent.viewPort.getCamera();
 
-        if (_focus != null) {
+        if (_focusEntityId != -1) {
             // FIXME: player position should be lower + camera movement should be softer
-            TransformComponent transformComponent = ComponentRetriever.get(_focus, TransformComponent.class);
+            TransformComponent transformComponent = _mTransform.get(_focusEntityId);
             if (transformComponent != null) {
                 float x = Math.max(_xMin, Math.min(_xMax, transformComponent.x));
                 float y = Math.max(_yMin, Math.min(_yMax, transformComponent.y));
                 camera.position.set(x, y, 0);
             }
         }
-    }
-
-    public void setFocus(Entity focus) {
-        this._focus = focus;
     }
 }

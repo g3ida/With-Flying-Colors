@@ -1,25 +1,25 @@
 package com.g3ida.withflyingcolours.core.player.movement;
 
-import com.badlogic.ashley.core.Entity;
-import com.badlogic.ashley.core.Family;
-import com.badlogic.ashley.systems.IteratingSystem;
+import com.artemis.ComponentMapper;
+import com.artemis.annotations.All;
+import com.artemis.systems.IteratingSystem;
 import com.badlogic.gdx.math.Vector2;
 
-import games.rednblack.editor.renderer.components.TransformComponent;
 import games.rednblack.editor.renderer.components.physics.PhysicsBodyComponent;
-import games.rednblack.editor.renderer.utils.ComponentRetriever;
 
+@All({PlayerWalkComponent.class, PhysicsBodyComponent.class})
 public class PlayerWalkSystem extends IteratingSystem {
+    ComponentMapper<PhysicsBodyComponent> mPhysicsBodyComponent;
+    ComponentMapper<PlayerWalkComponent> mPlayerWalkComponent;
 
     public PlayerWalkSystem() {
-        super(Family.all(PhysicsBodyComponent.class, PlayerWalkComponent.class).get());
+        super();
     }
 
     @Override
-    protected void processEntity(Entity entity, float deltaTime) {
-        PhysicsBodyComponent physicsBody = ComponentRetriever.get(entity, PhysicsBodyComponent.class);
-        PlayerWalkComponent playerWalk = ComponentRetriever.get(entity, PlayerWalkComponent.class);
-        //TransformComponent transformComponent = ComponentRetriever.get(entity, TransformComponent.class);
+    protected void process(int entityId) {
+        PhysicsBodyComponent physicsBody = mPhysicsBodyComponent.get(entityId);
+        PlayerWalkComponent playerWalk = mPlayerWalkComponent.get(entityId);
 
         Vector2 velocity = physicsBody.body.getLinearVelocity();
         if (Math.abs(velocity.x) > playerWalk.speed) {
@@ -30,7 +30,6 @@ public class PlayerWalkSystem extends IteratingSystem {
         else {
             velocity.x = playerWalk.direction * playerWalk.speed;
         }
-
         physicsBody.body.setLinearVelocity(velocity);
     }
 }

@@ -1,8 +1,9 @@
 package com.g3ida.withflyingcolours.core.player.movement;
 
-import games.rednblack.editor.renderer.components.BaseComponent;
+import com.artemis.Component;
+import com.artemis.PooledComponent;
 
-public class PlayerWalkComponent implements BaseComponent {
+public class PlayerWalkComponent extends PooledComponent {
 
     public int direction = 0;
     public float speed = 5f;

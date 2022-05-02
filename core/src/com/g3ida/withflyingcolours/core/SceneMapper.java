@@ -1,7 +1,6 @@
 package com.g3ida.withflyingcolours.core;
 
-import com.badlogic.ashley.core.Entity;
-import com.badlogic.ashley.core.PooledEngine;
+import com.artemis.Entity;
 import com.badlogic.gdx.physics.box2d.World;
 import com.g3ida.withflyingcolours.core.scripts.GameScript;
 
@@ -16,7 +15,7 @@ import games.rednblack.editor.renderer.utils.ItemWrapper;
 public class SceneMapper {
 
     private final String _packageName;
-    private PooledEngine _engine;
+    private com.artemis.World _engine;
     private ItemWrapper _rootWrapper;
     private World _world;
 
@@ -25,16 +24,16 @@ public class SceneMapper {
     }
 
     private void parseSceneGraph(Entity root) {
-        NodeComponent nodeComponent = ComponentRetriever.get(root, NodeComponent.class);
+        NodeComponent nodeComponent = ComponentRetriever.get(root.getId(), NodeComponent.class, _engine);
         if(nodeComponent != null) {
-            for (Entity child : nodeComponent.children) {
-                mapEntity(child);
+            for (Integer child : nodeComponent.children) {
+                mapEntity(_engine.getEntity(child));
             }
         }
     }
 
     private void mapEntity(Entity entity) {
-        MainItemComponent mainItemComponent = ComponentRetriever.get(entity, MainItemComponent.class);
+        MainItemComponent mainItemComponent = ComponentRetriever.get(entity.getId(), MainItemComponent.class, _engine);
 
         if (mainItemComponent.itemIdentifier == null || mainItemComponent.itemIdentifier.isEmpty()) {
             return;
@@ -45,8 +44,8 @@ public class SceneMapper {
             if(scriptName != null) {
                 String ScriptClass = _packageName.concat(".scripts.").concat(scriptName);
                 Class<?> entityClass = Class.forName(ScriptClass);
-                GameScript script = (GameScript) entityClass.getDeclaredConstructor(PooledEngine.class, World.class).newInstance(_engine, _world);
-                _rootWrapper.getChild(mainItemComponent.itemIdentifier).addScript(script, _engine);
+                GameScript script = (GameScript) entityClass.getDeclaredConstructor(com.artemis.World.class, World.class).newInstance(_engine, _world);
+                _rootWrapper.getChild(mainItemComponent.itemIdentifier).addScript(script);
             }
         }
         catch (ClassNotFoundException | InstantiationException | InvocationTargetException | NoSuchMethodException | IllegalAccessException e) {
@@ -56,9 +55,9 @@ public class SceneMapper {
 
     public void mapScripts(SceneLoader sceneLoader) {
         _engine = sceneLoader.getEngine();
-        Entity root = sceneLoader.getRoot();
-        _rootWrapper = new ItemWrapper(root);
+        int rootEnityId = sceneLoader.getRoot();
+        _rootWrapper = new ItemWrapper(rootEnityId, _engine);
         _world = sceneLoader.getWorld();
-        parseSceneGraph(root);
+        parseSceneGraph(_engine.getEntity(rootEnityId));
     }
 }

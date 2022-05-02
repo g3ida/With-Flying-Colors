@@ -1,22 +1,24 @@
 package com.g3ida.withflyingcolours.core.player.movement;
 
-import com.badlogic.ashley.core.Entity;
-import com.badlogic.ashley.core.Family;
-import com.badlogic.ashley.systems.IteratingSystem;
+import com.artemis.ComponentMapper;
+import com.artemis.annotations.All;
+import com.artemis.systems.IteratingSystem;
 
 import games.rednblack.editor.renderer.components.physics.PhysicsBodyComponent;
-import games.rednblack.editor.renderer.utils.ComponentRetriever;
 
+@All({PhysicsBodyComponent.class, PlayerRotationComponent.class})
 public class PlayerRotationSystem extends IteratingSystem {
+    private ComponentMapper<PhysicsBodyComponent> mPhysicsBodyComponent;
+    private ComponentMapper<PlayerRotationComponent> mPlayerRotationComponent;
 
     public PlayerRotationSystem() {
-        super(Family.all(PhysicsBodyComponent.class, PlayerRotationComponent.class).get());
+        super();
     }
 
     @Override
-    protected void processEntity(Entity entity, float deltaTime) {
-        PhysicsBodyComponent physicsBody = ComponentRetriever.get(entity, PhysicsBodyComponent.class);
-        PlayerRotationComponent playerRotation = ComponentRetriever.get(entity, PlayerRotationComponent.class);
+    protected void process(int entityId) {
+        PhysicsBodyComponent physicsBody = mPhysicsBodyComponent.get(entityId);
+        PlayerRotationComponent playerRotation = mPlayerRotationComponent.get(entityId);
 
         //setup rotation
         if(playerRotation.shouldRotate && playerRotation.canRotate) {
@@ -35,12 +37,12 @@ public class PlayerRotationSystem extends IteratingSystem {
         // update rotation
         if (playerRotation.rotationTimer > 0f)
         {
-            playerRotation.rotationTimer -= deltaTime;
+            playerRotation.rotationTimer -= world.getDelta();
             if (playerRotation.rotationTimer < 0f)
             {
                 // correction for the last frame
                 float current_angle = physicsBody.body.getAngle();
-                playerRotation.thetaPoint = (playerRotation.thetaTarget - current_angle) / deltaTime;
+                playerRotation.thetaPoint = (playerRotation.thetaTarget - current_angle) / world.getDelta();
                 playerRotation.rotationTimer = 0;
             }
             physicsBody.body.setAngularVelocity(playerRotation.thetaPoint);

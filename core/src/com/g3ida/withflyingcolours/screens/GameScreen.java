@@ -1,6 +1,6 @@
 package com.g3ida.withflyingcolours.screens;
 
-import com.badlogic.ashley.core.PooledEngine;
+import com.artemis.World;
 import com.badlogic.gdx.ScreenAdapter;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.utils.viewport.ExtendViewport;
@@ -9,39 +9,54 @@ import com.g3ida.withflyingcolours.core.AssetsLoader;
 import com.g3ida.withflyingcolours.core.GameSettings;
 import com.g3ida.withflyingcolours.core.SceneMapper;
 import com.g3ida.withflyingcolours.core.camera.CameraSystem;
-import com.g3ida.withflyingcolours.core.scripts.Player;
+import com.g3ida.withflyingcolours.core.platform.ColorPlatformRenderingSystem;
+import com.g3ida.withflyingcolours.core.player.animation.PlayerAnimationSystem;
+import com.g3ida.withflyingcolours.core.player.controller.PlayerControllerSystem;
+import com.g3ida.withflyingcolours.core.player.movement.PlayerJumpSystem;
+import com.g3ida.withflyingcolours.core.player.movement.PlayerRotationSystem;
+import com.g3ida.withflyingcolours.core.player.movement.PlayerWalkSystem;
 
+import games.rednblack.editor.renderer.SceneConfiguration;
 import games.rednblack.editor.renderer.SceneLoader;
 import games.rednblack.editor.renderer.resources.ResourceManager;
-import games.rednblack.editor.renderer.utils.ItemWrapper;
 
 public class GameScreen extends ScreenAdapter {
 
-    private SceneLoader _sceneLoader;
-    private ResourceManager _resourceManager;
+    private final SceneLoader _sceneLoader;
 
-    private Viewport _viewport;
-    private OrthographicCamera _camera;
+    private final Viewport _viewport;
+    private final OrthographicCamera _camera;
 
-    private AssetsLoader _assetsLoader;
+    private final AssetsLoader _assetsLoader;
 
-    private PooledEngine _engine;
+    private final World _engine;
 
     public GameScreen() {
 
         _assetsLoader = new AssetsLoader("project.dt");
 
-        _resourceManager = _assetsLoader.load();
-        _sceneLoader = new SceneLoader(_resourceManager);
+        ResourceManager _resourceManager = _assetsLoader.load();
+
+        // prepare screen configuration
+        SceneConfiguration sceneConfiguration = new SceneConfiguration();
+        // add systems
+        CameraSystem cameraSystem = new CameraSystem(0, 20, 0, 7);
+        sceneConfiguration.addSystem(cameraSystem);
+        sceneConfiguration.addSystem(new PlayerControllerSystem());
+        sceneConfiguration.addSystem(new PlayerRotationSystem());
+        sceneConfiguration.addSystem(new PlayerJumpSystem());
+        sceneConfiguration.addSystem(new PlayerWalkSystem());
+        sceneConfiguration.addSystem(new PlayerAnimationSystem());
+        sceneConfiguration.addSystem(new ColorPlatformRenderingSystem());
+
+        sceneConfiguration.setResourceRetriever(_resourceManager);
+        _sceneLoader = new SceneLoader(sceneConfiguration);
 
         _engine = _sceneLoader.getEngine();
 
         _camera = new OrthographicCamera();
         _viewport = new ExtendViewport(13, 7, _camera);
         GameSettings.mainViewPort = _viewport;
-
-        CameraSystem cameraSystem = new CameraSystem(0, 20, 0, 7);
-        _engine.addSystem(cameraSystem);
 
         _sceneLoader.loadScene("MainScene", _viewport);
 
@@ -65,17 +80,18 @@ public class GameScreen extends ScreenAdapter {
         super.dispose();
     }
 
-    public void update (float deltaTime) {
+    public void update () {
         _camera.update();
     }
 
     @Override
     public void render (float delta) {
         super.render(delta);
-        update(delta);
+        this.update();
 
         _viewport.apply();
-        _engine.update(delta);
+        _engine.setDelta(delta);
+        _engine.process();
     }
 
     @Override

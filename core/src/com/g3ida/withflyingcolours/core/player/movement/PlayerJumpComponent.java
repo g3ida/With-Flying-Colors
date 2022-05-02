@@ -1,10 +1,10 @@
 package com.g3ida.withflyingcolours.core.player.movement;
 
+import com.artemis.Component;
+import com.artemis.PooledComponent;
 import com.g3ida.withflyingcolours.core.player.PlayerControllerSettings;
 
-import games.rednblack.editor.renderer.components.BaseComponent;
-
-public class PlayerJumpComponent implements BaseComponent {
+public class PlayerJumpComponent extends PooledComponent {
 
     public static final PlayerControllerSettings jumpSettings = new PlayerControllerSettings(0.08f, 0.07f);
 

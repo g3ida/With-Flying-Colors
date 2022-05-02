@@ -1,24 +1,27 @@
 package com.g3ida.withflyingcolours.core.player.movement;
 
-import com.badlogic.ashley.core.Entity;
-import com.badlogic.ashley.core.Family;
-import com.badlogic.ashley.systems.IteratingSystem;
+import com.artemis.ComponentMapper;
+import com.artemis.annotations.All;
+import com.artemis.systems.IteratingSystem;
 import com.badlogic.gdx.math.Vector2;
 import com.g3ida.withflyingcolours.Utils;
 
 import games.rednblack.editor.renderer.components.physics.PhysicsBodyComponent;
 import games.rednblack.editor.renderer.utils.ComponentRetriever;
 
+@All({PhysicsBodyComponent.class, PlayerJumpComponent.class})
 public class PlayerJumpSystem extends IteratingSystem {
+    ComponentMapper<PhysicsBodyComponent> mPhysicsBodyComponent;
+    ComponentMapper<PlayerJumpComponent> mPlayerJumpComponent;
 
     public PlayerJumpSystem() {
-        super(Family.all(PhysicsBodyComponent.class, PlayerJumpComponent.class).get());
+        super();
     }
 
     @Override
-    protected void processEntity(Entity entity, float deltaTime) {
-        PhysicsBodyComponent physicsBody = ComponentRetriever.get(entity, PhysicsBodyComponent.class);
-        PlayerJumpComponent playerJump = ComponentRetriever.get(entity, PlayerJumpComponent.class);
+    protected void process(int entityId) {
+        PhysicsBodyComponent physicsBody = mPhysicsBodyComponent.get(entityId);
+        PlayerJumpComponent playerJump = mPlayerJumpComponent.get(entityId);
 
         if(isGrounded(physicsBody)) {
             playerJump.timeSinceGrounded = 0;
@@ -40,7 +43,7 @@ public class PlayerJumpSystem extends IteratingSystem {
                 playerJump.responsivenessTimer = 0;
                 doJump = true;
             } else {
-                playerJump.responsivenessTimer -= deltaTime;
+                playerJump.responsivenessTimer -= world.delta;
             }
         } else {
             playerJump.responsivenessTimer = 0;
@@ -64,11 +67,11 @@ public class PlayerJumpSystem extends IteratingSystem {
         }
 
         if (playerJump.shouldJump) {
-            playerJump.jumpTimer -= deltaTime;
+            playerJump.jumpTimer -= world.delta;
         }
 
         if(!isGrounded(physicsBody)) {
-            playerJump.timeSinceGrounded += deltaTime;
+            playerJump.timeSinceGrounded += world.delta;
         }
 
         playerJump.oldShouldJump = playerJump.shouldJump;
@@ -97,6 +100,7 @@ public class PlayerJumpSystem extends IteratingSystem {
         }
         //handle permissiveness
         boolean isJumping = physicsBody.body.getLinearVelocity().y > 0f;
-        return (playerJump.timeSinceGrounded <= PlayerJumpComponent.jumpSettings.permissiveness) && !isJumping && playerJump.jumpTimer <= 0f;
+        return (playerJump.timeSinceGrounded <= PlayerJumpComponent.jumpSettings.permissiveness)
+                && !isJumping && playerJump.jumpTimer <= 0f;
     }
 }

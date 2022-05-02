@@ -1,10 +1,10 @@
 package com.g3ida.withflyingcolours.core.player.animation;
 
+import com.artemis.Component;
+import com.artemis.PooledComponent;
 import com.badlogic.gdx.math.Interpolation;
 
-import games.rednblack.editor.renderer.components.BaseComponent;
-
-public class PlayerAnimationComponent implements BaseComponent {
+public class PlayerAnimationComponent extends PooledComponent {
 
     public TransformAnimation scaleAnimation;
     public TransformAnimation squeezeAnimation;

@@ -1,22 +1,16 @@
 package com.g3ida.withflyingcolours.core.scripts;
 
-import com.badlogic.ashley.core.Entity;
-import com.badlogic.ashley.core.PooledEngine;
+import com.artemis.ComponentMapper;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Fixture;
 import com.badlogic.gdx.physics.box2d.RayCastCallback;
 import com.badlogic.gdx.physics.box2d.World;
 import com.g3ida.withflyingcolours.core.camera.CameraSystem;
 import com.g3ida.withflyingcolours.core.player.animation.PlayerAnimationComponent;
-import com.g3ida.withflyingcolours.core.player.animation.PlayerAnimationSystem;
 import com.g3ida.withflyingcolours.core.player.controller.PlayerControllerComponent;
-import com.g3ida.withflyingcolours.core.player.controller.PlayerControllerSystem;
 import com.g3ida.withflyingcolours.core.player.movement.PlayerJumpComponent;
-import com.g3ida.withflyingcolours.core.player.movement.PlayerJumpSystem;
 import com.g3ida.withflyingcolours.core.player.movement.PlayerRotationComponent;
-import com.g3ida.withflyingcolours.core.player.movement.PlayerRotationSystem;
 import com.g3ida.withflyingcolours.core.player.movement.PlayerWalkComponent;
-import com.g3ida.withflyingcolours.core.player.movement.PlayerWalkSystem;
 import com.g3ida.withflyingcolours.utils.RotationDirection;
 
 import games.rednblack.editor.renderer.components.DimensionsComponent;
@@ -26,64 +20,51 @@ import games.rednblack.editor.renderer.utils.ComponentRetriever;
 
 public class Player extends GameScript {
 
-    private Entity _entity;
+    private int _entityId;
     private PlayerControllerComponent _playerController;
     private PlayerRotationComponent _playerRotation;
     private PlayerJumpComponent _playerJump;
     private PlayerWalkComponent _playerWalk;
     private PlayerAnimationComponent _playerAnim;
 
+    ComponentMapper<PlayerControllerComponent> mPlayerControllerComponent;
+    ComponentMapper<PlayerRotationComponent> mPlayerRotationComponent;
+    ComponentMapper<PlayerJumpComponent> mPlayerJumpComponent;
+    ComponentMapper<PlayerWalkComponent> mPlayerWalkComponent;
+    ComponentMapper<PlayerAnimationComponent> mPlayerAnimationComponent;
+
     //private ShaderProgram _shader;
 
     private final Vector2 impulse = new Vector2(0, 0);
     private final Vector2 speed = new Vector2(0, 0);
 
-    public Player(PooledEngine engine, World world) {
+    public Player(com.artemis.World engine, World world) {
         super(engine, world);
-        //FIXME: find a better place for initializing systems
-        getEngine().addSystem(new PlayerControllerSystem());
-        getEngine().addSystem(new PlayerRotationSystem());
-        getEngine().addSystem(new PlayerJumpSystem());
-        getEngine().addSystem(new PlayerWalkSystem());
-        getEngine().addSystem(new PlayerAnimationSystem());
     }
 
     public void initComponents() {
-
-        // add PlayerMovementComponent to the player entity.
-        ComponentRetriever.addMapper(PlayerControllerComponent.class); //FIXME : find a better place for this
-        _entity.add(getEngine().createComponent(PlayerControllerComponent.class));
-        _playerController = ComponentRetriever.get(_entity, PlayerControllerComponent.class);
-
-        // add PlayerRotationComponent to the player entity.
+        //FIXME : find a better place for this
+        ComponentRetriever.addMapper(PlayerControllerComponent.class);
         ComponentRetriever.addMapper(PlayerRotationComponent.class);
-        _entity.add(getEngine().createComponent(PlayerRotationComponent.class));
-        _playerRotation = ComponentRetriever.get(_entity, PlayerRotationComponent.class);
-
-        // add PlayerJumpComponent to the player entity.
         ComponentRetriever.addMapper(PlayerJumpComponent.class);
-        _entity.add(getEngine().createComponent(PlayerJumpComponent.class));
-        _playerJump = ComponentRetriever.get(_entity, PlayerJumpComponent.class);
-
-        // add PlayerWalkComponent to the player entity.
         ComponentRetriever.addMapper(PlayerWalkComponent.class);
-        _entity.add(getEngine().createComponent(PlayerWalkComponent.class));
-        _playerWalk = ComponentRetriever.get(_entity, PlayerWalkComponent.class);
-
-        // add PlayerWalkComponent to the player entity.
         ComponentRetriever.addMapper(PlayerAnimationComponent.class);
-        _entity.add(getEngine().createComponent(PlayerAnimationComponent.class));
-        _playerAnim = ComponentRetriever.get(_entity, PlayerAnimationComponent.class);
+
+        _playerController = mPlayerControllerComponent.create(_entityId);
+        _playerRotation = mPlayerRotationComponent.create(_entityId);
+        _playerJump = mPlayerJumpComponent.create(_entityId);
+        _playerWalk = mPlayerWalkComponent.create(_entityId);
+        _playerAnim = mPlayerAnimationComponent.create(_entityId);
 
         // attach player to camera
         CameraSystem cameraSystem = getEngine().getSystem(CameraSystem.class);
-        cameraSystem.setFocus(_entity);
+        cameraSystem.setFocus(_entityId);
     }
 
     @Override
-    public void init(Entity item) {
+    public void init(int item) {
         super.init(item);
-        _entity = getEntity();
+        _entityId = getEntity();
         initComponents();
     }
 
@@ -112,9 +93,9 @@ public class Player extends GameScript {
     }
 
     public void rayCast(float delta) {
-        DimensionsComponent dimensionsComponent = ComponentRetriever.get(_entity, DimensionsComponent.class);
-        PhysicsBodyComponent physicsBodyComponent = ComponentRetriever.get(_entity, PhysicsBodyComponent.class);
-        TransformComponent transformComponent = ComponentRetriever.get(_entity, TransformComponent.class);
+        DimensionsComponent dimensionsComponent = ComponentRetriever.get(_entityId, DimensionsComponent.class, getEngine());
+        PhysicsBodyComponent physicsBodyComponent = ComponentRetriever.get(_entityId, PhysicsBodyComponent.class, getEngine());
+        TransformComponent transformComponent = ComponentRetriever.get(_entityId, TransformComponent.class, getEngine());
 
         float rayGap = transformComponent.scaleY * dimensionsComponent.height / 2;
 
@@ -123,8 +104,8 @@ public class Player extends GameScript {
         //float ratioX = GameSettings.mainViewPort.getScreenWidth() / GameSettings.mainViewPort.getWorldWidth();
         //float ratioY = GameSettings.mainViewPort.getScreenHeight() / GameSettings.mainViewPort.getWorldHeight();
 
-        Vector2 rayFrom = new Vector2((transformComponent.x+dimensionsComponent.width/2), (transformComponent.y+rayGap));
-        Vector2 rayTo = new Vector2((transformComponent.x+dimensionsComponent.width/2), (transformComponent.y-raySize));
+        Vector2 rayFrom = new Vector2((transformComponent.x+dimensionsComponent.width/2f), (transformComponent.y+rayGap));
+        Vector2 rayTo = new Vector2((transformComponent.x+dimensionsComponent.width/2f), (transformComponent.y-raySize));
 
         //cast the ray
         World world = getWorld();
@@ -134,10 +115,9 @@ public class Player extends GameScript {
             public float reportRayFixture(Fixture fixture, Vector2 point, Vector2 normal, float fraction) {
                 //Entity entity = (Entity) fixture.getBody().getUserData();
                 //if (entity != null) {
-                    PlayerAnimationComponent playerAnimationComponent = ComponentRetriever.get(_entity, PlayerAnimationComponent.class);
-                    if (playerAnimationComponent != null) {
-                        if (!playerAnimationComponent.squeezeAnimation.isRunning() && !playerAnimationComponent.scaleAnimation.isRunning()) {
-                            playerAnimationComponent.doSqueeze = true;
+                    if (_playerAnim != null) {
+                        if (!_playerAnim.squeezeAnimation.isRunning() && !_playerAnim.scaleAnimation.isRunning()) {
+                            _playerAnim.doSqueeze = true;
                         }
                     }
                 //}

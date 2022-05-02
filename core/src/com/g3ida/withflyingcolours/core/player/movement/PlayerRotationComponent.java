@@ -1,10 +1,10 @@
 package com.g3ida.withflyingcolours.core.player.movement;
 
+import com.artemis.Component;
+import com.artemis.PooledComponent;
 import com.g3ida.withflyingcolours.utils.RotationDirection;
 
-import games.rednblack.editor.renderer.components.BaseComponent;
-
-public class PlayerRotationComponent implements BaseComponent {
+public class PlayerRotationComponent extends PooledComponent {
 
     public float rotationDuration = 0.12f; // duration of the rotation animation.
     float thetaZero; // initial angle, before the rotation is performed.
