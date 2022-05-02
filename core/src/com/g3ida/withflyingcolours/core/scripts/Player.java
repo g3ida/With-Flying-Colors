@@ -33,11 +33,6 @@ public class Player extends GameScript {
     ComponentMapper<PlayerWalkComponent> mPlayerWalkComponent;
     ComponentMapper<PlayerAnimationComponent> mPlayerAnimationComponent;
 
-    //private ShaderProgram _shader;
-
-    private final Vector2 impulse = new Vector2(0, 0);
-    private final Vector2 speed = new Vector2(0, 0);
-
     public Player(com.artemis.World engine, World world) {
         super(engine, world);
     }
@@ -97,15 +92,12 @@ public class Player extends GameScript {
         PhysicsBodyComponent physicsBodyComponent = ComponentRetriever.get(_entityId, PhysicsBodyComponent.class, getEngine());
         TransformComponent transformComponent = ComponentRetriever.get(_entityId, TransformComponent.class, getEngine());
 
-        float rayGap = transformComponent.scaleY * dimensionsComponent.height / 2;
+        float rayGap = transformComponent.scaleY * dimensionsComponent.height / 2f;
 
-        float raySize = -physicsBodyComponent.body.getLinearVelocity().y * delta;
-
-        //float ratioX = GameSettings.mainViewPort.getScreenWidth() / GameSettings.mainViewPort.getWorldWidth();
-        //float ratioY = GameSettings.mainViewPort.getScreenHeight() / GameSettings.mainViewPort.getWorldHeight();
+        float raySize = -physicsBodyComponent.body.getLinearVelocity().y * delta * 2f;
 
         Vector2 rayFrom = new Vector2((transformComponent.x+dimensionsComponent.width/2f), (transformComponent.y+rayGap));
-        Vector2 rayTo = new Vector2((transformComponent.x+dimensionsComponent.width/2f), (transformComponent.y-raySize));
+        Vector2 rayTo = new Vector2((transformComponent.x+dimensionsComponent.width/2f), (transformComponent.y+0.05f-raySize));
 
         //cast the ray
         World world = getWorld();
