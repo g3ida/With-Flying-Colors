@@ -34,13 +34,12 @@ public class SceneMapper {
 
     private void mapEntity(Entity entity) {
         MainItemComponent mainItemComponent = ComponentRetriever.get(entity.getId(), MainItemComponent.class, _engine);
-
         if (mainItemComponent.itemIdentifier == null || mainItemComponent.itemIdentifier.isEmpty()) {
             return;
         }
 
         try {
-            String scriptName = mainItemComponent.customVariables.getHashMap().get("script");
+            String scriptName = mainItemComponent.customVariables.get("script");
             if(scriptName != null) {
                 String ScriptClass = _packageName.concat(".scripts.").concat(scriptName);
                 Class<?> entityClass = Class.forName(ScriptClass);

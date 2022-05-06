@@ -1,6 +1,4 @@
 buildscript {
-    
-
     repositories {
         mavenLocal()
         mavenCentral()
@@ -9,7 +7,7 @@ buildscript {
         google()
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:7.0.3'
+        classpath 'com.android.tools.build:gradle:7.1.3'
         classpath 'com.mobidevelop.robovm:robovm-gradle-plugin:2.3.12'
     }
 }
@@ -27,7 +25,7 @@ allprojects {
         aiVersion = '1.8.2'
         gdxControllersVersion = '2.1.0'
         junitVersion = '4.12'
-        h2dVersion = '0.0.8'
+        h2dVersion = '0.1.0-SNAPSHOT'
         typingLabelVersion = '1.2.0'
         mokitoVersion = '3.12.4'
     }
@@ -55,7 +53,6 @@ project(":desktop") {
         api "com.badlogicgames.gdx:gdx-freetype-platform:$gdxVersion:natives-desktop"
         api "com.badlogicgames.gdx-controllers:gdx-controllers-desktop:$gdxControllersVersion"
         api "de.golfgl.gdxgamesvcs:gdx-gamesvcs-core-gamejolt:1.0.2"
-        
     }
 }
 
@@ -121,7 +118,6 @@ project(":core") {
         api "com.badlogicgames.gdx-controllers:gdx-controllers-core:$gdxControllersVersion"
         api "net.onedaybeard.artemis:artemis-odb:$artemisVersion"
         api "net.onedaybeard.artemis:artemis-odb-serializer-json-libgdx:$artemisVersion"
-        api "com.underwaterapps.overlap2druntime:overlap2d-runtime-libgdx:0.1.0"
         api "de.golfgl.gdxgamesvcs:gdx-gamesvcs-core:1.0.2"
         api "com.rafaskoberg.gdx:typing-label:$typingLabelVersion"
     }
