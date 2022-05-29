@@ -7,9 +7,9 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.World;
 
 import games.rednblack.editor.renderer.components.MainItemComponent;
-import games.rednblack.editor.renderer.components.PolygonComponent;
 import games.rednblack.editor.renderer.components.TransformComponent;
 import games.rednblack.editor.renderer.components.physics.PhysicsBodyComponent;
+import games.rednblack.editor.renderer.components.shape.PolygonShapeComponent;
 import games.rednblack.editor.renderer.systems.PhysicsSystem;
 
 public class BaseSystemTests {
@@ -59,7 +59,7 @@ public class BaseSystemTests {
         engine.edit(entityId).create(MainItemComponent.class);
         engine.edit(entityId).create(TransformComponent.class);
         //add shape to entity
-        engine.edit(entityId).create(PolygonComponent.class).makeRectangle(1, 1);
+        engine.edit(entityId).create(PolygonShapeComponent.class).makeRectangle(1, 1);
         // add physics body to entity
         engine.edit(entityId).create(PhysicsBodyComponent.class).bodyType = 2; //dynamic
 
