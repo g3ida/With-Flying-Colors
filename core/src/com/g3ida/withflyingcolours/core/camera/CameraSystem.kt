@@ -1,47 +1,30 @@
-package com.g3ida.withflyingcolours.core.camera;
+package com.g3ida.withflyingcolours.core.camera
 
-import com.artemis.ComponentMapper;
-import com.artemis.annotations.All;
-import com.artemis.systems.IteratingSystem;
-import com.badlogic.gdx.graphics.Camera;
+import com.artemis.ComponentMapper
+import games.rednblack.editor.renderer.components.ViewPortComponent
+import com.artemis.systems.IteratingSystem
+import games.rednblack.editor.renderer.components.TransformComponent
+import com.artemis.annotations.All
 
-import games.rednblack.editor.renderer.components.TransformComponent;
-import games.rednblack.editor.renderer.components.ViewPortComponent;
-
-@All(ViewPortComponent.class)
-public class CameraSystem extends IteratingSystem {
-
-    private int _focusEntityId = -1;
-    private ComponentMapper<ViewPortComponent> _mViewport;
-    private ComponentMapper<TransformComponent> _mTransform;
-
-    private final float _xMin, _xMax, _yMin, _yMax;
-
-    public CameraSystem(float xMin, float xMax, float yMin, float yMax) {
-
-        this._xMin = xMin;
-        this._xMax = xMax;
-        this._yMin = yMin;
-        this._yMax = yMax;
+@All(ViewPortComponent::class)
+class CameraSystem(private val _xMin: Float, private val _xMax: Float, private val _yMin: Float, private val _yMax: Float) : IteratingSystem() {
+    private var _focusEntityId = -1
+    private val _mViewport: ComponentMapper<ViewPortComponent>? = null
+    private val _mTransform: ComponentMapper<TransformComponent>? = null
+    fun setFocus(entityId: Int) {
+        _focusEntityId = entityId
     }
 
-    public void setFocus(int entityId) {
-        this._focusEntityId = entityId;
-    }
-
-    @Override
-    protected void process(int entityId) {
-        ViewPortComponent viewPortComponent = _mViewport.get(entityId);
-
-        Camera camera = viewPortComponent.viewPort.getCamera();
-
+    override fun process(entityId: Int) {
+        val viewPortComponent = _mViewport!![entityId]
+        val camera = viewPortComponent.viewPort.camera
         if (_focusEntityId != -1) {
             // FIXME: player position should be lower + camera movement should be softer
-            TransformComponent transformComponent = _mTransform.get(_focusEntityId);
+            val transformComponent = _mTransform!![_focusEntityId]
             if (transformComponent != null) {
-                float x = Math.max(_xMin, Math.min(_xMax, transformComponent.x));
-                float y = Math.max(_yMin, Math.min(_yMax, transformComponent.y));
-                camera.position.set(x, y, 0);
+                val x = Math.max(_xMin, Math.min(_xMax, transformComponent.x))
+                val y = Math.max(_yMin, Math.min(_yMax, transformComponent.y))
+                camera.position[x, y] = 0f
             }
         }
     }

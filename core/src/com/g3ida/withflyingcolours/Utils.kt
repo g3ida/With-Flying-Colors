@@ -1,24 +1,25 @@
-package com.g3ida.withflyingcolours;
+package com.g3ida.withflyingcolours
 
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.glutils.ShaderProgram;
+import com.badlogic.gdx.Gdx
+import com.badlogic.gdx.graphics.glutils.ShaderProgram
 
-public class Utils {
-    public static float epsilon = 0.001f;
-    public static float PI = 3.14159265359f; //use this as Math.PI is double
-    public static float PI2 = 1.57079632679f;
-
-    public static float modPI2(float angle) {
-        while (angle < -PI)
-            angle += 2.0 * PI;
-        while (angle > PI)
-            angle -= 2.0 * PI;
-        return angle;
+object Utils {
+    var epsilon = 0.001f
+    @JvmField
+    var PI = 3.14159265359f //use this as Math.PI is double
+    @JvmField
+    var PI2 = 1.57079632679f
+    @JvmStatic
+    fun modPI2(angle: Float): Float {
+        var ang = angle
+        while (ang < -PI) ang += (2.0 * PI).toFloat()
+        while (ang > PI) ang -= (2.0 * PI).toFloat()
+        return ang
     }
 
-    public static ShaderProgram loadShader(String baseFileName) {
-        return new ShaderProgram(
+    fun loadShader(baseFileName: String): ShaderProgram {
+        return ShaderProgram(
                 Gdx.files.internal(Constants.SHADERS_PATH + baseFileName + ".vert"),
-                Gdx.files.internal(Constants.SHADERS_PATH + baseFileName + ".frag"));
+                Gdx.files.internal(Constants.SHADERS_PATH + baseFileName + ".frag"))
     }
 }

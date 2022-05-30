@@ -1,16 +1,12 @@
-package com.g3ida.withflyingcolours.core.player.movement;
+package com.g3ida.withflyingcolours.core.player.movement
 
-import com.artemis.Component;
-import com.artemis.PooledComponent;
+import com.artemis.PooledComponent
 
-public class PlayerWalkComponent extends PooledComponent {
-
-    public int direction = 0;
-    public float speed = 5f;
-
-    @Override
-    public void reset() {
-        direction = 0;
-        speed = 3f;
+class PlayerWalkComponent : PooledComponent() {
+    var direction = 0
+    var speed = 5f
+    public override fun reset() {
+        direction = 0
+        speed = 3f
     }
 }

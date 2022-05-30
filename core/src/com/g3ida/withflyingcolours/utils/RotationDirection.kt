@@ -1,6 +1,5 @@
-package com.g3ida.withflyingcolours.utils;
+package com.g3ida.withflyingcolours.utils
 
-public enum RotationDirection {
-    clockwise,
-    antiClockwise,
+enum class RotationDirection {
+    clockwise, antiClockwise
 }

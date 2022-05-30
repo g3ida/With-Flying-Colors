@@ -1,20 +1,16 @@
-package com.g3ida.withflyingcolours.core.player.controller;
+package com.g3ida.withflyingcolours.core.player.controller
 
-import com.artemis.Component;
-import com.artemis.PooledComponent;
+import com.artemis.PooledComponent
 
-public class PlayerControllerComponent extends PooledComponent {
-
-    public int moveInput = 0;
-    public boolean shouldRotateLeft = false;
-    public boolean shouldRotateRight = false;
-    public boolean shouldJump = false;
-
-    @Override
-    public void reset() {
-        moveInput = 0;
-        shouldRotateLeft = false;
-        shouldRotateRight = false;
-        shouldJump = false;
+class PlayerControllerComponent : PooledComponent() {
+    var moveInput = 0
+    var shouldRotateLeft = false
+    var shouldRotateRight = false
+    var shouldJump = false
+    public override fun reset() {
+        moveInput = 0
+        shouldRotateLeft = false
+        shouldRotateRight = false
+        shouldJump = false
     }
 }

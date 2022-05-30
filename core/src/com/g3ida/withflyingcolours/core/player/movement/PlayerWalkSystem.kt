@@ -1,35 +1,55 @@
-package com.g3ida.withflyingcolours.core.player.movement;
+package com.g3ida.withflyingcolours.core.player.movement
 
-import com.artemis.ComponentMapper;
-import com.artemis.annotations.All;
-import com.artemis.systems.IteratingSystem;
-import com.badlogic.gdx.math.Vector2;
+import com.artemis.ComponentMapper
+import games.rednblack.editor.renderer.components.ViewPortComponent
+import com.artemis.systems.IteratingSystem
+import games.rednblack.editor.renderer.components.TransformComponent
+import games.rednblack.editor.renderer.components.physics.PhysicsBodyComponent
+import com.g3ida.withflyingcolours.core.player.movement.PlayerJumpComponent
+import com.g3ida.withflyingcolours.core.player.movement.PlayerWalkComponent
+import com.artemis.PooledComponent
+import com.artemis.annotations.All
+import com.g3ida.withflyingcolours.core.player.PlayerControllerSettings
+import com.g3ida.withflyingcolours.core.player.movement.PlayerRotationComponent
+import com.g3ida.withflyingcolours.utils.RotationDirection
+import com.g3ida.withflyingcolours.core.player.animation.PlayerAnimationComponent
+import com.g3ida.withflyingcolours.core.player.animation.TransformAnimation
+import com.g3ida.withflyingcolours.core.player.controller.PlayerControllerComponent
+import com.g3ida.withflyingcolours.core.scripts.GameScript
+import games.rednblack.editor.renderer.utils.ComponentRetriever
+import com.g3ida.withflyingcolours.core.camera.CameraSystem
+import games.rednblack.editor.renderer.components.DimensionsComponent
+import games.rednblack.editor.renderer.scripts.BasicScript
+import games.rednblack.editor.renderer.physics.PhysicsContact
+import com.g3ida.withflyingcolours.core.platform.ColorPlatformRenderingComponent
+import games.rednblack.editor.renderer.components.ShaderComponent
+import games.rednblack.editor.renderer.data.ShaderUniformVO
+import games.rednblack.editor.renderer.systems.render.HyperLap2dRenderer
+import com.g3ida.withflyingcolours.core.GameSettings
+import games.rednblack.editor.renderer.data.MainItemVO
+import games.rednblack.editor.renderer.utils.ItemWrapper
+import games.rednblack.editor.renderer.components.NodeComponent
+import games.rednblack.editor.renderer.components.MainItemComponent
+import games.rednblack.editor.renderer.SceneLoader
+import games.rednblack.editor.renderer.resources.AsyncResourceManager
+import games.rednblack.editor.renderer.resources.ResourceManagerLoader.AsyncResourceManagerParam
+import games.rednblack.editor.renderer.resources.ResourceManagerLoader
 
-import games.rednblack.editor.renderer.components.physics.PhysicsBodyComponent;
-
-@All({PlayerWalkComponent.class, PhysicsBodyComponent.class})
-public class PlayerWalkSystem extends IteratingSystem {
-    ComponentMapper<PhysicsBodyComponent> mPhysicsBodyComponent;
-    ComponentMapper<PlayerWalkComponent> mPlayerWalkComponent;
-
-    public PlayerWalkSystem() {
-        super();
-    }
-
-    @Override
-    protected void process(int entityId) {
-        PhysicsBodyComponent physicsBody = mPhysicsBodyComponent.get(entityId);
-        PlayerWalkComponent playerWalk = mPlayerWalkComponent.get(entityId);
-
-        Vector2 velocity = physicsBody.body.getLinearVelocity();
+@All(PlayerWalkComponent::class, PhysicsBodyComponent::class)
+class PlayerWalkSystem : IteratingSystem() {
+    var mPhysicsBodyComponent: ComponentMapper<PhysicsBodyComponent>? = null
+    var mPlayerWalkComponent: ComponentMapper<PlayerWalkComponent>? = null
+    override fun process(entityId: Int) {
+        val physicsBody = mPhysicsBodyComponent!![entityId]
+        val playerWalk = mPlayerWalkComponent!![entityId]
+        val velocity = physicsBody.body.linearVelocity
         if (Math.abs(velocity.x) > playerWalk.speed) {
             if (velocity.x * playerWalk.direction < 0) { // not the same direction
-                velocity.x += playerWalk.direction * playerWalk.speed;
+                velocity.x += playerWalk.direction * playerWalk.speed
             }
+        } else {
+            velocity.x = playerWalk.direction * playerWalk.speed
         }
-        else {
-            velocity.x = playerWalk.direction * playerWalk.speed;
-        }
-        physicsBody.body.setLinearVelocity(velocity);
+        physicsBody.body.linearVelocity = velocity
     }
 }

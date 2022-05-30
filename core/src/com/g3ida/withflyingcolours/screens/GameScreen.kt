@@ -1,101 +1,79 @@
-package com.g3ida.withflyingcolours.screens;
+package com.g3ida.withflyingcolours.screens
 
-import com.artemis.World;
-import com.badlogic.gdx.ScreenAdapter;
-import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.utils.viewport.ExtendViewport;
-import com.badlogic.gdx.utils.viewport.Viewport;
-import com.g3ida.withflyingcolours.core.AssetsLoader;
-import com.g3ida.withflyingcolours.core.GameSettings;
-import com.g3ida.withflyingcolours.core.SceneMapper;
-import com.g3ida.withflyingcolours.core.camera.CameraSystem;
-import com.g3ida.withflyingcolours.core.platform.ColorPlatformRenderingSystem;
-import com.g3ida.withflyingcolours.core.player.animation.PlayerAnimationSystem;
-import com.g3ida.withflyingcolours.core.player.controller.PlayerControllerSystem;
-import com.g3ida.withflyingcolours.core.player.movement.PlayerJumpSystem;
-import com.g3ida.withflyingcolours.core.player.movement.PlayerRotationSystem;
-import com.g3ida.withflyingcolours.core.player.movement.PlayerWalkSystem;
+import com.artemis.World
+import com.badlogic.gdx.ScreenAdapter
+import com.badlogic.gdx.graphics.OrthographicCamera
+import com.badlogic.gdx.utils.viewport.ExtendViewport
+import com.badlogic.gdx.utils.viewport.Viewport
+import games.rednblack.editor.renderer.SceneLoader
+import com.g3ida.withflyingcolours.core.AssetsLoader
+import games.rednblack.editor.renderer.SceneConfiguration
+import com.g3ida.withflyingcolours.core.camera.CameraSystem
+import com.g3ida.withflyingcolours.core.player.controller.PlayerControllerSystem
+import com.g3ida.withflyingcolours.core.player.movement.PlayerRotationSystem
+import com.g3ida.withflyingcolours.core.player.movement.PlayerJumpSystem
+import com.g3ida.withflyingcolours.core.player.movement.PlayerWalkSystem
+import com.g3ida.withflyingcolours.core.player.animation.PlayerAnimationSystem
+import com.g3ida.withflyingcolours.core.platform.ColorPlatformRenderingSystem
+import com.g3ida.withflyingcolours.core.GameSettings
+import com.g3ida.withflyingcolours.core.SceneMapper
 
-import games.rednblack.editor.renderer.SceneConfiguration;
-import games.rednblack.editor.renderer.SceneLoader;
-import games.rednblack.editor.renderer.resources.ResourceManager;
-
-public class GameScreen extends ScreenAdapter {
-
-    private final SceneLoader _sceneLoader;
-
-    private final Viewport _viewport;
-    private final OrthographicCamera _camera;
-
-    private final AssetsLoader _assetsLoader;
-
-    private final World _engine;
-
-    public GameScreen() {
-
-        _assetsLoader = new AssetsLoader("project.dt");
-
-        ResourceManager _resourceManager = _assetsLoader.load();
-
-        // prepare screen configuration
-        SceneConfiguration sceneConfiguration = new SceneConfiguration();
-        // add systems
-        CameraSystem cameraSystem = new CameraSystem(0, 20, 0, 7);
-        sceneConfiguration.addSystem(cameraSystem);
-        sceneConfiguration.addSystem(new PlayerControllerSystem());
-        sceneConfiguration.addSystem(new PlayerRotationSystem());
-        sceneConfiguration.addSystem(new PlayerJumpSystem());
-        sceneConfiguration.addSystem(new PlayerWalkSystem());
-        sceneConfiguration.addSystem(new PlayerAnimationSystem());
-        sceneConfiguration.addSystem(new ColorPlatformRenderingSystem());
-
-        sceneConfiguration.setResourceRetriever(_resourceManager);
-        _sceneLoader = new SceneLoader(sceneConfiguration);
-
-        _engine = _sceneLoader.getEngine();
-
-        _camera = new OrthographicCamera();
-        _viewport = new ExtendViewport(13, 7, _camera);
-        GameSettings.mainViewPort = _viewport;
-
-        _sceneLoader.loadScene("MainScene", _viewport);
-
-        SceneMapper sceneMapper = new SceneMapper();
-        sceneMapper.mapScripts(_sceneLoader);
-    }
-
-    @Override
-    public void resize(int width, int height) {
-        super.resize(width, height);
-        _viewport.update(width, height);
-
+class GameScreen : ScreenAdapter() {
+    private val _sceneLoader: SceneLoader
+    private val _viewport: Viewport
+    private val _camera: OrthographicCamera
+    private val _assetsLoader: AssetsLoader
+    private val _engine: World
+    override fun resize(width: Int, height: Int) {
+        super.resize(width, height)
+        _viewport.update(width, height)
         if (width != 0 && height != 0) {
-            _sceneLoader.resize(width, height);
+            _sceneLoader.resize(width, height)
         }
     }
 
-    @Override
-    public void dispose() {
-        _assetsLoader.dispose();
-        super.dispose();
+    override fun dispose() {
+        _assetsLoader.dispose()
+        super.dispose()
     }
 
-    public void update () {
-        _camera.update();
+    fun update() {
+        _camera.update()
     }
 
-    @Override
-    public void render (float delta) {
-        super.render(delta);
-        this.update();
-
-        _viewport.apply();
-        _engine.setDelta(delta);
-        _engine.process();
+    override fun render(delta: Float) {
+        super.render(delta)
+        update()
+        _viewport.apply()
+        _engine.setDelta(delta)
+        _engine.process()
     }
 
-    @Override
-    public void pause () {
+    override fun pause() {}
 
+    init {
+        _assetsLoader = AssetsLoader("project.dt")
+        val _resourceManager = _assetsLoader.load()
+
+        // prepare screen configuration
+        val sceneConfiguration = SceneConfiguration()
+        // add systems
+        val cameraSystem = CameraSystem(0f, 20f, 0f, 7f)
+        sceneConfiguration.addSystem(cameraSystem)
+        sceneConfiguration.addSystem(PlayerControllerSystem())
+        sceneConfiguration.addSystem(PlayerRotationSystem())
+        sceneConfiguration.addSystem(PlayerJumpSystem())
+        sceneConfiguration.addSystem(PlayerWalkSystem())
+        sceneConfiguration.addSystem(PlayerAnimationSystem())
+        sceneConfiguration.addSystem(ColorPlatformRenderingSystem())
+        sceneConfiguration.setResourceRetriever(_resourceManager)
+        _sceneLoader = SceneLoader(sceneConfiguration)
+        _engine = _sceneLoader.engine
+        _camera = OrthographicCamera()
+        _viewport = ExtendViewport(13f, 7f, _camera)
+        GameSettings.mainViewPort = _viewport
+        _sceneLoader.loadScene("MainScene", _viewport)
+        val sceneMapper = SceneMapper()
+        sceneMapper.mapScripts(_sceneLoader)
     }
 }
