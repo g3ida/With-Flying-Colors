@@ -49,7 +49,7 @@ class RotationSystemTest : BaseSystemTests() {
         // rotate the entity to the right by 90deg and assert.
         playerRotationComponent.setRotationDirection(RotationDirection.clockwise)
         cycleEngineFor(engine, 1f)
-        Assert.assertEquals(0f, modPI2(physicsBodyComponent.body.angle), 0.01f)
+        Assert.assertEquals(0f, physicsBodyComponent.body.angle.modPI2(), 0.01f)
 
         // rotate the entity to the left by 90deg and assert.
         playerRotationComponent.setRotationDirection(RotationDirection.antiClockwise)
