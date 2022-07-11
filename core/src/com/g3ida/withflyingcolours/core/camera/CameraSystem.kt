@@ -5,11 +5,13 @@ import games.rednblack.editor.renderer.components.ViewPortComponent
 import com.artemis.systems.IteratingSystem
 import games.rednblack.editor.renderer.components.TransformComponent
 import com.artemis.annotations.All
+import games.rednblack.editor.renderer.systems.strategy.RendererSystem
 import kotlin.math.max
 import kotlin.math.min
 
 @All(ViewPortComponent::class)
-class CameraSystem(private val _xMin: Float, private val _xMax: Float, private val _yMin: Float, private val _yMax: Float) : IteratingSystem() {
+class CameraSystem(private val _xMin: Float, private val _xMax: Float, private val _yMin: Float, private val _yMax: Float) :
+    RendererSystem, IteratingSystem() {
     private var _focusEntityId: Int = -1
     private lateinit var _mViewport: ComponentMapper<ViewPortComponent>
     private lateinit var _mTransform: ComponentMapper<TransformComponent>
