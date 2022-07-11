@@ -1,5 +1,5 @@
 buildscript {
-    ext.kotlinVersion = '1.6.21'
+    ext.kotlinVersion = '1.7.0'
     repositories {
         mavenLocal()
         mavenCentral()
@@ -27,7 +27,7 @@ allprojects {
         aiVersion = '1.8.2'
         gdxControllersVersion = '2.1.0'
         junitVersion = '4.12'
-        h2dVersion = '0.1.1-SNAPSHOT'
+        h2dVersion = '0.1.2-SNAPSHOT'
         typingLabelVersion = '1.2.0'
         mokitoVersion = '3.12.4'
     }
@@ -44,7 +44,6 @@ allprojects {
 
 project(":desktop") {
     apply plugin: "kotlin"
-
 
     dependencies {
         implementation project(":core")
@@ -103,7 +102,6 @@ project(":ios") {
         api "com.badlogicgames.gdx:gdx-freetype-platform:$gdxVersion:natives-ios"
         api "com.badlogicgames.gdx-controllers:gdx-controllers-ios:$gdxControllersVersion"
         api "de.golfgl.gdxgamesvcs:gdx-gamesvcs-ios-gamecenter:1.0.2"
-        
     }
 }
 
