@@ -7,7 +7,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch
 import com.g3ida.withflyingcolours.screens.GameScreen
 
 class WithFlyingColours : Game() {
-    var batch: SpriteBatch? = null
+    lateinit var batch: SpriteBatch
     override fun create() {
         batch = SpriteBatch()
         setScreen(GameScreen())
@@ -19,7 +19,7 @@ class WithFlyingColours : Game() {
     }
 
     override fun dispose() {
-        batch!!.dispose()
+        batch.dispose()
     }
 
     fun clearScreen() {

@@ -8,11 +8,11 @@ import com.g3ida.withflyingcolours.Utils
 
 @All(PhysicsBodyComponent::class, PlayerJumpComponent::class)
 class PlayerJumpSystem : IteratingSystem() {
-    var mPhysicsBodyComponent: ComponentMapper<PhysicsBodyComponent>? = null
-    var mPlayerJumpComponent: ComponentMapper<PlayerJumpComponent>? = null
+    lateinit var mPhysicsBodyComponent: ComponentMapper<PhysicsBodyComponent>
+    lateinit var mPlayerJumpComponent: ComponentMapper<PlayerJumpComponent>
     override fun process(entityId: Int) {
-        val physicsBody = mPhysicsBodyComponent!![entityId]
-        val playerJump = mPlayerJumpComponent!![entityId]
+        val physicsBody = mPhysicsBodyComponent[entityId]
+        val playerJump = mPlayerJumpComponent[entityId]
         if (isGrounded(physicsBody)) {
             playerJump.timeSinceGrounded = 0f
         }

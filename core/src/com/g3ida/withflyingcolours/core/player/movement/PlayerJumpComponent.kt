@@ -13,6 +13,7 @@ class PlayerJumpComponent : PooledComponent() {
     var jumpForce = 760.0f // the force applied to perform the jump.
     var responsivenessTimer = 0f // time since the player hit the jump button.
     var oldShouldJump = false // previous value of should jump.
+
     public override fun reset() {
         responsivenessTimer = 0f
         timeUntilFullJumpIsConsidered = 0.15f

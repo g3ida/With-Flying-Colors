@@ -1,16 +1,12 @@
 package com.g3ida.withflyingcolours.core.scripts
 
 import com.artemis.ComponentMapper
-import games.rednblack.editor.renderer.components.ViewPortComponent
-import com.artemis.systems.IteratingSystem
 import games.rednblack.editor.renderer.components.TransformComponent
 import games.rednblack.editor.renderer.components.physics.PhysicsBodyComponent
 import com.g3ida.withflyingcolours.core.player.movement.PlayerJumpComponent
 import com.g3ida.withflyingcolours.core.player.movement.PlayerWalkComponent
-import com.artemis.PooledComponent
 import com.artemis.World
 import com.badlogic.gdx.math.Vector2
-import com.badlogic.gdx.physics.box2d.RayCastCallback
 import com.g3ida.withflyingcolours.core.player.movement.PlayerRotationComponent
 import com.g3ida.withflyingcolours.utils.RotationDirection
 import com.g3ida.withflyingcolours.core.player.animation.PlayerAnimationComponent
@@ -62,10 +58,10 @@ class Player(engine: World?, world: com.badlogic.gdx.physics.box2d.World?) : Gam
         _playerWalk!!.direction = _playerController!!.moveInput
         _playerJump!!.shouldJump = _playerController!!.shouldJump
         if (_playerController!!.shouldRotateRight) {
-            _playerRotation!!.setRotationDirection(RotationDirection.clockwise)
+            _playerRotation!!.setRotationDirection(RotationDirection.Clockwise)
         }
         if (_playerController!!.shouldRotateLeft) {
-            _playerRotation!!.setRotationDirection(RotationDirection.antiClockwise)
+            _playerRotation!!.setRotationDirection(RotationDirection.AntiClockwise)
         }
         rayCast(delta)
     }

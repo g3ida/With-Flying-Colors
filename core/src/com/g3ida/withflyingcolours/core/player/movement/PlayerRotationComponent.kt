@@ -59,8 +59,8 @@ class PlayerRotationComponent : PooledComponent() {
     fun setRotationDirection(rotationDirection: RotationDirection?) {
         shouldRotate = true
         when (rotationDirection) {
-            RotationDirection.clockwise -> rotationDirectionSign = -1
-            RotationDirection.antiClockwise -> rotationDirectionSign = 1
+            RotationDirection.Clockwise -> rotationDirectionSign = -1
+            RotationDirection.AntiClockwise -> rotationDirectionSign = 1
             else -> {}
         }
     }
