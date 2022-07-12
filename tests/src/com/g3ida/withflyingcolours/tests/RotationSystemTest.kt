@@ -17,9 +17,8 @@ class RotationSystemTest : BaseSystemTests() {
     @Test
     @Throws(AssertionError::class)
     fun testPlayerRotationSystem() {
-
         //prepare engine and entity with physics
-        val engineWithEntity = createPhysicsWorldWithDynamicEntity(arrayOf<BaseSystem?>(PlayerRotationSystem()))
+        val engineWithEntity = createPhysicsWorldWithDynamicEntity(arrayOf<BaseSystem>(PlayerRotationSystem()))
         val engine = engineWithEntity.world
         val entityId = engineWithEntity.entityId
         val playerRotationComponent = engine.edit(entityId).create(PlayerRotationComponent::class.java)
@@ -32,47 +31,47 @@ class RotationSystemTest : BaseSystemTests() {
         Assert.assertEquals(0f, physicsBodyComponent.body.angle, 0.01f)
 
         // rotate the entity to the right by 90deg and assert.
-        playerRotationComponent.setRotationDirection(RotationDirection.clockwise)
+        playerRotationComponent.setRotationDirection(RotationDirection.Clockwise)
         cycleEngineFor(engine, 1f)
         Assert.assertEquals(-Utils.PI2, physicsBodyComponent.body.angle, 0.01f)
 
         // rotate the entity to the right by 90deg and assert.
-        playerRotationComponent.setRotationDirection(RotationDirection.clockwise)
+        playerRotationComponent.setRotationDirection(RotationDirection.Clockwise)
         cycleEngineFor(engine, 1f)
         Assert.assertEquals(-Utils.PI, physicsBodyComponent.body.angle, 0.01f)
 
         // rotate the entity to the right by 90deg and assert.
-        playerRotationComponent.setRotationDirection(RotationDirection.clockwise)
+        playerRotationComponent.setRotationDirection(RotationDirection.Clockwise)
         cycleEngineFor(engine, 1f)
         Assert.assertEquals(-(Utils.PI + Utils.PI2), physicsBodyComponent.body.angle, 0.01f)
 
         // rotate the entity to the right by 90deg and assert.
-        playerRotationComponent.setRotationDirection(RotationDirection.clockwise)
+        playerRotationComponent.setRotationDirection(RotationDirection.Clockwise)
         cycleEngineFor(engine, 1f)
         Assert.assertEquals(0f, physicsBodyComponent.body.angle.modPI2(), 0.01f)
 
         // rotate the entity to the left by 90deg and assert.
-        playerRotationComponent.setRotationDirection(RotationDirection.antiClockwise)
+        playerRotationComponent.setRotationDirection(RotationDirection.AntiClockwise)
         cycleEngineFor(engine, 1f)
         Assert.assertEquals(-(Utils.PI + Utils.PI2), physicsBodyComponent.body.angle, 0.01f)
 
         // rotate the entity to the left by 90deg and assert.
-        playerRotationComponent.setRotationDirection(RotationDirection.antiClockwise)
+        playerRotationComponent.setRotationDirection(RotationDirection.AntiClockwise)
         cycleEngineFor(engine, 1f)
         Assert.assertEquals(-Utils.PI, physicsBodyComponent.body.angle, 0.01f)
 
         // rotate the entity to the left by 90deg and assert.
-        playerRotationComponent.setRotationDirection(RotationDirection.antiClockwise)
+        playerRotationComponent.setRotationDirection(RotationDirection.AntiClockwise)
         cycleEngineFor(engine, 1f)
         Assert.assertEquals(-Utils.PI2, physicsBodyComponent.body.angle, 0.01f)
 
         // rotate the entity to the left by 90deg and assert.
-        playerRotationComponent.setRotationDirection(RotationDirection.antiClockwise)
+        playerRotationComponent.setRotationDirection(RotationDirection.AntiClockwise)
         cycleEngineFor(engine, 1f)
         Assert.assertEquals(0f, physicsBodyComponent.body.angle, 0.01f)
 
         // rotate the entity to the left by 90deg and assert.
-        playerRotationComponent.setRotationDirection(RotationDirection.antiClockwise)
+        playerRotationComponent.setRotationDirection(RotationDirection.AntiClockwise)
         cycleEngineFor(engine, 1f)
         Assert.assertEquals(Utils.PI2, physicsBodyComponent.body.angle, 0.01f)
 

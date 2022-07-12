@@ -1,11 +1,7 @@
-
-
 apply plugin: "java"
 
 sourceCompatibility = 1.7
 [compileJava, compileTestJava]*.options*.encoding = 'UTF-8'
-
-
 
 sourceSets {
 	test {
@@ -19,4 +15,4 @@ eclipse.project {
     name = appName + "-tests"
 }
 
-java.targetCompatibility = JavaVersion.VERSION_1_8
+java.targetCompatibility = JavaVersion.VERSION_11
