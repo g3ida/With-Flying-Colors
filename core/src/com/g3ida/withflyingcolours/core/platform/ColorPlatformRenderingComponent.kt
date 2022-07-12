@@ -15,6 +15,7 @@ class ColorPlatformRenderingComponent : PooledComponent() {
     var splashTimer = 0f
     var contactPosition = Vector2()
     private lateinit var _shader: ShaderProgram
+
     fun Init(entityId: Int, engine: World?) {
         _shader = Utils.loadShader(SHADER_NAME)
         if (!_shader.isCompiled) {

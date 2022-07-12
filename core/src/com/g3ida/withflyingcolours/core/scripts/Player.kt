@@ -13,6 +13,7 @@ import com.g3ida.withflyingcolours.core.player.animation.PlayerAnimationComponen
 import com.g3ida.withflyingcolours.core.player.controller.PlayerControllerComponent
 import games.rednblack.editor.renderer.utils.ComponentRetriever
 import com.g3ida.withflyingcolours.core.camera.CameraSystem
+import com.g3ida.withflyingcolours.core.player.animation.PlayerSqueezeAnimation
 import games.rednblack.editor.renderer.components.DimensionsComponent
 
 class Player(engine: World?, world: com.badlogic.gdx.physics.box2d.World?) : GameScript(engine, world) {
@@ -79,11 +80,9 @@ class Player(engine: World?, world: com.badlogic.gdx.physics.box2d.World?) : Gam
         val world = world
         world!!.rayCast({ _, _, _, _ -> //Entity entity = (Entity) fixture.getBody().getUserData();
             //if (entity != null) {
-            if (_playerAnim != null) {
-                if (!_playerAnim!!.squeezeAnimation.isRunning && !_playerAnim!!.scaleAnimation.isRunning) {
-                    _playerAnim!!.doSqueeze = true
+                if (_playerAnim?.currentAnimation?.isRunning() == false) {
+                    _playerAnim!!.currentAnimation = PlayerSqueezeAnimation()
                 }
-            }
             //}
             0f
         }, rayFrom, rayTo)

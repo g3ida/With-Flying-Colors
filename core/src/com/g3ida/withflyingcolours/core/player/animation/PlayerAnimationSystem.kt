@@ -12,14 +12,12 @@ class PlayerAnimationSystem : IteratingSystem() {
     override fun process(entityId: Int) {
         val playerAnimation = mPlayerAnimationComponent[entityId]
         val transform = mTransformComponent[entityId]
-        if (playerAnimation.doSqueeze) {
-            playerAnimation.doSqueeze = false
-            playerAnimation.squeezeAnimation.start()
-        } else if (playerAnimation.doScale) {
-            playerAnimation.doScale = false
-            playerAnimation.scaleAnimation.start()
-        }
-        playerAnimation.scaleAnimation.step(transform, world.delta)
-        playerAnimation.squeezeAnimation.step(transform, world.delta)
+
+        if (playerAnimation.currentAnimation.isDone())
+            playerAnimation.reset()
+        else if (!playerAnimation.currentAnimation.isRunning())
+            playerAnimation.currentAnimation.start()
+
+        playerAnimation.currentAnimation.step(transform, world.delta)
     }
 }

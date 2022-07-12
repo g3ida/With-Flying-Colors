@@ -12,12 +12,10 @@ class PlayerControllerSystem : IteratingSystem() {
     override fun process(entityId: Int) {
         //player movement left/right
         val playerMovement = mPlayerControllerComponent[entityId]
-        if (Gdx.input.isKeyPressed(Input.Keys.LEFT)) {
-            playerMovement.moveInput = -1
-        } else if (Gdx.input.isKeyPressed(Input.Keys.RIGHT)) {
-            playerMovement.moveInput = 1
-        } else {
-            playerMovement.moveInput = 0
+        playerMovement.moveInput = when {
+            Gdx.input.isKeyPressed(Input.Keys.LEFT) -> -1
+            Gdx.input.isKeyPressed(Input.Keys.RIGHT) -> 1
+            else -> 0
         }
         //jumping
         playerMovement.shouldJump = Gdx.input.isKeyPressed(Input.Keys.UP)
