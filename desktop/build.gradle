@@ -1,4 +1,3 @@
-sourceCompatibility = 1.7
 sourceSets.main.java.srcDirs = [ "src/" ]
 sourceSets.main.resources.srcDirs = ["../android/assets"]
 
@@ -30,11 +29,19 @@ task dist(type: Jar) {
     manifest {
         attributes 'Main-Class': project.mainClassName
     }
+
+    duplicatesStrategy = DuplicatesStrategy.INCLUDE
+    from files(sourceSets.main.output.classesDirs)
+    from files(sourceSets.main.output.resourcesDir)
+    from files(project.ext.assetsDir)
+
     dependsOn configurations.runtimeClasspath
     from {
         configurations.runtimeClasspath.collect { it.isDirectory() ? it : zipTree(it) }
     }
     with jar
+
+    destinationDirectory = file("$buildDir/dist")
 }
 
 dist.dependsOn classes
