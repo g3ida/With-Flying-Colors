@@ -34,6 +34,6 @@ jobs:
       run: cp ./desktop/build/dist/ ./downloads
     - name: Upload artifacts
       uses: actions/upload-artifact@v2
-        with: 
-          name: Artifacts
-          path: downloads
+      with: 
+        name: Artifacts
+        path: downloads
