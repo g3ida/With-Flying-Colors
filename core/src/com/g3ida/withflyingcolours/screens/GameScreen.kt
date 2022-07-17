@@ -17,63 +17,63 @@ import com.g3ida.withflyingcolours.core.player.animation.PlayerAnimationSystem
 import com.g3ida.withflyingcolours.core.platform.ColorPlatformRenderingSystem
 import com.g3ida.withflyingcolours.core.GameSettings
 import com.g3ida.withflyingcolours.core.SceneMapper
+import com.g3ida.withflyingcolours.core.extensions.toSceneLoader
+import com.g3ida.withflyingcolours.core.extensions.withResourceRetriever
+import com.g3ida.withflyingcolours.core.extensions.withSystems
 
 class GameScreen : ScreenAdapter() {
-    private val _sceneLoader: SceneLoader
-    private val _viewport: Viewport
-    private val _camera: OrthographicCamera
-    private val _assetsLoader: AssetsLoader
-    private val _engine: World
+    private val mSceneLoader: SceneLoader
+    private val mViewport: Viewport
+    private val mCamera: OrthographicCamera
+    private val mAssetsLoader: AssetsLoader = AssetsLoader("project.dt")
+    private val mEngine: World
+
     override fun resize(width: Int, height: Int) {
         super.resize(width, height)
-        _viewport.update(width, height)
+        mViewport.update(width, height)
         if (width != 0 && height != 0) {
-            _sceneLoader.resize(width, height)
+            mSceneLoader.resize(width, height)
         }
     }
 
     override fun dispose() {
-        _assetsLoader.dispose()
+        mAssetsLoader.dispose()
         super.dispose()
     }
 
     fun update() {
-        _camera.update()
+        mCamera.update()
     }
 
     override fun render(delta: Float) {
         super.render(delta)
         update()
-        _viewport.apply()
-        _engine.setDelta(delta)
-        _engine.process()
+        mViewport.apply()
+        mEngine.setDelta(delta)
+        mEngine.process()
     }
 
     override fun pause() {}
 
     init {
-        _assetsLoader = AssetsLoader("project.dt")
-        val _resourceManager = _assetsLoader.load()
+        val resourceManager = mAssetsLoader.load()
+        mSceneLoader = SceneConfiguration()
+            .withSystems(
+                CameraSystem(0f, 20f, 0f, 7f),
+                PlayerControllerSystem(),
+                PlayerRotationSystem(),
+                PlayerJumpSystem(),
+                PlayerWalkSystem(),
+                PlayerAnimationSystem(),
+                ColorPlatformRenderingSystem())
+            .withResourceRetriever(resourceManager)
+            .toSceneLoader()
 
-        // prepare screen configuration
-        val sceneConfiguration = SceneConfiguration()
-        // add systems
-        val cameraSystem = CameraSystem(0f, 20f, 0f, 7f)
-        sceneConfiguration.addSystem(cameraSystem)
-        sceneConfiguration.addSystem(PlayerControllerSystem())
-        sceneConfiguration.addSystem(PlayerRotationSystem())
-        sceneConfiguration.addSystem(PlayerJumpSystem())
-        sceneConfiguration.addSystem(PlayerWalkSystem())
-        sceneConfiguration.addSystem(PlayerAnimationSystem())
-        sceneConfiguration.addSystem(ColorPlatformRenderingSystem())
-        sceneConfiguration.setResourceRetriever(_resourceManager)
-        _sceneLoader = SceneLoader(sceneConfiguration)
-        _engine = _sceneLoader.engine
-        _camera = OrthographicCamera()
-        _viewport = ExtendViewport(13f, 7f, _camera)
-        GameSettings.mainViewPort = _viewport
-        _sceneLoader.loadScene("MainScene", _viewport)
-        val sceneMapper = SceneMapper()
-        sceneMapper.mapScripts(_sceneLoader)
+        mEngine = mSceneLoader.engine
+        mCamera = OrthographicCamera()
+        mViewport = ExtendViewport(13f, 7f, mCamera)
+        GameSettings.mainViewPort = mViewport
+        mSceneLoader.loadScene("MainScene", mViewport)
+        SceneMapper(mSceneLoader)
     }
 }
