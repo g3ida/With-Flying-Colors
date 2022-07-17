@@ -20,8 +20,9 @@ import com.g3ida.withflyingcolours.core.SceneMapper
 import com.g3ida.withflyingcolours.core.extensions.toSceneLoader
 import com.g3ida.withflyingcolours.core.extensions.withResourceRetriever
 import com.g3ida.withflyingcolours.core.extensions.withSystems
+import ktx.app.KtxScreen
 
-class GameScreen : ScreenAdapter() {
+class GameScreen : KtxScreen {
     private val mSceneLoader: SceneLoader
     private val mViewport: Viewport
     private val mCamera: OrthographicCamera

@@ -2,7 +2,7 @@ package com.g3ida.withflyingcolours
 
 import com.badlogic.gdx.backends.iosrobovm.IOSApplication
 import com.badlogic.gdx.backends.iosrobovm.IOSApplicationConfiguration
-import com.g3ida.withflyingcolours.WithFlyingColours
+import com.g3ida.withflyingcolours.Game
 import kotlin.jvm.JvmStatic
 import org.robovm.apple.foundation.NSAutoreleasePool
 import org.robovm.apple.uikit.UIApplication
@@ -11,7 +11,7 @@ import com.g3ida.withflyingcolours.IOSLauncher
 class IOSLauncher : IOSApplication.Delegate() {
     override fun createApplication(): IOSApplication {
         val config = IOSApplicationConfiguration()
-        return IOSApplication(WithFlyingColours(), config)
+        return IOSApplication(Game(), config)
     }
 
     companion object {
