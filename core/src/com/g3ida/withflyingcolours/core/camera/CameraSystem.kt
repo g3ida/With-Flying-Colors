@@ -8,26 +8,28 @@ import com.artemis.annotations.All
 import games.rednblack.editor.renderer.systems.strategy.RendererSystem
 import kotlin.math.max
 import kotlin.math.min
+import com.g3ida.withflyingcolours.core.extensions.*
 
 @All(ViewPortComponent::class)
-class CameraSystem(private val _xMin: Float, private val _xMax: Float, private val _yMin: Float, private val _yMax: Float) :
+class CameraSystem(private val mXMin: Float, private val mXMax: Float, private val mYMin: Float, private val mYMax: Float) :
     RendererSystem, IteratingSystem() {
-    private var _focusEntityId: Int = -1
-    private lateinit var _mViewport: ComponentMapper<ViewPortComponent>
-    private lateinit var _mTransform: ComponentMapper<TransformComponent>
+    private var mFocusEntityId: Int = -1
+    private lateinit var mViewportCM: ComponentMapper<ViewPortComponent>
+    private lateinit var mTransformCM: ComponentMapper<TransformComponent>
+
     fun setFocus(entityId: Int) {
-        _focusEntityId = entityId
+        mFocusEntityId = entityId
     }
 
     override fun process(entityId: Int) {
-        val viewPortComponent = _mViewport[entityId]
+        val viewPortComponent = mViewportCM[entityId]
         val camera = viewPortComponent.viewPort.camera
-        if (_focusEntityId != -1) {
+        if (mFocusEntityId != -1) {
             // FIXME: player position should be lower + camera movement should be softer
-            val transformComponent = _mTransform[_focusEntityId]
+            val transformComponent = mTransformCM.getOrNull(mFocusEntityId)
             if (transformComponent != null) {
-                val x = max(_xMin, min(_xMax, transformComponent.x))
-                val y = max(_yMin, min(_yMax, transformComponent.y))
+                val x = max(mXMin, min(mXMax, transformComponent.x))
+                val y = max(mYMin, min(mYMax, transformComponent.y))
                 camera.position[x, y] = 0f
             }
         }

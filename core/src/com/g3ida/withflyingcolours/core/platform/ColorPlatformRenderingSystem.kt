@@ -13,15 +13,15 @@ import com.g3ida.withflyingcolours.core.GameSettings
 
 @All(ColorPlatformRenderingComponent::class, ShaderComponent::class, TransformComponent::class)
 class ColorPlatformRenderingSystem : IteratingSystem() {
-    private lateinit var mColorPlatformRenderingComponent: ComponentMapper<ColorPlatformRenderingComponent>
-    private lateinit var mShaderComponent: ComponentMapper<ShaderComponent>
+    private lateinit var mColorPlatformRenderingCM: ComponentMapper<ColorPlatformRenderingComponent>
+    private lateinit var mShaderCM: ComponentMapper<ShaderComponent>
 
     override fun process(entityId: Int) {
-        val renderingComponent = mColorPlatformRenderingComponent[entityId]
+        val renderingComponent = mColorPlatformRenderingCM[entityId]
         if (renderingComponent.doColorSplash) {
             renderingComponent.doColorSplash = false
             renderingComponent.splashTimer = ColorPlatformRenderingComponent.SPLASH_DURATION
-            val shaderComponent = mShaderComponent[entityId]
+            val shaderComponent = mShaderCM[entityId]
             val uniform = ShaderUniformVO()
             uniform.set(world.getSystem(HyperLap2dRenderer::class.java).timeRunning)
             shaderComponent.customUniforms.put("start_time", uniform)

@@ -7,11 +7,11 @@ import com.artemis.annotations.All
 
 @All(PlayerAnimationComponent::class, TransformComponent::class)
 class PlayerAnimationSystem : IteratingSystem() {
-    private lateinit var mPlayerAnimationComponent: ComponentMapper<PlayerAnimationComponent>
-    private lateinit var mTransformComponent: ComponentMapper<TransformComponent>
+    private lateinit var mPlayerAnimationCM: ComponentMapper<PlayerAnimationComponent>
+    private lateinit var mTransformCM: ComponentMapper<TransformComponent>
     override fun process(entityId: Int) {
-        val playerAnimation = mPlayerAnimationComponent[entityId]
-        val transform = mTransformComponent[entityId]
+        val playerAnimation = mPlayerAnimationCM[entityId]
+        val transform = mTransformCM[entityId]
 
         if (playerAnimation.currentAnimation.isDone())
             playerAnimation.reset()

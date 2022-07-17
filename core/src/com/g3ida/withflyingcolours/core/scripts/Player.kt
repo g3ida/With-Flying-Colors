@@ -16,13 +16,13 @@ import com.g3ida.withflyingcolours.core.camera.CameraSystem
 import com.g3ida.withflyingcolours.core.player.animation.PlayerSqueezeAnimation
 import games.rednblack.editor.renderer.components.DimensionsComponent
 
-class Player(engine: World?, world: com.badlogic.gdx.physics.box2d.World?) : GameScript(engine, world) {
-    private var _entityId = 0
-    private var _playerController: PlayerControllerComponent? = null
-    private var _playerRotation: PlayerRotationComponent? = null
-    private var _playerJump: PlayerJumpComponent? = null
-    private var _playerWalk: PlayerWalkComponent? = null
-    private var _playerAnim: PlayerAnimationComponent? = null
+class Player(engine: World, world: com.badlogic.gdx.physics.box2d.World) : GameScript(engine, world) {
+    private var mEntityId = 0
+    private var mPlayerController: PlayerControllerComponent? = null
+    private var mPlayerRotation: PlayerRotationComponent? = null
+    private var mPlayerJump: PlayerJumpComponent? = null
+    private var mPlayerWalk: PlayerWalkComponent? = null
+    private var mPlayerAnim: PlayerAnimationComponent? = null
     var mPlayerControllerComponent: ComponentMapper<PlayerControllerComponent>? = null
     var mPlayerRotationComponent: ComponentMapper<PlayerRotationComponent>? = null
     var mPlayerJumpComponent: ComponentMapper<PlayerJumpComponent>? = null
@@ -35,20 +35,20 @@ class Player(engine: World?, world: com.badlogic.gdx.physics.box2d.World?) : Gam
         ComponentRetriever.addMapper(PlayerJumpComponent::class.java)
         ComponentRetriever.addMapper(PlayerWalkComponent::class.java)
         ComponentRetriever.addMapper(PlayerAnimationComponent::class.java)
-        _playerController = mPlayerControllerComponent!!.create(_entityId)
-        _playerRotation = mPlayerRotationComponent!!.create(_entityId)
-        _playerJump = mPlayerJumpComponent!!.create(_entityId)
-        _playerWalk = mPlayerWalkComponent!!.create(_entityId)
-        _playerAnim = mPlayerAnimationComponent!!.create(_entityId)
+        mPlayerController = mPlayerControllerComponent!!.create(mEntityId)
+        mPlayerRotation = mPlayerRotationComponent!!.create(mEntityId)
+        mPlayerJump = mPlayerJumpComponent!!.create(mEntityId)
+        mPlayerWalk = mPlayerWalkComponent!!.create(mEntityId)
+        mPlayerAnim = mPlayerAnimationComponent!!.create(mEntityId)
 
         // attach player to camera
-        val cameraSystem = engine!!.getSystem(CameraSystem::class.java)
-        cameraSystem.setFocus(_entityId)
+        val cameraSystem = engine.getSystem(CameraSystem::class.java)
+        cameraSystem.setFocus(mEntityId)
     }
 
     override fun init(item: Int) {
         super.init(item)
-        _entityId = getEntity()
+        mEntityId = getEntity()
         initComponents()
     }
 
@@ -56,21 +56,21 @@ class Player(engine: World?, world: com.badlogic.gdx.physics.box2d.World?) : Gam
     override fun act(delta: Float) {
 
         //TODO: handle left and write controls
-        _playerWalk!!.direction = _playerController!!.moveInput
-        _playerJump!!.shouldJump = _playerController!!.shouldJump
-        if (_playerController!!.shouldRotateRight) {
-            _playerRotation!!.setRotationDirection(RotationDirection.Clockwise)
+        mPlayerWalk!!.direction = mPlayerController!!.moveInput
+        mPlayerJump!!.shouldJump = mPlayerController!!.shouldJump
+        if (mPlayerController!!.shouldRotateRight) {
+            mPlayerRotation!!.setRotationDirection(RotationDirection.Clockwise)
         }
-        if (_playerController!!.shouldRotateLeft) {
-            _playerRotation!!.setRotationDirection(RotationDirection.AntiClockwise)
+        if (mPlayerController!!.shouldRotateLeft) {
+            mPlayerRotation!!.setRotationDirection(RotationDirection.AntiClockwise)
         }
         rayCast(delta)
     }
 
     fun rayCast(delta: Float) {
-        val dimensionsComponent = ComponentRetriever.get(_entityId, DimensionsComponent::class.java, engine)
-        val physicsBodyComponent = ComponentRetriever.get(_entityId, PhysicsBodyComponent::class.java, engine)
-        val transformComponent = ComponentRetriever.get(_entityId, TransformComponent::class.java, engine)
+        val dimensionsComponent = ComponentRetriever.get(mEntityId, DimensionsComponent::class.java, engine)
+        val physicsBodyComponent = ComponentRetriever.get(mEntityId, PhysicsBodyComponent::class.java, engine)
+        val transformComponent = ComponentRetriever.get(mEntityId, TransformComponent::class.java, engine)
         val rayGap = transformComponent.scaleY * dimensionsComponent.height / 2f
         val raySize = -physicsBodyComponent.body.linearVelocity.y * delta * 2f
         val rayFrom = Vector2(transformComponent.x + dimensionsComponent.width / 2f, transformComponent.y + rayGap)
@@ -78,10 +78,10 @@ class Player(engine: World?, world: com.badlogic.gdx.physics.box2d.World?) : Gam
 
         //cast the ray
         val world = world
-        world!!.rayCast({ _, _, _, _ -> //Entity entity = (Entity) fixture.getBody().getUserData();
+        world.rayCast({ _, _, _, _ -> //Entity entity = (Entity) fixture.getBody().getUserData();
             //if (entity != null) {
-                if (_playerAnim?.currentAnimation?.isRunning() == false) {
-                    _playerAnim!!.currentAnimation = PlayerSqueezeAnimation()
+                if (mPlayerAnim?.currentAnimation?.isRunning() == false) {
+                    mPlayerAnim!!.currentAnimation = PlayerSqueezeAnimation()
                 }
             //}
             0f

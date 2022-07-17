@@ -4,15 +4,16 @@ import com.artemis.ComponentMapper
 import com.artemis.systems.IteratingSystem
 import games.rednblack.editor.renderer.components.physics.PhysicsBodyComponent
 import com.artemis.annotations.All
-import com.g3ida.withflyingcolours.Utils
+import com.g3ida.withflyingcolours.core.extensions.*
+import kotlin.math.abs
 
 @All(PhysicsBodyComponent::class, PlayerJumpComponent::class)
 class PlayerJumpSystem : IteratingSystem() {
-    lateinit var mPhysicsBodyComponent: ComponentMapper<PhysicsBodyComponent>
-    lateinit var mPlayerJumpComponent: ComponentMapper<PlayerJumpComponent>
+    private lateinit var mPhysicsBodyCM: ComponentMapper<PhysicsBodyComponent>
+    private lateinit var mPlayerJumpCM: ComponentMapper<PlayerJumpComponent>
     override fun process(entityId: Int) {
-        val physicsBody = mPhysicsBodyComponent[entityId]
-        val playerJump = mPlayerJumpComponent[entityId]
+        val physicsBody = mPhysicsBodyCM[entityId]
+        val playerJump = mPlayerJumpCM[entityId]
         if (isGrounded(physicsBody)) {
             playerJump.timeSinceGrounded = 0f
         }
@@ -46,7 +47,7 @@ class PlayerJumpSystem : IteratingSystem() {
         }
 
         //jump has been released before full jump reached
-        if (!playerJump.shouldJump && playerJump.jumpTimer > Utils.EPSILON) {
+        if (!playerJump.shouldJump && playerJump.jumpTimer > Float.EPSILON) {
             //cancel jump
             val velocity = physicsBody.body.linearVelocity
             if (velocity.y > 0) { // decrease velocity only if the player is going up !
@@ -76,7 +77,7 @@ class PlayerJumpSystem : IteratingSystem() {
 
     fun isGrounded(physicsBody: PhysicsBodyComponent): Boolean {
         // FIXME: this condition is also met on jump peak.
-        return Math.abs(physicsBody.body.linearVelocity.y) < Utils.EPSILON
+        return abs(physicsBody.body.linearVelocity.y) < Float.EPSILON
     }
 
     fun can_jump(playerJump: PlayerJumpComponent, physicsBody: PhysicsBodyComponent): Boolean {

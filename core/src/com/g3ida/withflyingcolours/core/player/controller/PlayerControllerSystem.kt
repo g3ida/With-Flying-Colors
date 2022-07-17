@@ -8,10 +8,10 @@ import com.badlogic.gdx.Input
 
 @All(PlayerControllerComponent::class)
 class PlayerControllerSystem : IteratingSystem() {
-    lateinit var mPlayerControllerComponent: ComponentMapper<PlayerControllerComponent>
+    private lateinit var mPlayerControllerCM: ComponentMapper<PlayerControllerComponent>
     override fun process(entityId: Int) {
         //player movement left/right
-        val playerMovement = mPlayerControllerComponent[entityId]
+        val playerMovement = mPlayerControllerCM[entityId]
         playerMovement.moveInput = when {
             Gdx.input.isKeyPressed(Input.Keys.LEFT) -> -1
             Gdx.input.isKeyPressed(Input.Keys.RIGHT) -> 1

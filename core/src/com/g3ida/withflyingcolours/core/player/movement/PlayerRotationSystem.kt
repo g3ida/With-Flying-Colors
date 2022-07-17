@@ -7,11 +7,11 @@ import com.artemis.annotations.All
 
 @All(PhysicsBodyComponent::class, PlayerRotationComponent::class)
 class PlayerRotationSystem : IteratingSystem() {
-    private lateinit var mPhysicsBodyComponent: ComponentMapper<PhysicsBodyComponent>
-    private lateinit var mPlayerRotationComponent: ComponentMapper<PlayerRotationComponent>
+    private lateinit var mPhysicsBodyCM: ComponentMapper<PhysicsBodyComponent>
+    private lateinit var mPlayerRotationCM: ComponentMapper<PlayerRotationComponent>
     override fun process(entityId: Int) {
-        val physicsBody = mPhysicsBodyComponent[entityId]
-        val playerRotation = mPlayerRotationComponent[entityId]
+        val physicsBody = mPhysicsBodyCM[entityId]
+        val playerRotation = mPlayerRotationCM[entityId]
 
         //setup rotation
         if (playerRotation.shouldRotate && playerRotation.canRotate) {

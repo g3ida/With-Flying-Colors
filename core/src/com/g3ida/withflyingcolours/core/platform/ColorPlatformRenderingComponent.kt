@@ -7,6 +7,7 @@ import com.badlogic.gdx.graphics.glutils.ShaderProgram
 import com.badlogic.gdx.math.Vector2
 import com.g3ida.withflyingcolours.Constants
 import com.g3ida.withflyingcolours.Utils
+import com.g3ida.withflyingcolours.core.extensions.addComponentToEntity
 import games.rednblack.editor.renderer.components.ShaderComponent
 import games.rednblack.editor.renderer.data.MainItemVO
 
@@ -16,12 +17,12 @@ class ColorPlatformRenderingComponent : PooledComponent() {
     var contactPosition = Vector2()
     private lateinit var _shader: ShaderProgram
 
-    fun Init(entityId: Int, engine: World?) {
+    fun initialize(entityId: Int, engine: World) {
         _shader = Utils.loadShader(SHADER_NAME)
         if (!_shader.isCompiled) {
             Gdx.app.log(Constants.LOG_SHADER_PREFIX, _shader.getLog())
         }
-        val shaderComponent = engine!!.edit(entityId).create(ShaderComponent::class.java)
+        val shaderComponent = engine.addComponentToEntity<ShaderComponent>(entityId)
         shaderComponent.renderingLayer = MainItemVO.RenderingLayer.SCREEN
         shaderComponent.setShader(SHADER_NAME, _shader)
     }

@@ -1,8 +1,10 @@
 package com.g3ida.withflyingcolours.tests
 
-import com.g3ida.withflyingcolours.Utils.modPI2
 import com.artemis.BaseSystem
 import com.g3ida.withflyingcolours.Utils
+import com.g3ida.withflyingcolours.core.extensions.PI
+import com.g3ida.withflyingcolours.core.extensions.PI2
+import com.g3ida.withflyingcolours.core.extensions.modPI2
 import games.rednblack.editor.renderer.components.physics.PhysicsBodyComponent
 import org.junit.runner.RunWith
 import com.g3ida.withflyingcolours.core.player.movement.PlayerRotationSystem
@@ -33,17 +35,17 @@ class RotationSystemTest : BaseSystemTests() {
         // rotate the entity to the right by 90deg and assert.
         playerRotationComponent.setRotationDirection(RotationDirection.Clockwise)
         cycleEngineFor(engine, 1f)
-        Assert.assertEquals(-Utils.PI2, physicsBodyComponent.body.angle, 0.01f)
+        Assert.assertEquals(-Float.PI2, physicsBodyComponent.body.angle, 0.01f)
 
         // rotate the entity to the right by 90deg and assert.
         playerRotationComponent.setRotationDirection(RotationDirection.Clockwise)
         cycleEngineFor(engine, 1f)
-        Assert.assertEquals(-Utils.PI, physicsBodyComponent.body.angle, 0.01f)
+        Assert.assertEquals(-Float.PI, physicsBodyComponent.body.angle, 0.01f)
 
         // rotate the entity to the right by 90deg and assert.
         playerRotationComponent.setRotationDirection(RotationDirection.Clockwise)
         cycleEngineFor(engine, 1f)
-        Assert.assertEquals(-(Utils.PI + Utils.PI2), physicsBodyComponent.body.angle, 0.01f)
+        Assert.assertEquals(-(Float.PI + Float.PI2), physicsBodyComponent.body.angle, 0.01f)
 
         // rotate the entity to the right by 90deg and assert.
         playerRotationComponent.setRotationDirection(RotationDirection.Clockwise)
@@ -53,17 +55,17 @@ class RotationSystemTest : BaseSystemTests() {
         // rotate the entity to the left by 90deg and assert.
         playerRotationComponent.setRotationDirection(RotationDirection.AntiClockwise)
         cycleEngineFor(engine, 1f)
-        Assert.assertEquals(-(Utils.PI + Utils.PI2), physicsBodyComponent.body.angle, 0.01f)
+        Assert.assertEquals(-(Float.PI + Float.PI2), physicsBodyComponent.body.angle, 0.01f)
 
         // rotate the entity to the left by 90deg and assert.
         playerRotationComponent.setRotationDirection(RotationDirection.AntiClockwise)
         cycleEngineFor(engine, 1f)
-        Assert.assertEquals(-Utils.PI, physicsBodyComponent.body.angle, 0.01f)
+        Assert.assertEquals(-Float.PI, physicsBodyComponent.body.angle, 0.01f)
 
         // rotate the entity to the left by 90deg and assert.
         playerRotationComponent.setRotationDirection(RotationDirection.AntiClockwise)
         cycleEngineFor(engine, 1f)
-        Assert.assertEquals(-Utils.PI2, physicsBodyComponent.body.angle, 0.01f)
+        Assert.assertEquals(-Float.PI2, physicsBodyComponent.body.angle, 0.01f)
 
         // rotate the entity to the left by 90deg and assert.
         playerRotationComponent.setRotationDirection(RotationDirection.AntiClockwise)
@@ -73,7 +75,7 @@ class RotationSystemTest : BaseSystemTests() {
         // rotate the entity to the left by 90deg and assert.
         playerRotationComponent.setRotationDirection(RotationDirection.AntiClockwise)
         cycleEngineFor(engine, 1f)
-        Assert.assertEquals(Utils.PI2, physicsBodyComponent.body.angle, 0.01f)
+        Assert.assertEquals(Float.PI2, physicsBodyComponent.body.angle, 0.01f)
 
         //TODO: add test cases with multiple instantaneous rotate request and with variable speed etc...
     }
