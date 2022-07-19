@@ -4,6 +4,8 @@ import com.artemis.ComponentMapper
 import com.artemis.systems.IteratingSystem
 import games.rednblack.editor.renderer.components.physics.PhysicsBodyComponent
 import com.artemis.annotations.All
+import com.badlogic.gdx.math.MathUtils.round
+import com.g3ida.withflyingcolours.core.extensions.PI2
 
 @All(PhysicsBodyComponent::class, PlayerRotationComponent::class)
 class PlayerRotationSystem : IteratingSystem() {
@@ -18,8 +20,7 @@ class PlayerRotationSystem : IteratingSystem() {
             playerRotation.canRotate = false
             playerRotation.shouldRotate = false
             playerRotation.thetaZero = physicsBody.body.angle
-            val PI_2 = (Math.PI / 2.0).toFloat()
-            playerRotation.thetaTarget = Math.round((playerRotation.thetaZero + playerRotation.rotationDirectionSign * PI_2) / PI_2) * PI_2
+            playerRotation.thetaTarget = round((playerRotation.thetaZero + playerRotation.rotationDirectionSign * Float.PI2) / Float.PI2) * Float.PI2
             playerRotation.thetaPoint = (playerRotation.thetaTarget - playerRotation.thetaZero) / playerRotation.rotationDuration
             playerRotation.rotationTimer = playerRotation.rotationDuration
         }
@@ -29,8 +30,8 @@ class PlayerRotationSystem : IteratingSystem() {
             playerRotation.rotationTimer -= world.getDelta()
             if (playerRotation.rotationTimer < 0f) {
                 // correction for the last frame
-                val current_angle = physicsBody.body.angle
-                playerRotation.thetaPoint = (playerRotation.thetaTarget - current_angle) / world.getDelta()
+                val currentAngle = physicsBody.body.angle
+                playerRotation.thetaPoint = (playerRotation.thetaTarget - currentAngle) / world.getDelta()
                 playerRotation.rotationTimer = 0f
             }
             physicsBody.body.angularVelocity = playerRotation.thetaPoint

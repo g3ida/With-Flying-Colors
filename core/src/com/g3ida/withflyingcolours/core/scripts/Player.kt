@@ -4,6 +4,7 @@ import com.artemis.ComponentMapper
 import games.rednblack.editor.renderer.components.TransformComponent
 import games.rednblack.editor.renderer.components.physics.PhysicsBodyComponent
 import com.artemis.World
+import com.badlogic.gdx.physics.box2d.World as Box2dWorld
 import com.badlogic.gdx.Gdx
 import com.badlogic.gdx.math.Vector2
 import com.g3ida.withflyingcolours.utils.RotationDirection
@@ -11,6 +12,8 @@ import com.g3ida.withflyingcolours.core.player.animation.PlayerAnimationComponen
 import com.g3ida.withflyingcolours.core.player.controller.PlayerControllerComponent
 import games.rednblack.editor.renderer.utils.ComponentRetriever
 import com.g3ida.withflyingcolours.core.camera.CameraSystem
+import com.g3ida.withflyingcolours.core.events.EventType
+import com.g3ida.withflyingcolours.core.extensions.EPSILON
 import com.g3ida.withflyingcolours.core.input.KeyboardHandler
 import com.g3ida.withflyingcolours.core.input.KeyboardKey
 import com.g3ida.withflyingcolours.core.input.commands.PlayerJumpCommand
@@ -18,8 +21,10 @@ import com.g3ida.withflyingcolours.core.input.commands.mapCancellableCommand
 import com.g3ida.withflyingcolours.core.player.animation.PlayerSqueezeAnimation
 import com.g3ida.withflyingcolours.core.player.movement.*
 import games.rednblack.editor.renderer.components.DimensionsComponent
+import ktx.collections.GdxArray
+import kotlin.math.abs
 
-class Player(engine: World, world: com.badlogic.gdx.physics.box2d.World) : GameScript(engine, world) {
+class Player(engine: World, world: Box2dWorld) : GameScript(engine, world) {
     private var mEntityId = 0
     private var mPlayerController: PlayerControllerComponent? = null
     private var mPlayerRotation: PlayerRotationComponent? = null
@@ -29,6 +34,9 @@ class Player(engine: World, world: com.badlogic.gdx.physics.box2d.World) : GameS
     var mPlayerRotationComponent: ComponentMapper<PlayerRotationComponent>? = null
     var mPlayerWalkComponent: ComponentMapper<PlayerWalkComponent>? = null
     var mPlayerAnimationComponent: ComponentMapper<PlayerAnimationComponent>? = null
+    lateinit var mPhysicsBodyComponent: PhysicsBodyComponent
+    private val mEventActionListenerList = GdxArray<EventActionListener>()
+
     fun initComponents() {
         //FIXME : find a better place for this
         ComponentRetriever.addMapper(PlayerControllerComponent::class.java)
@@ -44,9 +52,14 @@ class Player(engine: World, world: com.badlogic.gdx.physics.box2d.World) : GameS
         val cameraSystem = engine.getSystem(CameraSystem::class.java)
         cameraSystem.setFocus(mEntityId)
 
-        val physicsBody = ComponentRetriever.get(mEntityId, PhysicsBodyComponent::class.java, engine)
+        mPhysicsBodyComponent = ComponentRetriever.get(mEntityId, PhysicsBodyComponent::class.java, engine)
         val inputProcessor = Gdx.input.inputProcessor
-        (inputProcessor as KeyboardHandler).mapCancellableCommand(KeyboardKey.UP, PlayerJumpCommand(physicsBody))
+        (inputProcessor as KeyboardHandler).mapCancellableCommand(KeyboardKey.UP, PlayerJumpCommand(this::isGrounded))
+
+        mEventActionListenerList.run {
+            add(PlayerJumpAction(mPhysicsBodyComponent).toActionListener(EventType.JumpCommand))
+            add(PlayerCancelJumpAction(mPhysicsBodyComponent).toActionListener(EventType.CancelJump))
+        }
     }
 
     override fun init(item: Int) {
@@ -55,7 +68,10 @@ class Player(engine: World, world: com.badlogic.gdx.physics.box2d.World) : GameS
         initComponents()
     }
 
-    override fun dispose() {}
+    override fun dispose() {
+        mEventActionListenerList.forEach { it.dispose() }
+    }
+
     override fun act(delta: Float) {
 
         //TODO: handle left and write controls
@@ -89,4 +105,6 @@ class Player(engine: World, world: com.badlogic.gdx.physics.box2d.World) : GameS
             0f
         }, rayFrom, rayTo)
     }
+
+    private fun isGrounded(): Boolean = abs(mPhysicsBodyComponent.body.linearVelocity.y) < Float.EPSILON
 }

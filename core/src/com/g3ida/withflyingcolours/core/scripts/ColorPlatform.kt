@@ -2,6 +2,7 @@ package com.g3ida.withflyingcolours.core.scripts
 
 import games.rednblack.editor.renderer.components.physics.PhysicsBodyComponent
 import com.artemis.World
+import com.badlogic.gdx.physics.box2d.World as Box2dWorld
 import com.badlogic.gdx.physics.box2d.Contact
 import com.badlogic.gdx.physics.box2d.Fixture
 import com.g3ida.withflyingcolours.Constants
@@ -12,7 +13,7 @@ import games.rednblack.editor.renderer.physics.PhysicsContact
 import com.g3ida.withflyingcolours.core.platform.ColorPlatformRenderingComponent
 import kotlin.math.abs
 
-class ColorPlatform(engine: World, world: com.badlogic.gdx.physics.box2d.World) : GameScript(engine, world), PhysicsContact {
+class ColorPlatform(engine: World, world: Box2dWorld) : GameScript(engine, world), PhysicsContact {
     private var mEntityId = 0
     private lateinit var mPlatformRenderingComponent: ColorPlatformRenderingComponent
     fun initComponents() {
