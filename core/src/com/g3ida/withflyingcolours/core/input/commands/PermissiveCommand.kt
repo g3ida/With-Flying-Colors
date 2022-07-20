@@ -1,9 +1,9 @@
 package com.g3ida.withflyingcolours.core.input.commands
 
-import com.g3ida.withflyingcolours.core.input.IWithUpdate
 import com.g3ida.withflyingcolours.utils.CountdownTimer
 
-abstract class PermissiveCommand(premissiveness: Float = 0.07f): ConditionalCommand(), IWithUpdate {
+abstract class PermissiveCommand(premissiveness: Float = 0.07f): ConditionalCommand(),
+    IIterativeCommand {
     //how much time we permit action since its conditions were met.
     private var mResponsivenessTimer = CountdownTimer(premissiveness, isSet = false)
     //how much do we delay action hoping its conditions to be met.
@@ -11,7 +11,7 @@ abstract class PermissiveCommand(premissiveness: Float = 0.07f): ConditionalComm
 
     override fun canExecute(): Boolean = true
 
-    override fun run() {
+    final override fun run() {
         if (canExecute() || mPermissivenessTimer.isRunning()) {
             mPermissivenessTimer.stop()
             mResponsivenessTimer.stop()

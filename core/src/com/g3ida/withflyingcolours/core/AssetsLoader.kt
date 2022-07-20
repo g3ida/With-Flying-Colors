@@ -6,20 +6,20 @@ import games.rednblack.editor.renderer.resources.ResourceManager
 import games.rednblack.editor.renderer.resources.ResourceManagerLoader
 
 class AssetsLoader(val filePath: String) {
-    private lateinit var _assetManager: AssetManager
+    private lateinit var mAssetManager: AssetManager
     fun load(): ResourceManager {
-        _assetManager = AssetManager()
-        _assetManager.setLoader(AsyncResourceManager::class.java, ResourceManagerLoader(_assetManager.fileHandleResolver))
-        _assetManager.load(filePath, AsyncResourceManager::class.java)
-        _assetManager.finishLoading()
-        return _assetManager.get(filePath, AsyncResourceManager::class.java)
+        mAssetManager = AssetManager()
+        mAssetManager.setLoader(AsyncResourceManager::class.java, ResourceManagerLoader(mAssetManager.fileHandleResolver))
+        mAssetManager.load(filePath, AsyncResourceManager::class.java)
+        mAssetManager.finishLoading()
+        return mAssetManager.get(filePath, AsyncResourceManager::class.java)
     }
 
     fun unload() {
-        _assetManager.unload(filePath)
+        mAssetManager.unload(filePath)
     }
 
     fun dispose() {
-        _assetManager.dispose()
+        mAssetManager.dispose()
     }
 }

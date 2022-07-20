@@ -1,6 +1,7 @@
 package com.g3ida.withflyingcolours.core.player.movement
 
 import com.badlogic.gdx.physics.box2d.Body
+import com.g3ida.withflyingcolours.core.player.movement.actions.IGameAction
 import games.rednblack.editor.renderer.components.physics.PhysicsBodyComponent
 
 class PlayerCancelJumpAction(val physicsBodyComponent: PhysicsBodyComponent): IGameAction {
@@ -12,4 +13,6 @@ class PlayerCancelJumpAction(val physicsBodyComponent: PhysicsBodyComponent): IG
             body.setLinearVelocity(velocity.x, velocity.y * 0.5f)
         }
     }
+
+    override fun step(delta: Float) {}
 }

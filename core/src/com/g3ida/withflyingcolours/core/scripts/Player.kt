@@ -12,54 +12,63 @@ import com.g3ida.withflyingcolours.core.player.animation.PlayerAnimationComponen
 import com.g3ida.withflyingcolours.core.player.controller.PlayerControllerComponent
 import games.rednblack.editor.renderer.utils.ComponentRetriever
 import com.g3ida.withflyingcolours.core.camera.CameraSystem
+import com.g3ida.withflyingcolours.core.ecs.components.EventListenerComponent
 import com.g3ida.withflyingcolours.core.events.EventType
 import com.g3ida.withflyingcolours.core.extensions.EPSILON
+import com.g3ida.withflyingcolours.core.input.KeyboardAction
 import com.g3ida.withflyingcolours.core.input.KeyboardHandler
 import com.g3ida.withflyingcolours.core.input.KeyboardKey
 import com.g3ida.withflyingcolours.core.input.commands.PlayerJumpCommand
+import com.g3ida.withflyingcolours.core.input.commands.PlayerRotationCommand
 import com.g3ida.withflyingcolours.core.input.commands.mapCancellableCommand
 import com.g3ida.withflyingcolours.core.player.animation.PlayerSqueezeAnimation
 import com.g3ida.withflyingcolours.core.player.movement.*
+import com.g3ida.withflyingcolours.core.player.movement.actions.toActionListener
 import games.rednblack.editor.renderer.components.DimensionsComponent
-import ktx.collections.GdxArray
 import kotlin.math.abs
 
 class Player(engine: World, world: Box2dWorld) : GameScript(engine, world) {
     private var mEntityId = 0
     private var mPlayerController: PlayerControllerComponent? = null
-    private var mPlayerRotation: PlayerRotationComponent? = null
     private var mPlayerWalk: PlayerWalkComponent? = null
     private var mPlayerAnim: PlayerAnimationComponent? = null
-    var mPlayerControllerComponent: ComponentMapper<PlayerControllerComponent>? = null
-    var mPlayerRotationComponent: ComponentMapper<PlayerRotationComponent>? = null
-    var mPlayerWalkComponent: ComponentMapper<PlayerWalkComponent>? = null
-    var mPlayerAnimationComponent: ComponentMapper<PlayerAnimationComponent>? = null
     lateinit var mPhysicsBodyComponent: PhysicsBodyComponent
-    private val mEventActionListenerList = GdxArray<EventActionListener>()
+
+    lateinit var mPlayerControllerCM: ComponentMapper<PlayerControllerComponent>
+    lateinit var mPlayerWalkCM: ComponentMapper<PlayerWalkComponent>
+    lateinit var mPlayerAnimationCM: ComponentMapper<PlayerAnimationComponent>
+    lateinit var mEventListenerCM: ComponentMapper<EventListenerComponent>
 
     fun initComponents() {
         //FIXME : find a better place for this
         ComponentRetriever.addMapper(PlayerControllerComponent::class.java)
-        ComponentRetriever.addMapper(PlayerRotationComponent::class.java)
         ComponentRetriever.addMapper(PlayerWalkComponent::class.java)
         ComponentRetriever.addMapper(PlayerAnimationComponent::class.java)
-        mPlayerController = mPlayerControllerComponent!!.create(mEntityId)
-        mPlayerRotation = mPlayerRotationComponent!!.create(mEntityId)
-        mPlayerWalk = mPlayerWalkComponent!!.create(mEntityId)
-        mPlayerAnim = mPlayerAnimationComponent!!.create(mEntityId)
+        ComponentRetriever.addMapper(EventListenerComponent::class.java)
+        mPlayerController = mPlayerControllerCM.create(mEntityId)
+        mPlayerWalk = mPlayerWalkCM.create(mEntityId)
+        mPlayerAnim = mPlayerAnimationCM.create(mEntityId)
 
         // attach player to camera
         val cameraSystem = engine.getSystem(CameraSystem::class.java)
         cameraSystem.setFocus(mEntityId)
 
         mPhysicsBodyComponent = ComponentRetriever.get(mEntityId, PhysicsBodyComponent::class.java, engine)
-        val inputProcessor = Gdx.input.inputProcessor
-        (inputProcessor as KeyboardHandler).mapCancellableCommand(KeyboardKey.UP, PlayerJumpCommand(this::isGrounded))
+        val inputProcessor = Gdx.input.inputProcessor as KeyboardHandler
 
-        mEventActionListenerList.run {
-            add(PlayerJumpAction(mPhysicsBodyComponent).toActionListener(EventType.JumpCommand))
-            add(PlayerCancelJumpAction(mPhysicsBodyComponent).toActionListener(EventType.CancelJump))
-        }
+        inputProcessor.mapCancellableCommand(KeyboardKey.UP, PlayerJumpCommand(this::isGrounded))
+        inputProcessor.mapCommand(KeyboardKey.C, KeyboardAction.KeyDown, PlayerRotationCommand(RotationDirection.Clockwise))
+        inputProcessor.mapCommand(KeyboardKey.Z, KeyboardAction.KeyDown, PlayerRotationCommand(RotationDirection.AntiClockwise))
+
+        val eventListenerComponent = mEventListenerCM.create(mEntityId)
+        eventListenerComponent.addActionListener(PlayerJumpAction(mPhysicsBodyComponent)
+            .toActionListener(EventType.JumpCommand))
+        eventListenerComponent.addActionListener(PlayerCancelJumpAction(mPhysicsBodyComponent)
+            .toActionListener(EventType.CancelJump))
+        eventListenerComponent.addActionListener(PlayerRotationAction(RotationDirection.AntiClockwise, mPhysicsBodyComponent)
+            .toActionListener(EventType.RotateLeftCommand))
+        eventListenerComponent.addActionListener(PlayerRotationAction(RotationDirection.Clockwise, mPhysicsBodyComponent)
+            .toActionListener(EventType.RotateRightCommand))
     }
 
     override fun init(item: Int) {
@@ -68,20 +77,10 @@ class Player(engine: World, world: Box2dWorld) : GameScript(engine, world) {
         initComponents()
     }
 
-    override fun dispose() {
-        mEventActionListenerList.forEach { it.dispose() }
-    }
+    override fun dispose() {}
 
     override fun act(delta: Float) {
-
-        //TODO: handle left and write controls
         mPlayerWalk!!.direction = mPlayerController!!.moveInput
-        if (mPlayerController!!.shouldRotateRight) {
-            mPlayerRotation!!.setRotationDirection(RotationDirection.Clockwise)
-        }
-        if (mPlayerController!!.shouldRotateLeft) {
-            mPlayerRotation!!.setRotationDirection(RotationDirection.AntiClockwise)
-        }
         rayCast(delta)
     }
 

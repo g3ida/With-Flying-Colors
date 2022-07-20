@@ -2,6 +2,7 @@ package com.g3ida.withflyingcolours.core.input
 
 import com.badlogic.gdx.Input
 import com.g3ida.withflyingcolours.core.input.commands.ICommand
+import com.g3ida.withflyingcolours.core.input.commands.IIterativeCommand
 import ktx.app.KtxInputAdapter
 import ktx.collections.gdxArrayOf
 
@@ -12,7 +13,7 @@ class KeyboardHandler: KtxInputAdapter {
 
     fun mapCommand(key : KeyboardKey,action: KeyboardAction, command: ICommand) {
         when(action) {
-            KeyboardAction.Down -> keyDownCommands[key.keycode] = command
+            KeyboardAction.KeyDown -> keyDownCommands[key.keycode] = command
             KeyboardAction.Up -> keyUpCommands[key.keycode] = command
         }
     }
@@ -34,11 +35,11 @@ class KeyboardHandler: KtxInputAdapter {
 
     fun update(delta: Float) {
         keyUpCommands
-            .filter { it is IWithUpdate }
-            .forEach { (it as IWithUpdate).update(delta) }
+            .filter { it is IIterativeCommand }
+            .forEach { (it as IIterativeCommand).update(delta) }
 
         keyDownCommands
-            .filter { it is IWithUpdate }
-            .forEach { (it as IWithUpdate).update(delta) }
+            .filter { it is IIterativeCommand }
+            .forEach { (it as IIterativeCommand).update(delta) }
     }
 }

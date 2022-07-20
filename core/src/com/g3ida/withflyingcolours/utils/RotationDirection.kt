@@ -1,5 +1,5 @@
 package com.g3ida.withflyingcolours.utils
 
-enum class RotationDirection {
-    Clockwise, AntiClockwise
+enum class RotationDirection(val sign: Int) {
+    Clockwise(-1), AntiClockwise(1)
 }

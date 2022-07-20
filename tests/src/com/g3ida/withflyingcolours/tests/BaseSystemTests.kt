@@ -27,7 +27,7 @@ open class BaseSystemTests {
         engine.process()
     }
 
-    fun createPhysicsWorldWithDynamicEntity(additionalSystems: Array<BaseSystem>): EngineWithEntity {
+    fun createPhysicsWorldWithDynamicEntity(vararg additionalSystems: BaseSystem): EngineWithEntity {
         val world = com.badlogic.gdx.physics.box2d.World(Vector2(0f, -10f), true)
         val physicsSystem = PhysicsSystem()
         physicsSystem.setBox2DWorld(world)

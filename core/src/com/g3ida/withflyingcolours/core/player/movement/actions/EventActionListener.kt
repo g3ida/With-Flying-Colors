@@ -1,4 +1,4 @@
-package com.g3ida.withflyingcolours.core.player.movement
+package com.g3ida.withflyingcolours.core.player.movement.actions
 
 import com.badlogic.gdx.utils.Disposable
 import com.g3ida.withflyingcolours.core.GameSettings

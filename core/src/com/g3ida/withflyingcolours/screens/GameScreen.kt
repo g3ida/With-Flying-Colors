@@ -9,12 +9,12 @@ import com.g3ida.withflyingcolours.core.AssetsLoader
 import games.rednblack.editor.renderer.SceneConfiguration
 import com.g3ida.withflyingcolours.core.camera.CameraSystem
 import com.g3ida.withflyingcolours.core.player.controller.PlayerControllerSystem
-import com.g3ida.withflyingcolours.core.player.movement.PlayerRotationSystem
 import com.g3ida.withflyingcolours.core.player.movement.PlayerWalkSystem
 import com.g3ida.withflyingcolours.core.player.animation.PlayerAnimationSystem
 import com.g3ida.withflyingcolours.core.platform.ColorPlatformRenderingSystem
 import com.g3ida.withflyingcolours.core.GameSettings
 import com.g3ida.withflyingcolours.core.SceneMapper
+import com.g3ida.withflyingcolours.core.ecs.systems.EventListenerSystem
 import com.g3ida.withflyingcolours.core.extensions.toSceneLoader
 import com.g3ida.withflyingcolours.core.extensions.withResourceRetriever
 import com.g3ida.withflyingcolours.core.extensions.withSystems
@@ -60,7 +60,7 @@ class GameScreen : KtxScreen {
             .withSystems(
                 CameraSystem(0f, 20f, 0f, 7f),
                 PlayerControllerSystem(),
-                PlayerRotationSystem(),
+                EventListenerSystem(),
                 PlayerWalkSystem(),
                 PlayerAnimationSystem(),
                 ColorPlatformRenderingSystem())
