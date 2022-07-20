@@ -1,4 +1,4 @@
-package com.g3ida.withflyingcolours.core.player.movement.actions
+package com.g3ida.withflyingcolours.core.actions
 
 interface IGameAction {
     fun execute()

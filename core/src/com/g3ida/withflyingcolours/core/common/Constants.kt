@@ -1,4 +1,4 @@
-package com.g3ida.withflyingcolours
+package com.g3ida.withflyingcolours.core.common
 
 object Constants {
     const val LOG_SHADER_PREFIX = "GLSL"

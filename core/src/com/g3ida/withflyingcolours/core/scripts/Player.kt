@@ -7,23 +7,22 @@ import com.artemis.World
 import com.badlogic.gdx.physics.box2d.World as Box2dWorld
 import com.badlogic.gdx.Gdx
 import com.badlogic.gdx.math.Vector2
+import com.g3ida.withflyingcolours.core.actions.PlayerCancelJumpAction
+import com.g3ida.withflyingcolours.core.actions.PlayerJumpAction
+import com.g3ida.withflyingcolours.core.actions.PlayerRotationAction
 import com.g3ida.withflyingcolours.utils.RotationDirection
-import com.g3ida.withflyingcolours.core.player.animation.PlayerAnimationComponent
-import com.g3ida.withflyingcolours.core.player.controller.PlayerControllerComponent
 import games.rednblack.editor.renderer.utils.ComponentRetriever
-import com.g3ida.withflyingcolours.core.camera.CameraSystem
-import com.g3ida.withflyingcolours.core.ecs.components.EventListenerComponent
+import com.g3ida.withflyingcolours.core.ecs.systems.CameraSystem
 import com.g3ida.withflyingcolours.core.events.EventType
 import com.g3ida.withflyingcolours.core.extensions.EPSILON
-import com.g3ida.withflyingcolours.core.input.KeyboardAction
-import com.g3ida.withflyingcolours.core.input.KeyboardHandler
-import com.g3ida.withflyingcolours.core.input.KeyboardKey
+import com.g3ida.withflyingcolours.core.input.keyboard.KeyboardAction
+import com.g3ida.withflyingcolours.core.input.keyboard.KeyboardHandler
+import com.g3ida.withflyingcolours.core.input.keyboard.KeyboardKey
 import com.g3ida.withflyingcolours.core.input.commands.PlayerJumpCommand
 import com.g3ida.withflyingcolours.core.input.commands.PlayerRotationCommand
 import com.g3ida.withflyingcolours.core.input.commands.mapCancellableCommand
-import com.g3ida.withflyingcolours.core.player.animation.PlayerSqueezeAnimation
-import com.g3ida.withflyingcolours.core.player.movement.*
-import com.g3ida.withflyingcolours.core.player.movement.actions.toActionListener
+import com.g3ida.withflyingcolours.core.actions.toActionListener
+import com.g3ida.withflyingcolours.core.ecs.components.*
 import games.rednblack.editor.renderer.components.DimensionsComponent
 import kotlin.math.abs
 
@@ -61,13 +60,17 @@ class Player(engine: World, world: Box2dWorld) : GameScript(engine, world) {
         inputProcessor.mapCommand(KeyboardKey.Z, KeyboardAction.KeyDown, PlayerRotationCommand(RotationDirection.AntiClockwise))
 
         val eventListenerComponent = mEventListenerCM.create(mEntityId)
-        eventListenerComponent.addActionListener(PlayerJumpAction(mPhysicsBodyComponent)
+        eventListenerComponent.addActionListener(
+            PlayerJumpAction(mPhysicsBodyComponent)
             .toActionListener(EventType.JumpCommand))
-        eventListenerComponent.addActionListener(PlayerCancelJumpAction(mPhysicsBodyComponent)
+        eventListenerComponent.addActionListener(
+            PlayerCancelJumpAction(mPhysicsBodyComponent)
             .toActionListener(EventType.CancelJump))
-        eventListenerComponent.addActionListener(PlayerRotationAction(RotationDirection.AntiClockwise, mPhysicsBodyComponent)
+        eventListenerComponent.addActionListener(
+            PlayerRotationAction(RotationDirection.AntiClockwise, mPhysicsBodyComponent)
             .toActionListener(EventType.RotateLeftCommand))
-        eventListenerComponent.addActionListener(PlayerRotationAction(RotationDirection.Clockwise, mPhysicsBodyComponent)
+        eventListenerComponent.addActionListener(
+            PlayerRotationAction(RotationDirection.Clockwise, mPhysicsBodyComponent)
             .toActionListener(EventType.RotateRightCommand))
     }
 

@@ -1,12 +1,12 @@
-package com.g3ida.withflyingcolours.core.platform
+package com.g3ida.withflyingcolours.core.ecs.components
 
 import com.artemis.PooledComponent
 import com.artemis.World
 import com.badlogic.gdx.Gdx
 import com.badlogic.gdx.graphics.glutils.ShaderProgram
 import com.badlogic.gdx.math.Vector2
-import com.g3ida.withflyingcolours.Constants
-import com.g3ida.withflyingcolours.Utils
+import com.g3ida.withflyingcolours.core.common.Constants
+import com.g3ida.withflyingcolours.utils.Utils
 import com.g3ida.withflyingcolours.core.extensions.addComponentToEntity
 import games.rednblack.editor.renderer.components.ShaderComponent
 import games.rednblack.editor.renderer.data.MainItemVO

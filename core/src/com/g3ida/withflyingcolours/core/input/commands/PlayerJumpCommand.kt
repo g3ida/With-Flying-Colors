@@ -1,6 +1,6 @@
 package com.g3ida.withflyingcolours.core.input.commands
 
-import com.g3ida.withflyingcolours.core.GameSettings
+import com.g3ida.withflyingcolours.core.common.GameSettings
 import com.g3ida.withflyingcolours.core.events.GameEvent
 import com.g3ida.withflyingcolours.core.events.EventType
 import com.g3ida.withflyingcolours.utils.CountdownTimer

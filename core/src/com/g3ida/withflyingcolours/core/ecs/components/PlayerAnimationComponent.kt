@@ -1,7 +1,9 @@
-package com.g3ida.withflyingcolours.core.player.animation
+package com.g3ida.withflyingcolours.core.ecs.components
 
 import com.artemis.PooledComponent
 import com.badlogic.gdx.math.Interpolation
+import com.g3ida.withflyingcolours.core.common.animation.ITransformAnimation
+import com.g3ida.withflyingcolours.core.common.animation.TransformAnimation
 
 const val SQUEEZE_ANIM_DURATION = 0.17f
 const val SCALE_ANIM_DURATION = 0.17f

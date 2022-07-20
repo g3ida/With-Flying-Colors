@@ -1,4 +1,4 @@
-package com.g3ida.withflyingcolours.core
+package com.g3ida.withflyingcolours.core.common
 
 import com.badlogic.gdx.utils.viewport.Viewport
 import com.g3ida.withflyingcolours.core.events.EventProcessor

@@ -1,8 +1,8 @@
 package com.g3ida.withflyingcolours.core.input.commands
 
-import com.g3ida.withflyingcolours.core.input.KeyboardHandler
-import com.g3ida.withflyingcolours.core.input.KeyboardAction
-import com.g3ida.withflyingcolours.core.input.KeyboardKey
+import com.g3ida.withflyingcolours.core.input.keyboard.KeyboardHandler
+import com.g3ida.withflyingcolours.core.input.keyboard.KeyboardAction
+import com.g3ida.withflyingcolours.core.input.keyboard.KeyboardKey
 
 interface ICancellableCommand: ICommand {
     fun cancel()

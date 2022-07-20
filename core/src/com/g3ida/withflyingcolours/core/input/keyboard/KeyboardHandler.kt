@@ -1,4 +1,4 @@
-package com.g3ida.withflyingcolours.core.input
+package com.g3ida.withflyingcolours.core.input.keyboard
 
 import com.badlogic.gdx.Input
 import com.g3ida.withflyingcolours.core.input.commands.ICommand
@@ -11,7 +11,7 @@ class KeyboardHandler: KtxInputAdapter {
     private val keyDownCommands = gdxArrayOf<ICommand>(initialCapacity = Input.Keys.MAX_KEYCODE)
     private val keyUpCommands = gdxArrayOf<ICommand>(initialCapacity = Input.Keys.MAX_KEYCODE)
 
-    fun mapCommand(key : KeyboardKey,action: KeyboardAction, command: ICommand) {
+    fun mapCommand(key : KeyboardKey, action: KeyboardAction, command: ICommand) {
         when(action) {
             KeyboardAction.KeyDown -> keyDownCommands[key.keycode] = command
             KeyboardAction.Up -> keyUpCommands[key.keycode] = command

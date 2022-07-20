@@ -1,10 +1,11 @@
-package com.g3ida.withflyingcolours.core.player.controller
+package com.g3ida.withflyingcolours.core.ecs.systems
 
 import com.artemis.ComponentMapper
 import com.artemis.systems.IteratingSystem
 import com.artemis.annotations.All
 import com.badlogic.gdx.Gdx
 import com.badlogic.gdx.Input
+import com.g3ida.withflyingcolours.core.ecs.components.PlayerControllerComponent
 
 @All(PlayerControllerComponent::class)
 class PlayerControllerSystem : IteratingSystem() {

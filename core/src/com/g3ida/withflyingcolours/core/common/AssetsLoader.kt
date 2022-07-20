@@ -1,4 +1,4 @@
-package com.g3ida.withflyingcolours.core
+package com.g3ida.withflyingcolours.core.common
 
 import com.badlogic.gdx.assets.AssetManager
 import games.rednblack.editor.renderer.resources.AsyncResourceManager

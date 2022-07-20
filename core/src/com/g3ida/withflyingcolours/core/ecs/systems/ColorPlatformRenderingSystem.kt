@@ -1,4 +1,4 @@
-package com.g3ida.withflyingcolours.core.platform
+package com.g3ida.withflyingcolours.core.ecs.systems
 
 import com.artemis.ComponentMapper
 import com.artemis.systems.IteratingSystem
@@ -9,7 +9,8 @@ import games.rednblack.editor.renderer.utils.ComponentRetriever
 import games.rednblack.editor.renderer.components.ShaderComponent
 import games.rednblack.editor.renderer.data.ShaderUniformVO
 import games.rednblack.editor.renderer.systems.render.HyperLap2dRenderer
-import com.g3ida.withflyingcolours.core.GameSettings
+import com.g3ida.withflyingcolours.core.common.GameSettings
+import com.g3ida.withflyingcolours.core.ecs.components.ColorPlatformRenderingComponent
 
 @All(ColorPlatformRenderingComponent::class, ShaderComponent::class, TransformComponent::class)
 class ColorPlatformRenderingSystem : IteratingSystem() {

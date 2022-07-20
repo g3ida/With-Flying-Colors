@@ -1,7 +1,7 @@
 package com.g3ida.withflyingcolours.core.ecs.components
 
 import com.artemis.PooledComponent
-import com.g3ida.withflyingcolours.core.player.movement.actions.EventActionListener
+import com.g3ida.withflyingcolours.core.actions.EventActionListener
 import ktx.collections.GdxArray
 
 class EventListenerComponent: PooledComponent() {

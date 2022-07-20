@@ -1,4 +1,4 @@
-package com.g3ida.withflyingcolours.core.player.movement
+package com.g3ida.withflyingcolours.core.ecs.components
 
 import com.artemis.PooledComponent
 

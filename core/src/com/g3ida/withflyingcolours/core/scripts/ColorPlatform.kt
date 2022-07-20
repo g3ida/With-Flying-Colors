@@ -5,12 +5,12 @@ import com.artemis.World
 import com.badlogic.gdx.physics.box2d.World as Box2dWorld
 import com.badlogic.gdx.physics.box2d.Contact
 import com.badlogic.gdx.physics.box2d.Fixture
-import com.g3ida.withflyingcolours.Constants
+import com.g3ida.withflyingcolours.core.common.Constants
 import com.g3ida.withflyingcolours.core.extensions.EPSILON
 import com.g3ida.withflyingcolours.core.extensions.addComponentToEntity
 import games.rednblack.editor.renderer.utils.ComponentRetriever
 import games.rednblack.editor.renderer.physics.PhysicsContact
-import com.g3ida.withflyingcolours.core.platform.ColorPlatformRenderingComponent
+import com.g3ida.withflyingcolours.core.ecs.components.ColorPlatformRenderingComponent
 import kotlin.math.abs
 
 class ColorPlatform(engine: World, world: Box2dWorld) : GameScript(engine, world), PhysicsContact {

@@ -1,8 +1,9 @@
-package com.g3ida.withflyingcolours.core.player.movement
+package com.g3ida.withflyingcolours.core.ecs.systems
 
 import com.artemis.ComponentMapper
 import com.artemis.annotations.All
 import com.artemis.systems.IteratingSystem
+import com.g3ida.withflyingcolours.core.ecs.components.PlayerWalkComponent
 import com.g3ida.withflyingcolours.core.extensions.*
 import games.rednblack.editor.renderer.components.physics.PhysicsBodyComponent
 

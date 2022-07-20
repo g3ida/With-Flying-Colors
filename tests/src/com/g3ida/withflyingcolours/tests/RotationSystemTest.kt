@@ -1,7 +1,6 @@
 package com.g3ida.withflyingcolours.tests
 
-import com.artemis.BaseSystem
-import com.g3ida.withflyingcolours.core.GameSettings
+import com.g3ida.withflyingcolours.core.common.GameSettings
 import com.g3ida.withflyingcolours.core.ecs.components.EventListenerComponent
 import com.g3ida.withflyingcolours.core.ecs.systems.EventListenerSystem
 import com.g3ida.withflyingcolours.core.events.EventType
@@ -9,8 +8,8 @@ import com.g3ida.withflyingcolours.core.events.GameEvent
 import com.g3ida.withflyingcolours.core.extensions.PI
 import com.g3ida.withflyingcolours.core.extensions.PI2
 import com.g3ida.withflyingcolours.core.extensions.modPI2
-import com.g3ida.withflyingcolours.core.player.movement.PlayerRotationAction
-import com.g3ida.withflyingcolours.core.player.movement.actions.EventActionListener
+import com.g3ida.withflyingcolours.core.actions.PlayerRotationAction
+import com.g3ida.withflyingcolours.core.actions.EventActionListener
 import games.rednblack.editor.renderer.components.physics.PhysicsBodyComponent
 import org.junit.runner.RunWith
 import com.g3ida.withflyingcolours.utils.RotationDirection
@@ -39,12 +38,14 @@ class RotationSystemTest : BaseSystemTests() {
         playerRotationComponent.addActionListener(
             EventActionListener(
                 EventType.RotateRightCommand,
-                PlayerRotationAction(RotationDirection.Clockwise, physicsBodyComponent)))
+                PlayerRotationAction(RotationDirection.Clockwise, physicsBodyComponent)
+            ))
 
         playerRotationComponent.addActionListener(
             EventActionListener(
                 EventType.RotateLeftCommand,
-                PlayerRotationAction(RotationDirection.AntiClockwise, physicsBodyComponent)))
+                PlayerRotationAction(RotationDirection.AntiClockwise, physicsBodyComponent)
+            ))
 
         // rotate the entity to the right by 90deg and assert.
         GameSettings.eventHandler.dispatchEvent(GameEvent(EventType.RotateRightCommand))

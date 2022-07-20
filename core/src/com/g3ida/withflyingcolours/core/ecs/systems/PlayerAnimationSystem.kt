@@ -1,9 +1,10 @@
-package com.g3ida.withflyingcolours.core.player.animation
+package com.g3ida.withflyingcolours.core.ecs.systems
 
 import com.artemis.ComponentMapper
 import com.artemis.systems.IteratingSystem
 import games.rednblack.editor.renderer.components.TransformComponent
 import com.artemis.annotations.All
+import com.g3ida.withflyingcolours.core.ecs.components.PlayerAnimationComponent
 
 @All(PlayerAnimationComponent::class, TransformComponent::class)
 class PlayerAnimationSystem : IteratingSystem() {

@@ -1,4 +1,4 @@
-package com.g3ida.withflyingcolours.core.player.animation
+package com.g3ida.withflyingcolours.core.common.animation
 
 import games.rednblack.editor.renderer.components.TransformComponent
 import com.badlogic.gdx.math.Interpolation

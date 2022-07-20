@@ -5,16 +5,11 @@ import com.badlogic.gdx.graphics.OrthographicCamera
 import com.badlogic.gdx.utils.viewport.ExtendViewport
 import com.badlogic.gdx.utils.viewport.Viewport
 import games.rednblack.editor.renderer.SceneLoader
-import com.g3ida.withflyingcolours.core.AssetsLoader
+import com.g3ida.withflyingcolours.core.common.AssetsLoader
 import games.rednblack.editor.renderer.SceneConfiguration
-import com.g3ida.withflyingcolours.core.camera.CameraSystem
-import com.g3ida.withflyingcolours.core.player.controller.PlayerControllerSystem
-import com.g3ida.withflyingcolours.core.player.movement.PlayerWalkSystem
-import com.g3ida.withflyingcolours.core.player.animation.PlayerAnimationSystem
-import com.g3ida.withflyingcolours.core.platform.ColorPlatformRenderingSystem
-import com.g3ida.withflyingcolours.core.GameSettings
+import com.g3ida.withflyingcolours.core.common.GameSettings
+import com.g3ida.withflyingcolours.core.ecs.systems.*
 import com.g3ida.withflyingcolours.core.SceneMapper
-import com.g3ida.withflyingcolours.core.ecs.systems.EventListenerSystem
 import com.g3ida.withflyingcolours.core.extensions.toSceneLoader
 import com.g3ida.withflyingcolours.core.extensions.withResourceRetriever
 import com.g3ida.withflyingcolours.core.extensions.withSystems
@@ -63,7 +58,8 @@ class GameScreen : KtxScreen {
                 EventListenerSystem(),
                 PlayerWalkSystem(),
                 PlayerAnimationSystem(),
-                ColorPlatformRenderingSystem())
+                ColorPlatformRenderingSystem()
+            )
             .withResourceRetriever(resourceManager)
             .toSceneLoader()
 

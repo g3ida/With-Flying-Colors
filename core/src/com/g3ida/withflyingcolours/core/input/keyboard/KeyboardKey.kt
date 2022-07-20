@@ -1,4 +1,4 @@
-package com.g3ida.withflyingcolours.core.input
+package com.g3ida.withflyingcolours.core.input.keyboard
 
 import com.badlogic.gdx.Input
 

@@ -1,7 +1,7 @@
 package com.g3ida.withflyingcolours
 
 import com.badlogic.gdx.Gdx
-import com.g3ida.withflyingcolours.core.input.KeyboardHandler
+import com.g3ida.withflyingcolours.core.input.keyboard.KeyboardHandler
 import com.g3ida.withflyingcolours.screens.GameScreen
 import ktx.app.KtxGame
 import ktx.app.KtxScreen

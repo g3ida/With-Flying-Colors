@@ -1,4 +1,4 @@
-package com.g3ida.withflyingcolours.core.camera
+package com.g3ida.withflyingcolours.core.ecs.systems
 
 import com.artemis.ComponentMapper
 import games.rednblack.editor.renderer.components.ViewPortComponent

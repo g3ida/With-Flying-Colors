@@ -1,7 +1,7 @@
-package com.g3ida.withflyingcolours.core.player.movement.actions
+package com.g3ida.withflyingcolours.core.actions
 
 import com.badlogic.gdx.utils.Disposable
-import com.g3ida.withflyingcolours.core.GameSettings
+import com.g3ida.withflyingcolours.core.common.GameSettings
 import com.g3ida.withflyingcolours.core.events.EventType
 import com.g3ida.withflyingcolours.core.events.GameEvent
 import com.g3ida.withflyingcolours.core.events.IEventListener
