@@ -1,6 +1,7 @@
-package com.g3ida.withflyingcolours.core.extensions
+package com.g3ida.withflyingcolours.utils.extensions
 
 import com.badlogic.gdx.math.Vector2
+import kotlin.math.abs
 import kotlin.math.cos
 import kotlin.math.sin
 
@@ -21,6 +22,12 @@ val Float.Companion.PI2: Float
 
 val Double.Companion.PI2: Double
     get() = 1.57079632679
+
+val Float.isAlmostZero: Boolean
+    get() = abs(this) < Float.EPSILON
+
+val Double.isAlmostZero: Boolean
+    get() = abs(this) < Double.EPSILON
 
 @JvmName("modPI21")
 fun Float.modPI2(): Float {

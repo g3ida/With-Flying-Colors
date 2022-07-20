@@ -8,7 +8,7 @@ import com.artemis.annotations.All
 import games.rednblack.editor.renderer.systems.strategy.RendererSystem
 import kotlin.math.max
 import kotlin.math.min
-import com.g3ida.withflyingcolours.core.extensions.*
+import com.g3ida.withflyingcolours.utils.extensions.*
 
 @All(ViewPortComponent::class)
 class CameraSystem(private val mXMin: Float, private val mXMax: Float, private val mYMin: Float, private val mYMax: Float) :

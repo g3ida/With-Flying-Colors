@@ -6,11 +6,11 @@ import com.badlogic.gdx.physics.box2d.World as Box2dWorld
 import com.badlogic.gdx.physics.box2d.Contact
 import com.badlogic.gdx.physics.box2d.Fixture
 import com.g3ida.withflyingcolours.core.common.Constants
-import com.g3ida.withflyingcolours.core.extensions.EPSILON
-import com.g3ida.withflyingcolours.core.extensions.addComponentToEntity
+import com.g3ida.withflyingcolours.utils.extensions.addComponentToEntity
 import games.rednblack.editor.renderer.utils.ComponentRetriever
 import games.rednblack.editor.renderer.physics.PhysicsContact
 import com.g3ida.withflyingcolours.core.ecs.components.ColorPlatformRenderingComponent
+import com.g3ida.withflyingcolours.utils.extensions.isAlmostZero
 import kotlin.math.abs
 
 class ColorPlatform(engine: World, world: Box2dWorld) : GameScript(engine, world), PhysicsContact {
@@ -42,10 +42,10 @@ class ColorPlatform(engine: World, world: Box2dWorld) : GameScript(engine, world
 
         // solve the bug of the player sticking to the walls instead of falling
         val physicsBody = ComponentRetriever.get(contactEntity, PhysicsBodyComponent::class.java, engine)
-        if (physicsBody != null && abs(physicsBody.body.linearVelocity.y) > Float.EPSILON) {
-            contact.friction = Constants.Game.PLAYER_WALL_FRICTION
+        contact.friction = if (!physicsBody.body.linearVelocity.y.isAlmostZero) {
+            Constants.Game.PLAYER_WALL_FRICTION
         } else {
-            contact.friction = Constants.Game.PLAYER_GROUND_FRICTION
+            Constants.Game.PLAYER_GROUND_FRICTION
         }
     }
 

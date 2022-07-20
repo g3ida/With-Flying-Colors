@@ -10,9 +10,9 @@ import games.rednblack.editor.renderer.SceneConfiguration
 import com.g3ida.withflyingcolours.core.common.GameSettings
 import com.g3ida.withflyingcolours.core.ecs.systems.*
 import com.g3ida.withflyingcolours.core.SceneMapper
-import com.g3ida.withflyingcolours.core.extensions.toSceneLoader
-import com.g3ida.withflyingcolours.core.extensions.withResourceRetriever
-import com.g3ida.withflyingcolours.core.extensions.withSystems
+import com.g3ida.withflyingcolours.utils.extensions.toSceneLoader
+import com.g3ida.withflyingcolours.utils.extensions.withResourceRetriever
+import com.g3ida.withflyingcolours.utils.extensions.withSystems
 import ktx.app.KtxScreen
 
 class GameScreen : KtxScreen {
@@ -54,9 +54,7 @@ class GameScreen : KtxScreen {
         mSceneLoader = SceneConfiguration()
             .withSystems(
                 CameraSystem(0f, 20f, 0f, 7f),
-                PlayerControllerSystem(),
                 EventListenerSystem(),
-                PlayerWalkSystem(),
                 PlayerAnimationSystem(),
                 ColorPlatformRenderingSystem()
             )

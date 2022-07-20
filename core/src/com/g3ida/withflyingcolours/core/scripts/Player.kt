@@ -7,45 +7,36 @@ import com.artemis.World
 import com.badlogic.gdx.physics.box2d.World as Box2dWorld
 import com.badlogic.gdx.Gdx
 import com.badlogic.gdx.math.Vector2
-import com.g3ida.withflyingcolours.core.actions.PlayerCancelJumpAction
-import com.g3ida.withflyingcolours.core.actions.PlayerJumpAction
-import com.g3ida.withflyingcolours.core.actions.PlayerRotationAction
+import com.g3ida.withflyingcolours.core.actions.*
 import com.g3ida.withflyingcolours.utils.RotationDirection
 import games.rednblack.editor.renderer.utils.ComponentRetriever
 import com.g3ida.withflyingcolours.core.ecs.systems.CameraSystem
 import com.g3ida.withflyingcolours.core.events.EventType
-import com.g3ida.withflyingcolours.core.extensions.EPSILON
 import com.g3ida.withflyingcolours.core.input.keyboard.KeyboardAction
 import com.g3ida.withflyingcolours.core.input.keyboard.KeyboardHandler
 import com.g3ida.withflyingcolours.core.input.keyboard.KeyboardKey
 import com.g3ida.withflyingcolours.core.input.commands.PlayerJumpCommand
 import com.g3ida.withflyingcolours.core.input.commands.PlayerRotationCommand
 import com.g3ida.withflyingcolours.core.input.commands.mapCancellableCommand
-import com.g3ida.withflyingcolours.core.actions.toActionListener
 import com.g3ida.withflyingcolours.core.ecs.components.*
+import com.g3ida.withflyingcolours.utils.extensions.addDragForce
+import com.g3ida.withflyingcolours.utils.extensions.isAlmostZero
+import com.g3ida.withflyingcolours.core.input.commands.PlayerMoveCommand
+import com.g3ida.withflyingcolours.utils.MoveDirection
 import games.rednblack.editor.renderer.components.DimensionsComponent
-import kotlin.math.abs
 
 class Player(engine: World, world: Box2dWorld) : GameScript(engine, world) {
+    val dragForce = 60f
     private var mEntityId = 0
-    private var mPlayerController: PlayerControllerComponent? = null
-    private var mPlayerWalk: PlayerWalkComponent? = null
-    private var mPlayerAnim: PlayerAnimationComponent? = null
-    lateinit var mPhysicsBodyComponent: PhysicsBodyComponent
-
-    lateinit var mPlayerControllerCM: ComponentMapper<PlayerControllerComponent>
-    lateinit var mPlayerWalkCM: ComponentMapper<PlayerWalkComponent>
-    lateinit var mPlayerAnimationCM: ComponentMapper<PlayerAnimationComponent>
-    lateinit var mEventListenerCM: ComponentMapper<EventListenerComponent>
+    private lateinit var mPlayerAnimationCM: ComponentMapper<PlayerAnimationComponent>
+    private lateinit var mEventListenerCM: ComponentMapper<EventListenerComponent>
+    private lateinit var mPlayerAnim: PlayerAnimationComponent
+    private lateinit var mPhysicsBodyComponent: PhysicsBodyComponent
 
     fun initComponents() {
         //FIXME : find a better place for this
-        ComponentRetriever.addMapper(PlayerControllerComponent::class.java)
-        ComponentRetriever.addMapper(PlayerWalkComponent::class.java)
         ComponentRetriever.addMapper(PlayerAnimationComponent::class.java)
         ComponentRetriever.addMapper(EventListenerComponent::class.java)
-        mPlayerController = mPlayerControllerCM.create(mEntityId)
-        mPlayerWalk = mPlayerWalkCM.create(mEntityId)
         mPlayerAnim = mPlayerAnimationCM.create(mEntityId)
 
         // attach player to camera
@@ -56,22 +47,39 @@ class Player(engine: World, world: Box2dWorld) : GameScript(engine, world) {
         val inputProcessor = Gdx.input.inputProcessor as KeyboardHandler
 
         inputProcessor.mapCancellableCommand(KeyboardKey.UP, PlayerJumpCommand(this::isGrounded))
-        inputProcessor.mapCommand(KeyboardKey.C, KeyboardAction.KeyDown, PlayerRotationCommand(RotationDirection.Clockwise))
-        inputProcessor.mapCommand(KeyboardKey.Z, KeyboardAction.KeyDown, PlayerRotationCommand(RotationDirection.AntiClockwise))
+        inputProcessor.mapCommand(KeyboardKey.C, KeyboardAction.KeyPressed, PlayerRotationCommand(RotationDirection.Clockwise))
+        inputProcessor.mapCommand(KeyboardKey.Z, KeyboardAction.KeyPressed, PlayerRotationCommand(RotationDirection.AntiClockwise))
+        inputProcessor.mapCommand(KeyboardKey.LEFT, KeyboardAction.KeyDown, PlayerMoveCommand(MoveDirection.Left))
+        inputProcessor.mapCommand(KeyboardKey.RIGHT, KeyboardAction.KeyDown, PlayerMoveCommand(MoveDirection.Right))
 
         val eventListenerComponent = mEventListenerCM.create(mEntityId)
-        eventListenerComponent.addActionListener(
-            PlayerJumpAction(mPhysicsBodyComponent)
-            .toActionListener(EventType.JumpCommand))
-        eventListenerComponent.addActionListener(
-            PlayerCancelJumpAction(mPhysicsBodyComponent)
-            .toActionListener(EventType.CancelJump))
-        eventListenerComponent.addActionListener(
-            PlayerRotationAction(RotationDirection.AntiClockwise, mPhysicsBodyComponent)
-            .toActionListener(EventType.RotateLeftCommand))
-        eventListenerComponent.addActionListener(
-            PlayerRotationAction(RotationDirection.Clockwise, mPhysicsBodyComponent)
-            .toActionListener(EventType.RotateRightCommand))
+
+        eventListenerComponent.run {
+            addActionListener(
+                PlayerJumpAction(mPhysicsBodyComponent)
+                    .toActionListener(EventType.JumpCommand)
+            )
+            addActionListener(
+                PlayerCancelJumpAction(mPhysicsBodyComponent)
+                    .toActionListener(EventType.CancelJumpCommand)
+            )
+            addActionListener(
+                PlayerRotationAction(RotationDirection.AntiClockwise, mPhysicsBodyComponent)
+                    .toActionListener(EventType.RotateLeftCommand)
+            )
+            addActionListener(
+                PlayerRotationAction(RotationDirection.Clockwise, mPhysicsBodyComponent)
+                    .toActionListener(EventType.RotateRightCommand)
+            )
+            addActionListener(
+                PlayerWalkAction(MoveDirection.Left, mPhysicsBodyComponent)
+                    .toActionListener(EventType.MoveLeftCommand)
+            )
+            addActionListener(
+                PlayerWalkAction(MoveDirection.Right, mPhysicsBodyComponent)
+                    .toActionListener(EventType.MoveRightCommand)
+            )
+        }
     }
 
     override fun init(item: Int) {
@@ -83,7 +91,7 @@ class Player(engine: World, world: Box2dWorld) : GameScript(engine, world) {
     override fun dispose() {}
 
     override fun act(delta: Float) {
-        mPlayerWalk!!.direction = mPlayerController!!.moveInput
+        mPhysicsBodyComponent.body.addDragForce(dragForce) // adds some air resistance
         rayCast(delta)
     }
 
@@ -100,13 +108,13 @@ class Player(engine: World, world: Box2dWorld) : GameScript(engine, world) {
         val world = world
         world.rayCast({ _, _, _, _ -> //Entity entity = (Entity) fixture.getBody().getUserData();
             //if (entity != null) {
-                if (mPlayerAnim?.currentAnimation?.isRunning() == false) {
-                    mPlayerAnim!!.currentAnimation = PlayerSqueezeAnimation()
+                if (!mPlayerAnim.currentAnimation.isRunning()) {
+                    mPlayerAnim.currentAnimation = PlayerSqueezeAnimation()
                 }
             //}
             0f
         }, rayFrom, rayTo)
     }
 
-    private fun isGrounded(): Boolean = abs(mPhysicsBodyComponent.body.linearVelocity.y) < Float.EPSILON
+    private fun isGrounded(): Boolean = mPhysicsBodyComponent.body.linearVelocity.y.isAlmostZero
 }

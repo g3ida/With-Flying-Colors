@@ -22,7 +22,7 @@ class PlayerJumpCommand(val isGrounded: () -> Boolean): PermissiveCommand(), ICa
 
     override fun cancel() {
         if (jumpTimer.isRunning()) {
-            GameSettings.eventHandler.dispatchEvent(GameEvent(EventType.CancelJump))
+            GameSettings.eventHandler.dispatchEvent(GameEvent(EventType.CancelJumpCommand))
             jumpTimer.stop()
         }
     }

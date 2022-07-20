@@ -5,9 +5,9 @@ import com.g3ida.withflyingcolours.core.ecs.components.EventListenerComponent
 import com.g3ida.withflyingcolours.core.ecs.systems.EventListenerSystem
 import com.g3ida.withflyingcolours.core.events.EventType
 import com.g3ida.withflyingcolours.core.events.GameEvent
-import com.g3ida.withflyingcolours.core.extensions.PI
-import com.g3ida.withflyingcolours.core.extensions.PI2
-import com.g3ida.withflyingcolours.core.extensions.modPI2
+import com.g3ida.withflyingcolours.utils.extensions.PI
+import com.g3ida.withflyingcolours.utils.extensions.PI2
+import com.g3ida.withflyingcolours.utils.extensions.modPI2
 import com.g3ida.withflyingcolours.core.actions.PlayerRotationAction
 import com.g3ida.withflyingcolours.core.actions.EventActionListener
 import games.rednblack.editor.renderer.components.physics.PhysicsBodyComponent

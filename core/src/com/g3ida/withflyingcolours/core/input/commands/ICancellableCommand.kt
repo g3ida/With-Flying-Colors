@@ -9,6 +9,6 @@ interface ICancellableCommand: ICommand {
 }
 
 fun KeyboardHandler.mapCancellableCommand(key : KeyboardKey, command: ICancellableCommand) {
-    this.mapCommand(key, KeyboardAction.KeyDown, command)
-    this.mapCommand(key, KeyboardAction.Up) { command.cancel() }
+    this.mapCommand(key, KeyboardAction.KeyPressed, command)
+    this.mapCommand(key, KeyboardAction.KeyReleased) { command.cancel() }
 }

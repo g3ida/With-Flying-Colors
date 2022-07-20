@@ -3,7 +3,7 @@ package com.g3ida.withflyingcolours.core.common.animation
 import games.rednblack.editor.renderer.components.TransformComponent
 import com.badlogic.gdx.math.Interpolation
 import com.badlogic.gdx.math.Vector2
-import com.g3ida.withflyingcolours.core.extensions.*
+import com.g3ida.withflyingcolours.utils.extensions.*
 import kotlin.math.abs
 
 open class TransformAnimation(

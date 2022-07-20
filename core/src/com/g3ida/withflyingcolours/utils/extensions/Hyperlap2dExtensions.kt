@@ -1,4 +1,4 @@
-package com.g3ida.withflyingcolours.core.extensions
+package com.g3ida.withflyingcolours.utils.extensions
 
 import com.artemis.BaseSystem
 import games.rednblack.editor.renderer.SceneConfiguration
