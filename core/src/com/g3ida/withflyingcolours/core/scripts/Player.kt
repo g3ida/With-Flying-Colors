@@ -15,13 +15,10 @@ import com.g3ida.withflyingcolours.core.events.EventType
 import com.g3ida.withflyingcolours.core.input.keyboard.KeyboardAction
 import com.g3ida.withflyingcolours.core.input.keyboard.KeyboardHandler
 import com.g3ida.withflyingcolours.core.input.keyboard.KeyboardKey
-import com.g3ida.withflyingcolours.core.input.commands.PlayerJumpCommand
-import com.g3ida.withflyingcolours.core.input.commands.PlayerRotationCommand
-import com.g3ida.withflyingcolours.core.input.commands.mapCancellableCommand
 import com.g3ida.withflyingcolours.core.ecs.components.*
+import com.g3ida.withflyingcolours.core.input.commands.*
 import com.g3ida.withflyingcolours.utils.extensions.addDragForce
 import com.g3ida.withflyingcolours.utils.extensions.isAlmostZero
-import com.g3ida.withflyingcolours.core.input.commands.PlayerMoveCommand
 import com.g3ida.withflyingcolours.utils.MoveDirection
 import games.rednblack.editor.renderer.components.DimensionsComponent
 
@@ -46,21 +43,23 @@ class Player(engine: World, world: Box2dWorld) : GameScript(engine, world) {
         mPhysicsBodyComponent = ComponentRetriever.get(mEntityId, PhysicsBodyComponent::class.java, engine)
         val inputProcessor = Gdx.input.inputProcessor as KeyboardHandler
 
-        inputProcessor.mapCancellableCommand(KeyboardKey.UP, PlayerJumpCommand(this::isGrounded))
+        inputProcessor.mapCommand(KeyboardKey.UP,KeyboardAction.KeyPressed, PlayerJumpCommand())
+        inputProcessor.mapCommand(KeyboardKey.UP,KeyboardAction.KeyReleased, PlayerCancelJumpCommand())
         inputProcessor.mapCommand(KeyboardKey.C, KeyboardAction.KeyPressed, PlayerRotationCommand(RotationDirection.Clockwise))
         inputProcessor.mapCommand(KeyboardKey.Z, KeyboardAction.KeyPressed, PlayerRotationCommand(RotationDirection.AntiClockwise))
         inputProcessor.mapCommand(KeyboardKey.LEFT, KeyboardAction.KeyDown, PlayerMoveCommand(MoveDirection.Left))
         inputProcessor.mapCommand(KeyboardKey.RIGHT, KeyboardAction.KeyDown, PlayerMoveCommand(MoveDirection.Right))
 
         val eventListenerComponent = mEventListenerCM.create(mEntityId)
+        val playerJumpAction = PlayerJumpAction(mPhysicsBodyComponent)
 
         eventListenerComponent.run {
             addActionListener(
-                PlayerJumpAction(mPhysicsBodyComponent)
+                playerJumpAction
                     .toActionListener(EventType.JumpCommand)
             )
             addActionListener(
-                PlayerCancelJumpAction(mPhysicsBodyComponent)
+                playerJumpAction.CancelJumpAction()
                     .toActionListener(EventType.CancelJumpCommand)
             )
             addActionListener(
@@ -115,6 +114,4 @@ class Player(engine: World, world: Box2dWorld) : GameScript(engine, world) {
             0f
         }, rayFrom, rayTo)
     }
-
-    private fun isGrounded(): Boolean = mPhysicsBodyComponent.body.linearVelocity.y.isAlmostZero
 }

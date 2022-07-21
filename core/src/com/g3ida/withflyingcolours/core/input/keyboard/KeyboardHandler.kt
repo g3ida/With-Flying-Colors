@@ -3,7 +3,6 @@ package com.g3ida.withflyingcolours.core.input.keyboard
 import com.badlogic.gdx.Gdx
 import com.badlogic.gdx.Input
 import com.g3ida.withflyingcolours.core.input.commands.ICommand
-import com.g3ida.withflyingcolours.core.input.commands.IIterativeCommand
 import ktx.app.KtxInputAdapter
 import ktx.collections.gdxArrayOf
 
@@ -37,16 +36,10 @@ class KeyboardHandler: KtxInputAdapter {
         return true
     }
 
-    fun update(delta: Float) {
+    fun update() {
         keyDownCommands
             .withIndex()
             .filter{ Gdx.input.isKeyPressed(it.index) }
             .forEach { it.value?.run() }
-
-        listOf(keyDownCommands, keyReleasedCommands, keyPressedCommands)
-            .forEach { cmd ->
-                cmd.filterIsInstance<IIterativeCommand>()
-                    .forEach { it.update(delta) }
-            }
     }
 }
