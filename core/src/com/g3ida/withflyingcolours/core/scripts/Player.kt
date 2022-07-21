@@ -8,7 +8,6 @@ import com.badlogic.gdx.physics.box2d.World as Box2dWorld
 import com.badlogic.gdx.Gdx
 import com.badlogic.gdx.math.Vector2
 import com.g3ida.withflyingcolours.core.actions.*
-import com.g3ida.withflyingcolours.utils.RotationDirection
 import games.rednblack.editor.renderer.utils.ComponentRetriever
 import com.g3ida.withflyingcolours.core.ecs.systems.CameraSystem
 import com.g3ida.withflyingcolours.core.events.EventType
@@ -18,9 +17,8 @@ import com.g3ida.withflyingcolours.core.input.keyboard.KeyboardKey
 import com.g3ida.withflyingcolours.core.ecs.components.*
 import com.g3ida.withflyingcolours.core.input.commands.*
 import com.g3ida.withflyingcolours.utils.extensions.addDragForce
-import com.g3ida.withflyingcolours.utils.extensions.isAlmostZero
-import com.g3ida.withflyingcolours.utils.MoveDirection
 import games.rednblack.editor.renderer.components.DimensionsComponent
+import ktx.collections.gdxMapOf
 
 class Player(engine: World, world: Box2dWorld) : GameScript(engine, world) {
     val dragForce = 60f
@@ -43,41 +41,20 @@ class Player(engine: World, world: Box2dWorld) : GameScript(engine, world) {
         mPhysicsBodyComponent = ComponentRetriever.get(mEntityId, PhysicsBodyComponent::class.java, engine)
         val inputProcessor = Gdx.input.inputProcessor as KeyboardHandler
 
-        inputProcessor.mapCommand(KeyboardKey.UP,KeyboardAction.KeyPressed, PlayerJumpCommand())
-        inputProcessor.mapCommand(KeyboardKey.UP,KeyboardAction.KeyReleased, PlayerCancelJumpCommand())
-        inputProcessor.mapCommand(KeyboardKey.C, KeyboardAction.KeyPressed, PlayerRotationCommand(RotationDirection.Clockwise))
-        inputProcessor.mapCommand(KeyboardKey.Z, KeyboardAction.KeyPressed, PlayerRotationCommand(RotationDirection.AntiClockwise))
-        inputProcessor.mapCommand(KeyboardKey.LEFT, KeyboardAction.KeyDown, PlayerMoveCommand(MoveDirection.Left))
-        inputProcessor.mapCommand(KeyboardKey.RIGHT, KeyboardAction.KeyDown, PlayerMoveCommand(MoveDirection.Right))
+        inputProcessor.mapCommand(KeyboardKey.UP,KeyboardAction.KeyPressed, EventType.JumpCommand.toGameEventCommand())
+        inputProcessor.mapCommand(KeyboardKey.UP,KeyboardAction.KeyReleased, EventType.CancelJumpCommand.toGameEventCommand())
+        inputProcessor.mapCommand(KeyboardKey.C, KeyboardAction.KeyPressed, EventType.RotateCommand.toGameEventCommand(gdxMapOf("direction" to "1")))
+        inputProcessor.mapCommand(KeyboardKey.Z, KeyboardAction.KeyPressed, EventType.RotateCommand.toGameEventCommand(gdxMapOf("direction" to "-1")))
+        inputProcessor.mapCommand(KeyboardKey.LEFT, KeyboardAction.KeyDown, EventType.MoveCommand.toGameEventCommand(gdxMapOf("direction" to "-1")))
+        inputProcessor.mapCommand(KeyboardKey.RIGHT, KeyboardAction.KeyDown, EventType.MoveCommand.toGameEventCommand(gdxMapOf("direction" to "1")))
 
         val eventListenerComponent = mEventListenerCM.create(mEntityId)
         val playerJumpAction = PlayerJumpAction(mPhysicsBodyComponent)
-
         eventListenerComponent.run {
-            addActionListener(
-                playerJumpAction
-                    .toActionListener(EventType.JumpCommand)
-            )
-            addActionListener(
-                playerJumpAction.CancelJumpAction()
-                    .toActionListener(EventType.CancelJumpCommand)
-            )
-            addActionListener(
-                PlayerRotationAction(RotationDirection.AntiClockwise, mPhysicsBodyComponent)
-                    .toActionListener(EventType.RotateLeftCommand)
-            )
-            addActionListener(
-                PlayerRotationAction(RotationDirection.Clockwise, mPhysicsBodyComponent)
-                    .toActionListener(EventType.RotateRightCommand)
-            )
-            addActionListener(
-                PlayerWalkAction(MoveDirection.Left, mPhysicsBodyComponent)
-                    .toActionListener(EventType.MoveLeftCommand)
-            )
-            addActionListener(
-                PlayerWalkAction(MoveDirection.Right, mPhysicsBodyComponent)
-                    .toActionListener(EventType.MoveRightCommand)
-            )
+            addActionListener(playerJumpAction.toActionListener(EventType.JumpCommand))
+            addActionListener(playerJumpAction.toActionListener(EventType.CancelJumpCommand))
+            addActionListener(PlayerRotationAction(mPhysicsBodyComponent).toActionListener(EventType.RotateCommand))
+            addActionListener(PlayerWalkAction(mPhysicsBodyComponent).toActionListener(EventType.MoveCommand))
         }
     }
 

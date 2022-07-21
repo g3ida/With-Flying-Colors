@@ -1,3 +1,6 @@
 package com.g3ida.withflyingcolours.core.events
 
-class GameEvent(val type: EventType)
+import com.badlogic.gdx.utils.ObjectMap
+import ktx.collections.gdxMapOf
+
+class GameEvent(val type: EventType, val extraData: ObjectMap<String, String> = gdxMapOf())

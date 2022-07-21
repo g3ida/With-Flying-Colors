@@ -1,6 +1,8 @@
 package com.g3ida.withflyingcolours.core.actions
 
 import com.badlogic.gdx.physics.box2d.Body
+import com.g3ida.withflyingcolours.core.events.EventType
+import com.g3ida.withflyingcolours.core.events.GameEvent
 import com.g3ida.withflyingcolours.utils.CountdownTimer
 import com.g3ida.withflyingcolours.utils.extensions.isAlmostZero
 import games.rednblack.editor.renderer.components.physics.PhysicsBodyComponent
@@ -17,7 +19,15 @@ class PlayerJumpAction(val physicsBodyComponent: PhysicsBodyComponent): IGameAct
     private var mPermissivenessTimer = CountdownTimer(permissiveness, isSet = false)
     private var jumpTimer: CountdownTimer = CountdownTimer(timeUntilFullJumpIsConsidered, isSet = false)
 
-    override fun execute() {
+    override fun execute(event: GameEvent) {
+        when(event.type) {
+            EventType.JumpCommand -> runJumpAction()
+            EventType.CancelJumpCommand -> runCancelJumpAction()
+            else -> {}
+        }
+    }
+
+    private fun runJumpAction()  {
         if (canExecute() || mPermissivenessTimer.isRunning()) {
             mPermissivenessTimer.stop()
             mResponsivenessTimer.stop()
@@ -30,6 +40,16 @@ class PlayerJumpAction(val physicsBodyComponent: PhysicsBodyComponent): IGameAct
         }
     }
 
+    fun runCancelJumpAction() {
+        if (jumpTimer.isRunning()) {
+            jumpTimer.stop()
+            val velocity = body.linearVelocity
+            if (velocity.y > 0f) { // decrease velocity only if the player is going up !
+                body.setLinearVelocity(velocity.x, velocity.y * 0.5f)
+            }
+        }
+    }
+
     private fun isGrounded(): Boolean = physicsBodyComponent.body.linearVelocity.y.isAlmostZero
     private fun canExecute(): Boolean = isGrounded()
 
@@ -39,25 +59,12 @@ class PlayerJumpAction(val physicsBodyComponent: PhysicsBodyComponent): IGameAct
             if (mResponsivenessTimer.isRunning()) {
                 mResponsivenessTimer.stop()
                 mPermissivenessTimer.stop()
-                execute()
+                execute(GameEvent(EventType.JumpCommand))
             }
         } else {
             mResponsivenessTimer.step(delta)
             mPermissivenessTimer.step(delta)
         }
         jumpTimer.step(delta)
-    }
-
-    inner class CancelJumpAction: IGameAction {
-        override fun execute() {
-            if (jumpTimer.isRunning()) {
-                jumpTimer.stop()
-                val velocity = body.linearVelocity
-                if (velocity.y > 0f) { // decrease velocity only if the player is going up !
-                    body.setLinearVelocity(velocity.x, velocity.y * 0.5f)
-                }
-            }
-        }
-        override fun step(delta: Float) {}
     }
 }

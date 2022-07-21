@@ -1,12 +1,13 @@
 package com.g3ida.withflyingcolours.core.actions
 
 import com.badlogic.gdx.math.MathUtils
+import com.g3ida.withflyingcolours.core.events.GameEvent
 import com.g3ida.withflyingcolours.utils.extensions.PI2
 import com.g3ida.withflyingcolours.utils.CountdownTimer
 import com.g3ida.withflyingcolours.utils.RotationDirection
 import games.rednblack.editor.renderer.components.physics.PhysicsBodyComponent
 
-class PlayerRotationAction(val rotationDirection: RotationDirection, val physicsBodyComponent: PhysicsBodyComponent): IGameAction {
+class PlayerRotationAction(val physicsBodyComponent: PhysicsBodyComponent): IGameAction {
 
     var rotationDuration = 0.12f // duration of the rotation animation.
     var thetaZero = 0f // initial angle, before the rotation is performed.
@@ -34,10 +35,11 @@ class PlayerRotationAction(val rotationDirection: RotationDirection, val physics
         }
     }
 
-    override fun execute() {
+    override fun execute(event: GameEvent) {
+        val direction: Int = event.extraData.get("direction", "1").toIntOrNull() ?: 1
         canRotate = false
         thetaZero = physicsBodyComponent.body.angle
-        thetaTarget = MathUtils.round((thetaZero + rotationDirection.sign * Float.PI2) / Float.PI2) * Float.PI2
+        thetaTarget = MathUtils.round((thetaZero + direction * Float.PI2) / Float.PI2) * Float.PI2
         thetaPoint = (thetaTarget - thetaZero) / rotationDuration
         rotationTimer.reset()
     }
