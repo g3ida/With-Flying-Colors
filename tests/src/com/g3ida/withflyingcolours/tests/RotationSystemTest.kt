@@ -10,9 +10,11 @@ import com.g3ida.withflyingcolours.utils.extensions.PI2
 import com.g3ida.withflyingcolours.utils.extensions.modPI2
 import com.g3ida.withflyingcolours.core.actions.PlayerRotationAction
 import com.g3ida.withflyingcolours.core.actions.EventActionListener
+import com.g3ida.withflyingcolours.core.actions.toActionListener
 import games.rednblack.editor.renderer.components.physics.PhysicsBodyComponent
 import org.junit.runner.RunWith
 import com.g3ida.withflyingcolours.utils.RotationDirection
+import ktx.collections.gdxMapOf
 import org.junit.Assert
 import org.junit.Test
 import java.lang.AssertionError
@@ -35,60 +37,50 @@ class RotationSystemTest : BaseSystemTests() {
         physicsBodyComponent.body.isFixedRotation = true
         Assert.assertEquals(0f, physicsBodyComponent.body.angle, 0.01f)
 
-        playerRotationComponent.addActionListener(
-            EventActionListener(
-                EventType.RotateRightCommand,
-                PlayerRotationAction(RotationDirection.Clockwise, physicsBodyComponent)
-            ))
-
-        playerRotationComponent.addActionListener(
-            EventActionListener(
-                EventType.RotateLeftCommand,
-                PlayerRotationAction(RotationDirection.AntiClockwise, physicsBodyComponent)
-            ))
+        playerRotationComponent.addActionListener(PlayerRotationAction(physicsBodyComponent).toActionListener(EventType.RotateCommand))
 
         // rotate the entity to the right by 90deg and assert.
-        GameSettings.eventHandler.dispatchEvent(GameEvent(EventType.RotateRightCommand))
+        GameSettings.eventHandler.dispatchEvent(GameEvent(EventType.RotateCommand, gdxMapOf("direction" to "-1")))
         cycleEngineFor(engine, 1f)
         Assert.assertEquals(-Float.PI2, physicsBodyComponent.body.angle, 0.01f)
 
         // rotate the entity to the right by 90deg and assert.
-        GameSettings.eventHandler.dispatchEvent(GameEvent(EventType.RotateRightCommand))
+        GameSettings.eventHandler.dispatchEvent(GameEvent(EventType.RotateCommand, gdxMapOf("direction" to "-1")))
         cycleEngineFor(engine, 1f)
         Assert.assertEquals(-Float.PI, physicsBodyComponent.body.angle, 0.01f)
 
         // rotate the entity to the right by 90deg and assert.
-        GameSettings.eventHandler.dispatchEvent(GameEvent(EventType.RotateRightCommand))
+        GameSettings.eventHandler.dispatchEvent(GameEvent(EventType.RotateCommand, gdxMapOf("direction" to "-1")))
         cycleEngineFor(engine, 1f)
         Assert.assertEquals(-(Float.PI + Float.PI2), physicsBodyComponent.body.angle, 0.01f)
 
         // rotate the entity to the right by 90deg and assert.
-        GameSettings.eventHandler.dispatchEvent(GameEvent(EventType.RotateRightCommand))
+        GameSettings.eventHandler.dispatchEvent(GameEvent(EventType.RotateCommand, gdxMapOf("direction" to "-1")))
         cycleEngineFor(engine, 1f)
         Assert.assertEquals(0f, physicsBodyComponent.body.angle.modPI2(), 0.01f)
 
         // rotate the entity to the left by 90deg and assert.
-        GameSettings.eventHandler.dispatchEvent(GameEvent(EventType.RotateLeftCommand))
+        GameSettings.eventHandler.dispatchEvent(GameEvent(EventType.RotateCommand, gdxMapOf("direction" to "1")))
         cycleEngineFor(engine, 1f)
         Assert.assertEquals(-(Float.PI + Float.PI2), physicsBodyComponent.body.angle, 0.01f)
 
         // rotate the entity to the left by 90deg and assert.
-        GameSettings.eventHandler.dispatchEvent(GameEvent(EventType.RotateLeftCommand))
+        GameSettings.eventHandler.dispatchEvent(GameEvent(EventType.RotateCommand, gdxMapOf("direction" to "1")))
         cycleEngineFor(engine, 1f)
         Assert.assertEquals(-Float.PI, physicsBodyComponent.body.angle, 0.01f)
 
         // rotate the entity to the left by 90deg and assert.
-        GameSettings.eventHandler.dispatchEvent(GameEvent(EventType.RotateLeftCommand))
+        GameSettings.eventHandler.dispatchEvent(GameEvent(EventType.RotateCommand, gdxMapOf("direction" to "1")))
         cycleEngineFor(engine, 1f)
         Assert.assertEquals(-Float.PI2, physicsBodyComponent.body.angle, 0.01f)
 
         // rotate the entity to the left by 90deg and assert.
-        GameSettings.eventHandler.dispatchEvent(GameEvent(EventType.RotateLeftCommand))
+        GameSettings.eventHandler.dispatchEvent(GameEvent(EventType.RotateCommand, gdxMapOf("direction" to "1")))
         cycleEngineFor(engine, 1f)
         Assert.assertEquals(0f, physicsBodyComponent.body.angle, 0.01f)
 
         // rotate the entity to the left by 90deg and assert.
-        GameSettings.eventHandler.dispatchEvent(GameEvent(EventType.RotateLeftCommand))
+        GameSettings.eventHandler.dispatchEvent(GameEvent(EventType.RotateCommand, gdxMapOf("direction" to "1")))
         cycleEngineFor(engine, 1f)
         Assert.assertEquals(Float.PI2, physicsBodyComponent.body.angle, 0.01f)
 

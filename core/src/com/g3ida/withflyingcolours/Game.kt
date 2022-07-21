@@ -16,7 +16,7 @@ class Game : KtxGame<KtxScreen>() {
     }
 
     override fun render() {
-        inputManager.update(Gdx.graphics.getDeltaTime())
+        inputManager.update()
         super.render()
     }
 

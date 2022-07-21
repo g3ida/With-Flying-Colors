@@ -13,7 +13,7 @@ class EventActionListener(val eventType: EventType, val action: IGameAction): IE
     }
 
     override fun onEvent(event: GameEvent) {
-        action.execute()
+        action.execute(event)
     }
 
     override fun dispose() {

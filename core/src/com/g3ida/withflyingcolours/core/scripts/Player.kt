@@ -43,8 +43,8 @@ class Player(engine: World, world: Box2dWorld) : GameScript(engine, world) {
 
         inputProcessor.mapCommand(KeyboardKey.UP,KeyboardAction.KeyPressed, EventType.JumpCommand.toGameEventCommand())
         inputProcessor.mapCommand(KeyboardKey.UP,KeyboardAction.KeyReleased, EventType.CancelJumpCommand.toGameEventCommand())
-        inputProcessor.mapCommand(KeyboardKey.C, KeyboardAction.KeyPressed, EventType.RotateCommand.toGameEventCommand(gdxMapOf("direction" to "1")))
-        inputProcessor.mapCommand(KeyboardKey.Z, KeyboardAction.KeyPressed, EventType.RotateCommand.toGameEventCommand(gdxMapOf("direction" to "-1")))
+        inputProcessor.mapCommand(KeyboardKey.C, KeyboardAction.KeyPressed, EventType.RotateCommand.toGameEventCommand(gdxMapOf("direction" to "-1")))
+        inputProcessor.mapCommand(KeyboardKey.Z, KeyboardAction.KeyPressed, EventType.RotateCommand.toGameEventCommand(gdxMapOf("direction" to "1")))
         inputProcessor.mapCommand(KeyboardKey.LEFT, KeyboardAction.KeyDown, EventType.MoveCommand.toGameEventCommand(gdxMapOf("direction" to "-1")))
         inputProcessor.mapCommand(KeyboardKey.RIGHT, KeyboardAction.KeyDown, EventType.MoveCommand.toGameEventCommand(gdxMapOf("direction" to "1")))
 
