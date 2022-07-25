@@ -29,19 +29,19 @@ class BodyEditorLoaderTest : BaseSystemTests() {
     }
 
     private fun attachFixtureToBodyAndAssert(world: World,
-                                     bodyEditorLoader: BodyEditorLoader,
-                                     bodyName: String,
-                                     expectedCirlceFixturesCount: Int,
-                                     expectedPolygonFixturesCount: Int) {
+                                             bodyEditorLoader: BodyEditorLoader,
+                                             bodyName: String,
+                                             expectedCircleFixturesCount: Int,
+                                             expectedPolygonFixturesCount: Int) {
         val body = world.createBody(BodyDef())
         bodyEditorLoader.attachFixture(body, bodyName, FixtureDef(), 1f)
-        val expectedTotalFixturesCount = expectedCirlceFixturesCount + expectedPolygonFixturesCount
+        val expectedTotalFixturesCount = expectedCircleFixturesCount + expectedPolygonFixturesCount
 
         assertEquals(expectedTotalFixturesCount,
             body.fixtureList.size,
             "total fixtures")
 
-        assertEquals(expectedCirlceFixturesCount,
+        assertEquals(expectedCircleFixturesCount,
             body.fixtureList.count { it.type == Shape.Type.Circle },
             "circle fixtures")
 
