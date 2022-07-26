@@ -2,13 +2,14 @@ package com.g3ida.withflyingcolours.core
 
 import com.artemis.Entity
 import com.artemis.World
+import com.badlogic.gdx.physics.box2d.World as Box2dWorld
 import com.g3ida.withflyingcolours.core.scripts.GameScript
+import com.g3ida.withflyingcolours.utils.EntityBodyLoader
+import games.rednblack.editor.renderer.SceneLoader
+import games.rednblack.editor.renderer.components.MainItemComponent
+import games.rednblack.editor.renderer.components.NodeComponent
 import games.rednblack.editor.renderer.utils.ComponentRetriever
 import games.rednblack.editor.renderer.utils.ItemWrapper
-import games.rednblack.editor.renderer.components.NodeComponent
-import games.rednblack.editor.renderer.components.MainItemComponent
-import games.rednblack.editor.renderer.SceneLoader
-import java.lang.reflect.InvocationTargetException
 
 class SceneMapper(sceneLoader: SceneLoader) {
     private val mPackageName: String = this.javaClass.getPackage().name
@@ -43,18 +44,18 @@ class SceneMapper(sceneLoader: SceneLoader) {
             if (scriptName != null) {
                 val scriptClass = "$mPackageName.scripts.$scriptName"
                 val entityClass = Class.forName(scriptClass)
-                val script = entityClass.getDeclaredConstructor(World::class.java, com.badlogic.gdx.physics.box2d.World::class.java).newInstance(mEngine, mWorld) as GameScript
+                val script = entityClass
+                    .getDeclaredConstructor(World::class.java, Box2dWorld::class.java)
+                    .newInstance(mEngine, mWorld) as GameScript
                 mRootWrapper.getChild(mainItemComponent.itemIdentifier).addScript(script)
             }
-        } catch (e: ClassNotFoundException) {
-            e.printStackTrace()
-        } catch (e: InstantiationException) {
-            e.printStackTrace()
-        } catch (e: InvocationTargetException) {
-            e.printStackTrace()
-        } catch (e: NoSuchMethodException) {
-            e.printStackTrace()
-        } catch (e: IllegalAccessException) {
+
+            val customBody = mainItemComponent.customVariables.get("body")
+            if (customBody != null) {
+                val bodyLoader = EntityBodyLoader(entity.id, mEngine, mWorld)
+                bodyLoader.load(customBody)
+            }
+        } catch (e: Exception) {
             e.printStackTrace()
         }
     }
