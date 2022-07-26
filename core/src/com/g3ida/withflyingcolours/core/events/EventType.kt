@@ -5,4 +5,6 @@ enum class EventType {
     CancelJumpCommand,
     RotateCommand,
     MoveCommand,
+    PlayerLanded,
+    GameOver
 }

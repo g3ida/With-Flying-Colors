@@ -9,11 +9,9 @@ import com.g3ida.withflyingcolours.utils.extensions.PI
 import com.g3ida.withflyingcolours.utils.extensions.PI2
 import com.g3ida.withflyingcolours.utils.extensions.modPI2
 import com.g3ida.withflyingcolours.core.actions.PlayerRotationAction
-import com.g3ida.withflyingcolours.core.actions.EventActionListener
 import com.g3ida.withflyingcolours.core.actions.toActionListener
 import games.rednblack.editor.renderer.components.physics.PhysicsBodyComponent
 import org.junit.runner.RunWith
-import com.g3ida.withflyingcolours.utils.RotationDirection
 import ktx.collections.gdxMapOf
 import org.junit.Assert
 import org.junit.Test

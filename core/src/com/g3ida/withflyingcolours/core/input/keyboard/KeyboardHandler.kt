@@ -2,9 +2,12 @@ package com.g3ida.withflyingcolours.core.input.keyboard
 
 import com.badlogic.gdx.Gdx
 import com.badlogic.gdx.Input
+import com.g3ida.withflyingcolours.core.events.EventType
 import com.g3ida.withflyingcolours.core.input.commands.ICommand
+import com.g3ida.withflyingcolours.core.input.commands.toGameEventCommand
 import ktx.app.KtxInputAdapter
 import ktx.collections.gdxArrayOf
+import ktx.collections.gdxMapOf
 
 class KeyboardHandler: KtxInputAdapter {
 
@@ -41,5 +44,22 @@ class KeyboardHandler: KtxInputAdapter {
             .withIndex()
             .filter{ Gdx.input.isKeyPressed(it.index) }
             .forEach { it.value?.run() }
+    }
+
+    fun applyDefaultMapping() {
+        mapCommand(KeyboardKey.UP,KeyboardAction.KeyPressed, EventType.JumpCommand.toGameEventCommand())
+        mapCommand(KeyboardKey.UP,KeyboardAction.KeyReleased, EventType.CancelJumpCommand.toGameEventCommand())
+        mapCommand(KeyboardKey.C, KeyboardAction.KeyPressed, EventType.RotateCommand.toGameEventCommand(
+            gdxMapOf("direction" to "-1")
+        ))
+        mapCommand(KeyboardKey.Z, KeyboardAction.KeyPressed, EventType.RotateCommand.toGameEventCommand(
+            gdxMapOf("direction" to "1")
+        ))
+        mapCommand(KeyboardKey.LEFT, KeyboardAction.KeyDown, EventType.MoveCommand.toGameEventCommand(
+            gdxMapOf("direction" to "-1")
+        ))
+        mapCommand(KeyboardKey.RIGHT, KeyboardAction.KeyDown, EventType.MoveCommand.toGameEventCommand(
+            gdxMapOf("direction" to "1")
+        ))
     }
 }

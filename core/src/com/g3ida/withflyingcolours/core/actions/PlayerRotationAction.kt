@@ -4,7 +4,6 @@ import com.badlogic.gdx.math.MathUtils
 import com.g3ida.withflyingcolours.core.events.GameEvent
 import com.g3ida.withflyingcolours.utils.extensions.PI2
 import com.g3ida.withflyingcolours.utils.CountdownTimer
-import com.g3ida.withflyingcolours.utils.RotationDirection
 import games.rednblack.editor.renderer.components.physics.PhysicsBodyComponent
 
 class PlayerRotationAction(val physicsBodyComponent: PhysicsBodyComponent): IGameAction {

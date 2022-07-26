@@ -2,7 +2,6 @@ package com.g3ida.withflyingcolours.utils
 
 import com.artemis.World
 import com.badlogic.gdx.files.FileHandle
-import com.badlogic.gdx.physics.box2d.FixtureDef
 import games.rednblack.editor.renderer.components.TransformComponent
 import com.badlogic.gdx.physics.box2d.World as Box2dWorld
 import games.rednblack.editor.renderer.components.physics.PhysicsBodyComponent
@@ -20,7 +19,7 @@ class EntityBodyLoader(val entityId: Int, val engine: World, val box2dWorld: Box
 
         val physicsBodyComponent = ComponentRetriever.get(entityId, PhysicsBodyComponent::class.java, engine)
         refreshBody(entityId, physicsBodyComponent)
-        bodyEditorLoader.attachFixture(physicsBodyComponent.body, defaultBodyName, FixtureDef(), 1f)
+        bodyEditorLoader.attachFixture(physicsBodyComponent.body, defaultBodyName, 1f)
         // FIXME: For now we can't mix and match multiple shape types as Hyperlap2d components does not support it
         PhysicsBodyLoader.getInstance().refreshShape(entityId, engine)
     }

@@ -34,7 +34,7 @@ class BodyEditorLoaderTest : BaseSystemTests() {
                                              expectedCircleFixturesCount: Int,
                                              expectedPolygonFixturesCount: Int) {
         val body = world.createBody(BodyDef())
-        bodyEditorLoader.attachFixture(body, bodyName, FixtureDef(), 1f)
+        bodyEditorLoader.attachFixture(body, bodyName, 1f)
         val expectedTotalFixturesCount = expectedCircleFixturesCount + expectedPolygonFixturesCount
 
         assertEquals(expectedTotalFixturesCount,

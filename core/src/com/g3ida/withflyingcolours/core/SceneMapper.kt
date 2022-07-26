@@ -2,9 +2,12 @@ package com.g3ida.withflyingcolours.core
 
 import com.artemis.Entity
 import com.artemis.World
+import com.g3ida.withflyingcolours.core.ecs.components.ColorComponent
 import com.badlogic.gdx.physics.box2d.World as Box2dWorld
 import com.g3ida.withflyingcolours.core.scripts.GameScript
 import com.g3ida.withflyingcolours.utils.EntityBodyLoader
+import com.g3ida.withflyingcolours.utils.extensions.addComponentToEntity
+import com.g3ida.withflyingcolours.utils.toColor
 import games.rednblack.editor.renderer.SceneLoader
 import games.rednblack.editor.renderer.components.MainItemComponent
 import games.rednblack.editor.renderer.components.NodeComponent
@@ -40,6 +43,7 @@ class SceneMapper(sceneLoader: SceneLoader) {
             return
         }
         try {
+            // script
             val scriptName = mainItemComponent.customVariables.get("script")
             if (scriptName != null) {
                 val scriptClass = "$mPackageName.scripts.$scriptName"
@@ -49,11 +53,17 @@ class SceneMapper(sceneLoader: SceneLoader) {
                     .newInstance(mEngine, mWorld) as GameScript
                 mRootWrapper.getChild(mainItemComponent.itemIdentifier).addScript(script)
             }
-
+            // body
             val customBody = mainItemComponent.customVariables.get("body")
             if (customBody != null) {
                 val bodyLoader = EntityBodyLoader(entity.id, mEngine, mWorld)
                 bodyLoader.load(customBody)
+            }
+            // color
+            val color = mainItemComponent.customVariables.get("color")?.toColor()
+            if (color != null) {
+                val colorComponent = mEngine.addComponentToEntity<ColorComponent>(entity.id)
+                colorComponent.color = color
             }
         } catch (e: Exception) {
             e.printStackTrace()

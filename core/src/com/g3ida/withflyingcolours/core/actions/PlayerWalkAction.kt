@@ -1,7 +1,6 @@
 package com.g3ida.withflyingcolours.core.actions
 
 import com.g3ida.withflyingcolours.core.events.GameEvent
-import com.g3ida.withflyingcolours.utils.MoveDirection
 import games.rednblack.editor.renderer.components.physics.PhysicsBodyComponent
 import kotlin.math.abs
 

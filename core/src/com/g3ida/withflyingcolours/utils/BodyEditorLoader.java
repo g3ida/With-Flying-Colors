@@ -1,5 +1,6 @@
 package com.g3ida.withflyingcolours.utils;
 
+import com.g3ida.withflyingcolours.utils.exceptions.ParseException;
 import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
@@ -35,12 +36,12 @@ public class BodyEditorLoader {
 	// Ctors
 	// -------------------------------------------------------------------------
 
-	public BodyEditorLoader(FileHandle file) {
+	public BodyEditorLoader(FileHandle file) throws ParseException {
 		if (file == null) throw new NullPointerException("file is null");
 		model = readJson(file.readString());
 	}
 
-	public BodyEditorLoader(String str) {
+	public BodyEditorLoader(String str) throws ParseException {
 		if (str == null) throw new NullPointerException("str is null");
 		model = readJson(str);
 	}
@@ -70,10 +71,9 @@ public class BodyEditorLoader {
 	 *
 	 * @param body The Box2d body you want to attach the fixture to.
 	 * @param name The name of the fixture you want to load.
-	 * @param fd The fixture parameters to apply to the created body fixture.
 	 * @param scale The desired scale of the body. The default width is 1.
 	 */
-	public void attachFixture(Body body, String name, FixtureDef fd, float scale) {
+	public void attachFixture(Body body, String name, float scale) {
 		RigidBodyModel rbModel = model.rigidBodies.get(name);
 		if (rbModel == null) throw new RuntimeException("Name '" + name + "' was not found.");
 
@@ -89,6 +89,7 @@ public class BodyEditorLoader {
 			}
 
 			polygonShape.set(vertices);
+			FixtureDef fd = createFixtureDefFromShape(polygon);
 			fd.shape = polygonShape;
 			body.createFixture(fd);
 
@@ -104,6 +105,7 @@ public class BodyEditorLoader {
 
 			circleShape.setPosition(center);
 			circleShape.setRadius(radius);
+			FixtureDef fd = createFixtureDefFromShape(circle);
 			fd.shape = circleShape;
 			body.createFixture(fd);
 
@@ -159,12 +161,19 @@ public class BodyEditorLoader {
 		public final List<CircleModel> circles = new ArrayList<>();
 	}
 
-	public static class PolygonModel {
+	public static abstract class ShapeModel {
+		public Float friction = 0.2f;
+		public Float restitution = 0f;
+		public Float density = 0f;
+		public Boolean isSensor = false;
+	}
+
+	public static class PolygonModel extends ShapeModel  {
 		public final List<Vector2> vertices = new ArrayList<>();
 		private Vector2[] buffer; // used to avoid allocation in attachFixture()
 	}
 
-	public static class CircleModel {
+	public static class CircleModel extends ShapeModel {
 		public final Vector2 center = new Vector2();
 		public float radius;
 	}
@@ -173,7 +182,7 @@ public class BodyEditorLoader {
 	// Json reading process
 	// -------------------------------------------------------------------------
 
-	private Model readJson(String str) {
+	private Model readJson(String str) throws ParseException {
 		Model m = new Model();
 		JsonValue rootElem = new JsonReader().parse(str);
 
@@ -188,7 +197,26 @@ public class BodyEditorLoader {
 		return m;
 	}
 
-	private RigidBodyModel readRigidBody(JsonValue bodyElem) {
+	private void readShapeData(JsonValue shapeElem, ShapeModel shape) {
+		JsonValue friction = shapeElem.get("friction");
+		if (friction != null) {
+			shape.friction = friction.asFloat();
+		}
+		JsonValue restitution = shapeElem.get("restitution");
+		if (restitution != null) {
+			shape.restitution = restitution.asFloat();
+		}
+		JsonValue density = shapeElem.get("density");
+		if (density != null) {
+			shape.density = density.asFloat();
+		}
+		JsonValue isSensor = shapeElem.get("isSensor");
+		if (isSensor != null) {
+			shape.isSensor = isSensor.asBoolean();
+		}
+	}
+
+	private RigidBodyModel readRigidBody(JsonValue bodyElem) throws ParseException {
 		RigidBodyModel rbModel = new RigidBodyModel();
 		rbModel.name = bodyElem.get("name").asString();
 		rbModel.imagePath = bodyElem.get("imagePath").asString();
@@ -197,40 +225,47 @@ public class BodyEditorLoader {
 		rbModel.origin.x = originElem.get("x").asFloat();
 		rbModel.origin.y = originElem.get("y").asFloat();
 
-		// polygons
-
-		JsonValue polygonsElem = bodyElem.get("polygons");
-
-		for (int i=0; i<polygonsElem.size; i++) {
-			PolygonModel polygon = new PolygonModel();
-			rbModel.polygons.add(polygon);
-
-			JsonValue verticesElem = polygonsElem.get(i);
-			for (int ii=0; ii<verticesElem.size; ii++) {
-				JsonValue vertexElem = verticesElem.get(ii);
-				float x = vertexElem.get("x").asFloat();
-				float y = vertexElem.get("y").asFloat();
-				polygon.vertices.add(new Vector2(x, y));
+		// shapes
+		JsonValue shapesElem = bodyElem.get("shapes");
+		for (int i=0; i<shapesElem.size; i++) {
+			JsonValue shapeElem = shapesElem.get(i);
+			String type = shapeElem.get("type").asString();
+			if (type.equals("POLYGON")) {
+				PolygonModel polygon = new PolygonModel();
+				rbModel.polygons.add(polygon);
+				readShapeData(shapeElem, polygon);
+				JsonValue verticesElem = shapeElem.get("vertices");
+				for (int ii=0; ii<verticesElem.size; ii++) {
+					JsonValue vertexElem = verticesElem.get(ii);
+					float x = vertexElem.get("x").asFloat();
+					float y = vertexElem.get("y").asFloat();
+					polygon.vertices.add(new Vector2(x, y));
+				}
+				polygon.buffer = new Vector2[polygon.vertices.size()];
 			}
-
-			polygon.buffer = new Vector2[polygon.vertices.size()];
+			else if (type.equals("CIRCLE")) {
+				CircleModel circle = new CircleModel();
+				rbModel.circles.add(circle);
+				readShapeData(shapeElem, circle);
+				JsonValue circleElem = (JsonValue) shapeElem.get("coords");
+				circle.center.x = circleElem.get("cx").asFloat();
+				circle.center.y = circleElem.get("cy").asFloat();
+				circle.radius =  circleElem.get("r").asFloat();
+			}
+			else {
+				throw new ParseException("unknown shape type :" + type);
+			}
 		}
-
-		// circles
-
-		JsonValue circlesElem = bodyElem.get("circles");
-
-		for (int i=0; i<circlesElem.size; i++) {
-			CircleModel circle = new CircleModel();
-			rbModel.circles.add(circle);
-
-			JsonValue circleElem = (JsonValue) circlesElem.get(i);
-			circle.center.x = circleElem.get("cx").asFloat();
-			circle.center.y = circleElem.get("cy").asFloat();
-			circle.radius =  circleElem.get("r").asFloat();
-		}
-
 		return rbModel;
+	}
+
+	private FixtureDef createFixtureDefFromShape(ShapeModel shape) {
+		FixtureDef fd = new FixtureDef();
+		fd.friction = shape.friction;
+		fd.isSensor = shape.isSensor;
+		fd.density = shape.density;
+		fd.restitution = shape.restitution;
+		return fd;
 	}
 
 	// -------------------------------------------------------------------------
