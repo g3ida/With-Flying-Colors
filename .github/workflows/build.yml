@@ -2,9 +2,9 @@ name: Build and Tests
 
 on:
   push:
-    branches: [ master ]
+    branches: [ master, dev ]
   pull_request:
-    branches: [ master ]
+    branches: [ master, dev ]
 
 jobs:
   build:
@@ -26,4 +26,15 @@ jobs:
       run: ./gradlew desktop:build
     - name: Run unit tests
       run: ./gradlew core:test
-
+    - name: Package jar file with Gradle
+      run: ./gradlew desktop:dist
+    - name: Create artifacts folder
+      run: mkdir downloads
+    - name: Copy generated artifacts
+      run: cp -r ./desktop/build/dist/ ./downloads
+    - name: Upload artifacts
+      uses: actions/upload-artifact@v2
+      with: 
+        name: Artifacts
+        path: downloads
+        retention-days: 1
