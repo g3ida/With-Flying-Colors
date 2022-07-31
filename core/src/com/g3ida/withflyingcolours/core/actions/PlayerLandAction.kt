@@ -10,5 +10,6 @@ class PlayerLandAction(val playerAnimationComponent: PlayerAnimationComponent): 
             playerAnimationComponent.currentAnimation = PlayerSqueezeAnimation()
         }
     }
+    override fun interpolate(alpha: Float) {}
     override fun step(delta: Float) {}
 }

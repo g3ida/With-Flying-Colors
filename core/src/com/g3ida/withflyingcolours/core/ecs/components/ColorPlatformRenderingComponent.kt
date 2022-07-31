@@ -30,6 +30,7 @@ class ColorPlatformRenderingComponent : PooledComponent() {
     public override fun reset() {
         splashTimer = 0f
         contactPosition = Vector2()
+        dispose()
     }
 
     fun dispose() {

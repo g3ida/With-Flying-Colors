@@ -24,7 +24,9 @@ class Player(engine: World, world: Box2dWorld) : GameScript(engine, world) {
     private lateinit var mEventListenerCM: ComponentMapper<EventListenerComponent>
     private lateinit var mPhysicsBodyCM: ComponentMapper<PhysicsBodyComponent>
 
+    private lateinit var playerDieAction: PlayerDieAction
     fun initComponents() {
+        playerDieAction = PlayerDieAction(mEntityId, engine)
         mPlayerAnim = mPlayerAnimationCM.create(mEntityId)
         // attach player to camera
         val cameraSystem = engine.getSystem(CameraSystem::class.java)
@@ -43,6 +45,7 @@ class Player(engine: World, world: Box2dWorld) : GameScript(engine, world) {
             addActionListener(PlayerRotationAction(mPhysicsBodyComponent).toActionListener(EventType.RotateCommand))
             addActionListener(PlayerWalkAction(mPhysicsBodyComponent).toActionListener(EventType.MoveCommand))
             addActionListener(PlayerLandAction(mPlayerAnim).toActionListener(EventType.PlayerLanded))
+            addActionListener(playerDieAction.toActionListener(EventType.GameOver))
         }
     }
 
@@ -70,7 +73,9 @@ class Player(engine: World, world: Box2dWorld) : GameScript(engine, world) {
         initComponents()
     }
 
-    override fun dispose() {}
+    override fun dispose() {
+        playerDieAction.dispose()
+    }
 
     override fun act(delta: Float) {
         mPhysicsBodyComponent.body.addDragForce(dragForce) // adds some air resistance

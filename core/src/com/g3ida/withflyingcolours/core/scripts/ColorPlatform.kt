@@ -55,6 +55,8 @@ class ColorPlatform(engine: World, world: Box2dWorld) : GameScript(engine, world
         val fixtureColorComponent = mFixtureColorCM.get(contactEntity)
         if (fixtureColorComponent != null) { // add check that this is the player (mainItemComponent)
             GameSettings.eventHandler.dispatchEvent(GameEvent(EventType.PlayerLanded))
+            mPlatformRenderingComponent.doColorSplash = true
+            mPlatformRenderingComponent.contactPosition = contactFixture.body.position
             val playerColor = fixtureColorComponent.fixtureDirection.get(contactFixture)?.color
             if (playerColor != null && playerColor != mColor) {
                 GameSettings.eventHandler.dispatchEvent(GameEvent(EventType.GameOver))

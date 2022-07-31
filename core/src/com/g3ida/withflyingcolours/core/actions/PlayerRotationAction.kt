@@ -34,6 +34,7 @@ class PlayerRotationAction(val physicsBodyComponent: PhysicsBodyComponent): IGam
         }
     }
 
+    override fun interpolate(alpha: Float) = step(alpha)
     override fun execute(event: GameEvent) {
         val direction: Int = event.extraData.get("direction", "1").toIntOrNull() ?: 1
         canRotate = false

@@ -50,6 +50,8 @@ class PlayerJumpAction(val physicsBodyComponent: PhysicsBodyComponent): IGameAct
         }
     }
 
+    override fun interpolate(alpha: Float) {}
+
     private fun isGrounded(): Boolean = physicsBodyComponent.body.linearVelocity.y.isAlmostZero
     private fun canExecute(): Boolean = isGrounded()
 

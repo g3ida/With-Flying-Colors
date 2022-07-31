@@ -33,7 +33,7 @@ class ColorPlatformRenderingSystem : IteratingSystem() {
             val ratioX = GameSettings.mainViewPort!!.screenWidth / GameSettings.mainViewPort!!.worldWidth
             val ratioY = GameSettings.mainViewPort!!.screenHeight / GameSettings.mainViewPort!!.worldHeight
             val u_contactpos = ShaderUniformVO()
-            u_contactpos[positionOnViewport.x * ratioX * 2] = positionOnViewport.y * ratioY * 2
+            u_contactpos.set(positionOnViewport.x * ratioX * 2, positionOnViewport.y * ratioY * 2)
             shaderComponent.customUniforms.put("u_contactpos", u_contactpos)
         }
         if (renderingComponent.splashTimer > 0f) {

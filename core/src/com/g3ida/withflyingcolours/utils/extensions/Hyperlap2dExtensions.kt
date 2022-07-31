@@ -10,8 +10,18 @@ fun SceneConfiguration.withSystem(system: BaseSystem): SceneConfiguration {
     return this
 }
 
+fun SceneConfiguration.withSystem(priority: Int, system: BaseSystem): SceneConfiguration {
+    this.addSystem(priority, system)
+    return this
+}
+
 fun SceneConfiguration.withSystems(vararg systems: BaseSystem): SceneConfiguration {
     systems.forEach { this.addSystem(it) }
+    return this
+}
+
+fun SceneConfiguration.withSystems(priority: Int, vararg systems: BaseSystem): SceneConfiguration {
+    systems.forEach { this.addSystem(priority, it) }
     return this
 }
 

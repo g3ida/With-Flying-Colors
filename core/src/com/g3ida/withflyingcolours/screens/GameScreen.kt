@@ -1,7 +1,9 @@
 package com.g3ida.withflyingcolours.screens
 
 import com.artemis.World
+import com.artemis.WorldConfigurationBuilder
 import com.badlogic.gdx.graphics.OrthographicCamera
+import com.badlogic.gdx.utils.Disposable
 import com.badlogic.gdx.utils.viewport.ExtendViewport
 import com.badlogic.gdx.utils.viewport.Viewport
 import games.rednblack.editor.renderer.SceneLoader
@@ -14,6 +16,7 @@ import com.g3ida.withflyingcolours.debuging.DebugConfig
 import com.g3ida.withflyingcolours.debuging.FixtureTracerSystem
 import com.g3ida.withflyingcolours.utils.extensions.toSceneLoader
 import com.g3ida.withflyingcolours.utils.extensions.withResourceRetriever
+import com.g3ida.withflyingcolours.utils.extensions.withSystem
 import com.g3ida.withflyingcolours.utils.extensions.withSystems
 import games.rednblack.editor.renderer.utils.CpuPolygonSpriteBatch
 import games.rednblack.editor.renderer.utils.DefaultShaders
@@ -37,6 +40,9 @@ class GameScreen : KtxScreen {
 
     override fun dispose() {
         mAssetsLoader.dispose()
+        mEngine.systems.filterIsInstance<Disposable>().forEach { it.dispose() }
+        mEngine.dispose()
+        mSceneLoader.dispose()
         super.dispose()
     }
 
@@ -73,9 +79,9 @@ class GameScreen : KtxScreen {
 
         sceneConfig.withSystems(
             CameraSystem(0f, 20f, 0f, 7f),
-            EventListenerSystem(),
             PlayerAnimationSystem(),
             ColorPlatformRenderingSystem())
+            .withSystem(WorldConfigurationBuilder.Priority.HIGH, EventListenerSystem())
             .withResourceRetriever(resourceManager)
 
         mSceneLoader = sceneConfig.toSceneLoader()

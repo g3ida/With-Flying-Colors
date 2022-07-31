@@ -1,85 +1,35 @@
-
 pack.png
-size: 512, 512
-format: RGBA8888
-filter: Linear, Linear
-repeat: none
-blue.9
-  rotate: false
-  xy: 261, 359
-  size: 128, 128
-  split: 16, 12, 10, 14
-  pad: 0, 0, 0, 0
-  orig: 128, 128
-  offset: 0, 0
-  index: -1
-blue_gears.9
-  rotate: false
-  xy: 261, 229
-  size: 128, 128
-  split: 38, 43, 37, 37
-  pad: 0, 0, 0, 0
-  orig: 128, 128
-  offset: 0, 0
-  index: -1
-pink.9
-  rotate: false
-  xy: 131, 359
-  size: 128, 128
-  split: 16, 12, 10, 14
-  pad: 0, 0, 0, 0
-  orig: 128, 128
-  offset: 0, 0
-  index: -1
-pink_gears.9
-  rotate: false
-  xy: 131, 99
-  size: 128, 128
-  split: 38, 43, 37, 37
-  pad: 0, 0, 0, 0
-  orig: 128, 128
-  offset: 0, 0
-  index: -1
-player
-  rotate: false
-  xy: 1, 1
-  size: 96, 96
-  orig: 96, 96
-  offset: 0, 0
-  index: -1
-purple.9
-  rotate: false
-  xy: 1, 229
-  size: 128, 128
-  split: 16, 12, 10, 14
-  pad: 0, 0, 0, 0
-  orig: 128, 128
-  offset: 0, 0
-  index: -1
-purple_gears.9
-  rotate: false
-  xy: 131, 229
-  size: 128, 128
-  split: 38, 43, 37, 37
-  pad: 0, 0, 0, 0
-  orig: 128, 128
-  offset: 0, 0
-  index: -1
-yellow.9
-  rotate: false
-  xy: 1, 359
-  size: 128, 128
-  split: 16, 12, 10, 14
-  pad: 0, 0, 0, 0
-  orig: 128, 128
-  offset: 0, 0
-  index: -1
-yellow_gears.9
-  rotate: false
-  xy: 1, 99
-  size: 128, 128
-  split: 38, 43, 37, 37
-  pad: 0, 0, 0, 0
-  orig: 128, 128
-  offset: 0, 0
-  index: -1
+	size: 512, 512
+	filter: Linear, Linear
+blue
+	bounds: 261, 261, 128, 128
+	split: 16, 12, 10, 14
+	pad: 0, 0, 0, 0
+blue_gears
+	bounds: 261, 131, 128, 128
+	split: 38, 43, 37, 37
+	pad: 0, 0, 0, 0
+pink
+	bounds: 131, 261, 128, 128
+	split: 16, 12, 10, 14
+	pad: 0, 0, 0, 0
+pink_gears
+	bounds: 131, 1, 128, 128
+	split: 38, 43, 37, 37
+	pad: 0, 0, 0, 0
+purple
+	bounds: 1, 131, 128, 128
+	split: 16, 12, 10, 14
+	pad: 0, 0, 0, 0
+purple_gears
+	bounds: 131, 131, 128, 128
+	split: 38, 43, 37, 37
+	pad: 0, 0, 0, 0
+yellow
+	bounds: 1, 261, 128, 128
+	split: 16, 12, 10, 14
+	pad: 0, 0, 0, 0
+yellow_gears
+	bounds: 1, 1, 128, 128
+	split: 38, 43, 37, 37
+	pad: 0, 0, 0, 0

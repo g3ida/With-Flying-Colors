@@ -23,6 +23,18 @@ val Float.Companion.PI2: Float
 val Double.Companion.PI2: Double
     get() = 1.57079632679
 
+val Float.Companion.PI4: Float
+    get() = 0.78539816339f
+
+val Double.Companion.PI4: Double
+    get() = 0.78539816339
+
+val Float.Companion.PI3: Float
+    get() = 0.52359877559f
+
+val Double.Companion.PI3: Double
+    get() = 0.52359877559
+
 val Float.isAlmostZero: Boolean
     get() = abs(this) < Float.EPSILON
 

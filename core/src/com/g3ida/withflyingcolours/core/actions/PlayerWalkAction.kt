@@ -17,5 +17,6 @@ class PlayerWalkAction(val physicsBodyComponent: PhysicsBodyComponent): IGameAct
         }
     }
 
+    override fun interpolate(alpha: Float) {}
     override fun step(delta: Float) {}
 }

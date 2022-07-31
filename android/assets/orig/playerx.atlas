@@ -1,0 +1,5 @@
+player.png
+	size: 256, 256
+	filter: Linear, Linear
+player
+	bounds: 81, 81, 96, 96
