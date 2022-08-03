@@ -17,7 +17,7 @@ import games.rednblack.editor.renderer.data.ShaderUniformVO
 import games.rednblack.editor.renderer.systems.render.HyperLap2dRenderer
 import games.rednblack.editor.renderer.utils.ComponentRetriever
 
-class PlayerDieAction(val entityId: Int, val engine: World): IGameAction, Disposable {
+class PlayerDieAction(val entityId: Int, val engine: World): IInterpolationAction, Disposable {
     private val shaderName = "player_die"
     private val mShader: ShaderProgram = loadShader(shaderName)
     private val mShaderComponent: ShaderComponent
@@ -83,17 +83,19 @@ class PlayerDieAction(val entityId: Int, val engine: World): IGameAction, Dispos
 
     override fun execute(event: GameEvent) {
         mTimer.reset()
-        val uniform = ShaderUniformVO()
-        uniform.set(engine.getSystem(HyperLap2dRenderer::class.java).timeRunning)
-        mShaderComponent.customUniforms.put("start_time", uniform)
+        val runningTime = engine.getSystem(HyperLap2dRenderer::class.java).timeRunning
+        mShaderUniformStore.addUniform("start_time", runningTime)
     }
 
     override fun step(delta: Float) {
         mTimer.step(delta)
         mShaderUniformStore.update()
+
     }
 
-    override fun interpolate(alpha: Float) {}
+    override fun interpolate(alpha: Float) {
+        mShaderUniformStore.update()
+    }
 
     override fun dispose() {
         mShader.dispose()

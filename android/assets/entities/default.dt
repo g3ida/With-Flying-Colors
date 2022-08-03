@@ -1,0 +1,20 @@
+{
+  "class":"SimpleImageVO",
+  "uniqueId":20,
+  "itemIdentifier":"default",
+  "tags":[
+
+  ],
+  "customVariables":{
+  },
+  "x":1.81,
+  "y":3.39,
+  "originX":0.5,
+  "originY":0.5,
+  "zIndex":3,
+  "layerName":"Default",
+  "shader":{
+
+  },
+  "imageName":"default"
+}

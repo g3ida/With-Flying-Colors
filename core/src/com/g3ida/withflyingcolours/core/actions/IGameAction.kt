@@ -5,5 +5,4 @@ import com.g3ida.withflyingcolours.core.events.GameEvent
 interface IGameAction {
     fun execute(event: GameEvent)
     fun step(delta: Float)
-    fun interpolate(alpha: Float)
 }

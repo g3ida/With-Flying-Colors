@@ -14,6 +14,7 @@ import games.rednblack.editor.renderer.utils.ComponentRetriever
 import games.rednblack.editor.renderer.physics.PhysicsContact
 import com.g3ida.withflyingcolours.core.ecs.components.ColorPlatformRenderingComponent
 import com.g3ida.withflyingcolours.core.ecs.components.FixtureColorComponent
+import com.g3ida.withflyingcolours.core.ecs.entities.spawnContactSpark
 import com.g3ida.withflyingcolours.core.events.EventType
 import com.g3ida.withflyingcolours.core.events.GameEvent
 import com.g3ida.withflyingcolours.utils.extensions.isAlmostZero
@@ -44,6 +45,7 @@ class ColorPlatform(engine: World, world: Box2dWorld) : GameScript(engine, world
     }
 
     override fun beginContact(contactEntity: Int, contactFixture: Fixture, ownFixture: Fixture, contact: Contact) {
+        println(contact.worldManifold.numberOfContactPoints)
         // solve the bug of the player sticking to the walls instead of falling
         val physicsBody = ComponentRetriever.get(contactEntity, PhysicsBodyComponent::class.java, engine)
         contact.friction = if (!physicsBody.body.linearVelocity.y.isAlmostZero) {
@@ -60,6 +62,7 @@ class ColorPlatform(engine: World, world: Box2dWorld) : GameScript(engine, world
             val playerColor = fixtureColorComponent.fixtureDirection.get(contactFixture)?.color
             if (playerColor != null && playerColor != mColor) {
                 GameSettings.eventHandler.dispatchEvent(GameEvent(EventType.GameOver))
+                GameSettings.entitySpawner.spawnContactSpark(contact)
             }
         }
     }

@@ -6,7 +6,8 @@ import com.g3ida.withflyingcolours.core.events.EventType
 import com.g3ida.withflyingcolours.core.events.GameEvent
 import com.g3ida.withflyingcolours.core.events.IEventListener
 
-class EventActionListener(val eventType: EventType, val action: IGameAction): IEventListener, Disposable {
+class EventActionListener(val eventType: EventType, val action: IGameAction)
+    : IEventListener, Disposable {
 
     init {
         GameSettings.eventHandler.subscribe(eventType, this)

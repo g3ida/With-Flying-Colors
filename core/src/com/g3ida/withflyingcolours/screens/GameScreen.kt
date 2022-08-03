@@ -12,6 +12,7 @@ import games.rednblack.editor.renderer.SceneConfiguration
 import com.g3ida.withflyingcolours.core.common.GameSettings
 import com.g3ida.withflyingcolours.core.ecs.systems.*
 import com.g3ida.withflyingcolours.core.SceneMapper
+import com.g3ida.withflyingcolours.core.ecs.entities.RuntimeEntitySpawner
 import com.g3ida.withflyingcolours.debuging.DebugConfig
 import com.g3ida.withflyingcolours.debuging.FixtureTracerSystem
 import com.g3ida.withflyingcolours.utils.extensions.toSceneLoader
@@ -92,6 +93,10 @@ class GameScreen : KtxScreen {
         mViewport = ExtendViewport(13f, 7f, mCamera)
         GameSettings.mainViewPort = mViewport
         mSceneLoader.loadScene("MainScene", mViewport)
+
         SceneMapper(mSceneLoader)
+        val spawner = RuntimeEntitySpawner(mSceneLoader.entityFactory)
+        GameSettings.entitySpawner = spawner
+        spawner.loadModels()
     }
 }

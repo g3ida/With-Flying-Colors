@@ -33,3 +33,5 @@ yellow_gears.9
 	bounds: 1, 1, 128, 128
 	split: 38, 43, 37, 37
 	pad: 0, 0, 0, 0
+default
+	bounds: 1, 370, 1, 1

@@ -23,10 +23,7 @@ float circleshape2(vec2 position, float radius){
   return step(radius, length(position - contactPos));
 }
 
-
 void main(){
-
-    
   vec2 position = (gl_FragCoord.xy) / u_resolution;
 
   vec4 color = texture2D(u_sampler2D, v_texCoord0) * v_color;

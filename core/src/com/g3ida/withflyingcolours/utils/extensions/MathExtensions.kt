@@ -1,5 +1,6 @@
 package com.g3ida.withflyingcolours.utils.extensions
 
+import com.badlogic.gdx.math.MathUtils
 import com.badlogic.gdx.math.Vector2
 import kotlin.math.abs
 import kotlin.math.cos
@@ -87,3 +88,7 @@ fun sincos(x: Float) = Pair(sin(x), cos(x))
 
 val PairOfFloats.swapped: Pair<Float, Float>
     get() = Pair(this.second, this.first)
+
+fun calculateAngle(v1: Vector2, v2: Vector2): Float {
+    return  MathUtils.acos((v1.x * v2.x + v1.y * v2.y) / (v1.len() * v2.len()))
+}
